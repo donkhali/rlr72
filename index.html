@@ -52,7 +52,7 @@
                     Tesorería R.·. L.·. Renovación N° 72
                 </h1>
                 <p class="text-[11px] uppercase tracking-[0.2em] text-slate-400 font-medium">
-                    Google Sheets Cloud Direct Backend
+                    Google Sheets Cloud Direct Backend + CRUD
                 </p>
             </div>
         </div>
@@ -100,7 +100,7 @@
             </div>
 
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                <h3 class="font-serif text-lg font-bold text-slate-900 mb-4">Historial de Cápitas y Aportes (Cloud)</h3>
+                <h3 class="font-serif text-lg font-bold text-slate-900 mb-4">Historial de Cápitas y Aportes</h3>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-slate-200 text-sm">
                         <thead class="bg-slate-900 text-amber-300 uppercase text-[11px]">
@@ -135,69 +135,48 @@
                     <span>Caja y Movimientos</span>
                 </button>
                 <button type="button" id="tab-btn-padron" onclick="cambiarTabAdmin('padron')" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
-                    <span>Padrón de Hermanos</span>
+                    <span>Padrón de Hermanos (CRUD)</span>
                 </button>
                 <button type="button" id="tab-btn-auditoria" onclick="cambiarTabAdmin('auditoria')" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
                     <span>Libro Diario y Auditoría</span>
                 </button>
             </nav>
 
-            <!-- PESTAÑA 1: CAJA Y MOVIMIENTOS (Ingresos y Egresos) -->
+            <!-- PESTAÑA 1: CAJA Y MOVIMIENTOS -->
             <div id="tab-panel-caja" class="admin-tab-panel space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Formulario Ingresos -->
                     <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-emerald-700">
-                        <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
-                            <h3 class="font-serif text-base font-bold text-slate-900">Registrar Ingreso</h3>
-                            <span class="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">Entrada</span>
-                        </div>
+                        <h3 class="font-serif text-base font-bold text-slate-900 mb-4">Registrar Ingreso</h3>
                         <div class="space-y-3 text-sm">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-600 mb-1">Fecha</label>
-                                <input type="date" id="ingreso-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 mb-1">Concepto</label>
-                                <select id="ingreso-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold">
-                                    <option value="cuota">Pago de Cápita Mensual</option>
-                                    <option value="eventual">Aporte Extraordinario</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 mb-1">Hermano</label>
-                                <select id="ingreso-usuario" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono"></select>
-                            </div>
-                            <input type="number" id="ingreso-monto" step="0.01" placeholder="Monto ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums">
-                            <input type="text" id="ingreso-desc" placeholder="Descripción" class="w-full p-2 border border-slate-300 rounded-lg text-base">
-                            <button onclick="registrarTransaccionCloud('ingreso')" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm">
-                                Guardar Ingreso en Google Sheet e Imprimir Recibo
+                            <input type="date" id="ingreso-fecha" class="w-full p-2 border rounded-lg bg-stone-50 font-mono font-bold">
+                            <select id="ingreso-subtipo" class="w-full p-2 border rounded-lg bg-white font-semibold">
+                                <option value="cuota">Pago de Cápita Mensual</option>
+                                <option value="eventual">Aporte Extraordinario</option>
+                            </select>
+                            <select id="ingreso-usuario" class="w-full p-2 border rounded-lg bg-stone-50 font-mono"></select>
+                            <input type="number" id="ingreso-monto" step="0.01" placeholder="Monto ($)" class="w-full p-2 border rounded-lg text-base tabular-nums">
+                            <input type="text" id="ingreso-desc" placeholder="Descripción" class="w-full p-2 border rounded-lg text-base">
+                            <button onclick="registrarTransaccionCloud('ingreso')" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg font-semibold">
+                                Guardar Ingreso e Imprimir Recibo
                             </button>
                         </div>
                     </div>
 
-                    <!-- Formulario Egresos (Gastos) -->
+                    <!-- Formulario Egresos -->
                     <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-rose-700">
-                        <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
-                            <h3 class="font-serif text-base font-bold text-slate-900">Registrar Egreso / Gasto</h3>
-                            <span class="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200">Salida</span>
-                        </div>
+                        <h3 class="font-serif text-base font-bold text-slate-900 mb-4">Registrar Egreso / Gasto</h3>
                         <div class="space-y-3 text-sm">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-600 mb-1">Fecha</label>
-                                <input type="date" id="gasto-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold text-rose-800">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 mb-1">Concepto de Gasto</label>
-                                <select id="gasto-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold">
-                                    <option value="gasto_fijo">Gasto Fijo</option>
-                                    <option value="gasto_variable">Gasto Variable</option>
-                                    <option value="mantenimiento">Mantenimiento de Templo</option>
-                                    <option value="servicios">Servicios Públicos</option>
-                                </select>
-                            </div>
-                            <input type="number" id="gasto-monto" step="0.01" placeholder="Monto Egreso ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums">
-                            <input type="text" id="gasto-desc" placeholder="Descripción o detalle del gasto" class="w-full p-2 border border-slate-300 rounded-lg text-base">
-                            <button onclick="registrarTransaccionCloud('gasto')" class="w-full bg-rose-700 hover:bg-rose-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm">
+                            <input type="date" id="gasto-fecha" class="w-full p-2 border rounded-lg bg-stone-50 font-mono font-bold text-rose-800">
+                            <select id="gasto-subtipo" class="w-full p-2 border rounded-lg bg-white font-semibold">
+                                <option value="gasto_fijo">Gasto Fijo</option>
+                                <option value="gasto_variable">Gasto Variable</option>
+                                <option value="mantenimiento">Mantenimiento de Templo</option>
+                                <option value="servicios">Servicios Públicos</option>
+                            </select>
+                            <input type="number" id="gasto-monto" step="0.01" placeholder="Monto Egreso ($)" class="w-full p-2 border rounded-lg text-base tabular-nums">
+                            <input type="text" id="gasto-desc" placeholder="Descripción o detalle" class="w-full p-2 border rounded-lg text-base">
+                            <button onclick="registrarTransaccionCloud('gasto')" class="w-full bg-rose-700 hover:bg-rose-800 text-white py-2.5 rounded-lg font-semibold">
                                 Guardar Egreso en Google Sheet
                             </button>
                         </div>
@@ -205,16 +184,41 @@
                 </div>
             </div>
 
-            <!-- PESTAÑA 2: PADRÓN DE HERMANOS -->
-            <div id="tab-panel-padron" class="admin-tab-panel hidden bg-white p-6 rounded-xl shadow-md border border-slate-200 space-y-4">
-                <h3 class="font-serif text-xl font-bold text-slate-900">Padrón General de Hermanos (Cloud)</h3>
-                <div class="overflow-x-auto rounded-lg border border-slate-200">
-                    <table class="min-w-full divide-y divide-slate-200 text-sm">
-                        <thead class="bg-slate-900 text-amber-300 text-[11px] font-semibold uppercase">
-                            <tr><th class="px-4 py-3 text-left">Cédula</th><th class="px-4 py-3 text-left">Nombre Completo</th><th class="px-4 py-3 text-left">Nivel</th><th class="px-4 py-3 text-left">Registro</th></tr>
-                        </thead>
-                        <tbody id="tabla-usuarios-admin" class="divide-y divide-slate-100 text-slate-700"></tbody>
-                    </table>
+            <!-- PESTAÑA 2: PADRÓN DE HERMANOS (CRUD COMPLETO) -->
+            <div id="tab-panel-padron" class="admin-tab-panel hidden space-y-6">
+                <!-- Formulario de Alta -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-amber-600 max-w-xl mx-auto">
+                    <h3 class="font-serif text-base font-bold text-slate-900 mb-3">Registrar Nuevo Hermano en Google Sheets</h3>
+                    <div class="space-y-3 text-sm">
+                        <input type="text" id="crud-cedula" placeholder="Cédula (Solo números)" class="w-full p-2 border rounded-lg font-mono font-bold">
+                        <input type="text" id="crud-nombre" placeholder="Nombre Completo" class="w-full p-2 border rounded-lg">
+                        <select id="crud-membresia" class="w-full p-2 border rounded-lg bg-white font-semibold">
+                            <option value="1er Nivel">1er Nivel (Hermano Regular)</option>
+                            <option value="2do Nivel">2do Nivel (Operador de Caja)</option>
+                            <option value="3er Nivel">3er Nivel (Tesorero Supremo)</option>
+                        </select>
+                        <button onclick="crudCrearUsuario()" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 py-2.5 rounded-lg font-bold">
+                            Insertar Hermano en Nube
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tabla de Edición y Borrado -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                    <h3 class="font-serif text-lg font-bold text-slate-900 mb-4">Padrón y Edición Directa (CRUD)</h3>
+                    <div class="overflow-x-auto rounded-lg border border-slate-200">
+                        <table class="min-w-full divide-y divide-slate-200 text-xs">
+                            <thead class="bg-slate-900 text-amber-300 uppercase">
+                                <tr>
+                                    <th class="px-3 py-2.5 text-left">Cédula</th>
+                                    <th class="px-3 py-2 text-left">Nombre Completo</th>
+                                    <th class="px-3 py-2 text-left">Nivel Acceso</th>
+                                    <th class="px-3 py-2 text-center">Acciones CRUD</th>
+                                </tr>
+                            </thead>
+                            <tbody id="crud-tabla-usuarios" class="divide-y divide-slate-100"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -319,6 +323,7 @@
             }
             document.querySelectorAll('.admin-tab-panel').forEach(panel => panel.classList.add('hidden'));
             document.getElementById(`tab-panel-${tabName}`).classList.remove('hidden');
+            if(tabName === 'padron') renderCrudUsuarios();
         }
 
         function routeDashboard() {
@@ -384,18 +389,80 @@
             document.getElementById('admin-card-ingresos').innerText = `$${ingresos.toFixed(2)}`;
             document.getElementById('admin-card-gastos').innerText = `$${gastos.toFixed(2)}`;
             document.getElementById('admin-card-saldo').innerText = `$${(ingresos - gastos).toFixed(2)}`;
+        }
 
-            const tbodyUsuarios = document.getElementById('tabla-usuarios-admin');
-            tbodyUsuarios.innerHTML = "";
+        function renderCrudUsuarios() {
+            const tbody = document.getElementById('crud-tabla-usuarios');
+            tbody.innerHTML = "";
             appData.usuarios.forEach(u => {
-                tbodyUsuarios.innerHTML += `
-                    <tr class="text-sm hover:bg-stone-50">
-                        <td class="px-4 py-2.5 font-mono font-bold">${u.cedula}</td>
-                        <td class="px-4 py-2.5 capitalize">${u.nombre}</td>
-                        <td class="px-4 py-2.5 text-slate-500 text-xs">${u.membresia}</td>
-                        <td class="px-4 py-2.5 font-mono text-xs text-slate-400">${u.fecha_registro || '-'}</td>
+                tbody.innerHTML += `
+                    <tr class="hover:bg-stone-50">
+                        <td class="p-2"><input type="text" id="edit-ced-${u.cedula}" value="${u.cedula}" class="w-full font-mono font-bold bg-transparent border-b"></td>
+                        <td class="p-2"><input type="text" id="edit-nom-${u.cedula}" value="${u.nombre}" class="w-full capitalize bg-transparent border-b"></td>
+                        <td class="p-2">
+                            <select id="edit-mem-${u.cedula}" class="bg-transparent font-semibold">
+                                <option value="1er Nivel" ${u.membresia==='1er Nivel'?'selected':''}>1er Nivel</option>
+                                <option value="2do Nivel" ${u.membresia==='2do Nivel'?'selected':''}>2do Nivel</option>
+                                <option value="3er Nivel" ${u.membresia==='3er Nivel'?'selected':''}>3er Nivel</option>
+                            </select>
+                        </td>
+                        <td class="p-2 text-center flex justify-center gap-1.5">
+                            <button onclick="crudEditarUsuario('${u.cedula}')" class="bg-slate-800 text-amber-400 px-2.5 py-1 rounded text-xs font-bold">Guardar</button>
+                            <button onclick="crudEliminarUsuario('${u.cedula}')" class="bg-rose-800 text-white px-2.5 py-1 rounded text-xs font-bold">Eliminar</button>
+                        </td>
                     </tr>`;
             });
+        }
+
+        async function crudCrearUsuario() {
+            const cedula = document.getElementById('crud-cedula').value.trim();
+            const nombre = document.getElementById('crud-nombre').value.trim();
+            const membresia = document.getElementById('crud-membresia').value;
+            if(!cedula || !nombre) return alert("Rellena la cédula y el nombre.");
+
+            try {
+                alert("Insertando hermano en Google Sheets...");
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST', mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'crear_usuario', cedula, nombre, membresia })
+                });
+                alert("¡Hermano agregado con éxito!");
+                document.getElementById('crud-cedula').value = "";
+                document.getElementById('crud-nombre').value = "";
+                setTimeout(cargarDatosCloud, 2000);
+            } catch(e) { alert("Error: " + e.message); }
+        }
+
+        async function crudEditarUsuario(cedulaOriginal) {
+            const cedula = document.getElementById(`edit-ced-${cedulaOriginal}`).value.trim();
+            const nombre = document.getElementById(`edit-nom-${cedulaOriginal}`).value.trim();
+            const membresia = document.getElementById(`edit-mem-${cedulaOriginal}`).value;
+
+            try {
+                alert("Actualizando datos en Google Sheets...");
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST', mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'editar_usuario', cedula_original: cedulaOriginal, cedula, nombre, membresia })
+                });
+                alert("¡Actualizado con éxito!");
+                setTimeout(cargarDatosCloud, 2000);
+            } catch(e) { alert("Error: " + e.message); }
+        }
+
+        async function crudEliminarUsuario(cedula) {
+            if(!confirm(`¿Deseas eliminar al hermano con cédula ${cedula} de Google Sheets?`)) return;
+            try {
+                alert("Eliminando de Google Sheets...");
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST', mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'eliminar_usuario', cedula })
+                });
+                alert("¡Eliminado con éxito!");
+                setTimeout(cargarDatosCloud, 2000);
+            } catch(e) { alert("Error: " + e.message); }
         }
 
         async function registrarTransaccionCloud(tipo) {
@@ -403,17 +470,14 @@
             const subtipo = document.getElementById(`${tipo}-subtipo`).value;
             const monto = parseFloat(document.getElementById(`${tipo}-monto`).value);
             const descripcion = document.getElementById(`${tipo}-desc`).value.trim();
-            let usuario_id = currentUser.id || 1;
-
-            if (tipo === 'ingreso') {
-                usuario_id = document.getElementById('ingreso-usuario').value;
-            }
+            let usuario_id = tipo === 'ingreso' ? document.getElementById('ingreso-usuario').value : 1;
 
             if (isNaN(monto) || monto <= 0 || !fecha) {
                 return alert("Introduce un monto y fecha válidos.");
             }
 
             const payload = {
+                action: 'crear_transaccion',
                 usuario_id: usuario_id,
                 tipo: tipo,
                 subtipo: subtipo,
@@ -425,8 +489,7 @@
             try {
                 alert(`Guardando ${tipo} directamente en Google Sheets...`);
                 await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
+                    method: 'POST', mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
