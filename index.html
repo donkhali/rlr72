@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tesorería R.·. L.·. Renovación N° 72</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+    <link href="[https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600;700;800&display=swap)" rel="stylesheet">
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -18,10 +18,10 @@
                     }
                 }
             }
-        }
+        };
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    <script src="[https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js](https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js)"></script>
+    <script src="[https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js](https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js)"></script>
     <style>
         .tabular-nums { font-variant-numeric: tabular-nums; }
         .bg-masonic-pattern {
@@ -55,7 +55,7 @@
         <div id="session-info" class="hidden text-xs sm:text-sm flex items-center gap-3">
             <span id="api-badge" class="text-[11px] font-mono px-2 py-1 rounded bg-slate-800 text-slate-300">Conectando...</span>
             <span id="user-display" class="font-mono font-semibold bg-slate-800 text-amber-300 border border-amber-500/40 px-3 py-1.5 rounded"></span>
-            <button onclick="logout()" class="bg-rose-900 hover:bg-rose-800 text-stone-100 border border-rose-700/70 px-3 py-1.5 rounded transition font-semibold">
+            <button type="button" id="btn-logout" class="bg-rose-900 hover:bg-rose-800 text-stone-100 border border-rose-700/70 px-3 py-1.5 rounded transition font-semibold">
                 Cerrar Sesión
             </button>
         </div>
@@ -72,7 +72,6 @@
                 Hermanos ingresan <b>solo con su Cédula</b>. Oficiales ingresan Cédula + Clave.
             </p>
 
-            <!-- Indicador de estado de sincronización en el Login -->
             <div id="login-sync-box" class="mb-5 px-3 py-2 rounded-lg bg-stone-100 border border-slate-200 text-center text-xs font-mono text-slate-600">
                 ⏳ Sincronizando padrón con Google Sheets...
             </div>
@@ -80,19 +79,19 @@
             <div class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Cédula de Identidad / ID</label>
-                    <input type="text" id="auth-cedula" onkeydown="if(event.key==='Enter') handleAuth()" class="block w-full rounded-lg border-slate-300 shadow-sm p-2.5 bg-stone-50 border font-mono font-bold text-slate-900" placeholder="Ej: 12056737, 1111 o admin">
+                    <input type="text" id="auth-cedula" class="block w-full rounded-lg border-slate-300 shadow-sm p-2.5 bg-stone-50 border font-mono font-bold text-slate-900" placeholder="Ej: 12056737, 1111 o admin">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Clave de Acceso <span class="text-[11px] text-slate-400 font-normal normal-case">(Dejar en blanco si eres Hermano Regular)</span></label>
-                    <input type="password" id="auth-password" onkeydown="if(event.key==='Enter') handleAuth()" class="block w-full rounded-lg border-slate-300 shadow-sm p-2.5 bg-stone-50 border tracking-widest text-center text-slate-900" placeholder="••••">
+                    <input type="password" id="auth-password" class="block w-full rounded-lg border-slate-300 shadow-sm p-2.5 bg-stone-50 border tracking-widest text-center text-slate-900" placeholder="••••">
                 </div>
-                <button id="btn-login" onclick="handleAuth()" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/50 py-2.5 rounded-lg transition font-semibold text-sm shadow-md uppercase">
+                <button type="button" id="btn-login" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/50 py-2.5 rounded-lg transition font-semibold text-sm shadow-md uppercase">
                     Validar Credenciales
                 </button>
             </div>
         </section>
 
-        <!-- SECCIÓN 2: Panel del Hermano (1er Nivel / Consulta) -->
+        <!-- SECCIÓN 2: Panel del Hermano -->
         <section id="panel-nivel-socio" class="hidden space-y-6">
             <div class="p-6 rounded-xl border text-center shadow-md bg-emerald-50 border-emerald-300 text-emerald-900">
                 <span class="text-[11px] font-bold uppercase tracking-[0.2em] mb-1 block">Estado de Cuenta Fraternal</span>
@@ -104,7 +103,7 @@
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
                 <div class="flex justify-between items-center mb-4">
                     <h3 class="font-serif text-lg font-bold text-slate-900">Historial Personal de Cápitas y Aportes</h3>
-                    <button onclick="cargarDatosCloud()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3 py-1.5 rounded-lg border">
+                    <button type="button" id="btn-refresh-socio" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3 py-1.5 rounded-lg border">
                         ↻ Actualizar
                     </button>
                 </div>
@@ -138,13 +137,13 @@
 
             <!-- BARRA DE NAVEGACIÓN POR PESTAÑAS -->
             <nav class="bg-slate-900 p-1.5 rounded-xl shadow-md border border-slate-800 flex flex-wrap gap-1.5">
-                <button type="button" id="tab-btn-caja" onclick="cambiarTabAdmin('caja')" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 bg-amber-500 text-slate-950 shadow">
+                <button type="button" id="tab-btn-caja" data-tab="caja" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 bg-amber-500 text-slate-950 shadow">
                     <span>Caja y Movimientos</span>
                 </button>
-                <button type="button" id="tab-btn-padron" onclick="cambiarTabAdmin('padron')" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
+                <button type="button" id="tab-btn-padron" data-tab="padron" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
                     <span>Padrón de Hermanos (CRUD)</span>
                 </button>
-                <button type="button" id="tab-btn-auditoria" onclick="cambiarTabAdmin('auditoria')" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
+                <button type="button" id="tab-btn-auditoria" data-tab="auditoria" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
                     <span>Libro Diario y Auditoría</span>
                 </button>
             </nav>
@@ -164,7 +163,7 @@
                             <select id="ingreso-usuario" class="w-full p-2 border rounded-lg bg-stone-50 font-mono"></select>
                             <input type="number" id="ingreso-monto" step="0.01" placeholder="Monto ($)" class="w-full p-2 border rounded-lg text-base tabular-nums">
                             <input type="text" id="ingreso-desc" placeholder="Descripción" class="w-full p-2 border rounded-lg text-base">
-                            <button onclick="registrarTransaccionCloud('ingreso')" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg font-semibold">
+                            <button type="button" id="btn-registrar-ingreso" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg font-semibold">
                                 Guardar Ingreso e Imprimir Recibo
                             </button>
                         </div>
@@ -183,7 +182,7 @@
                             </select>
                             <input type="number" id="gasto-monto" step="0.01" placeholder="Monto Egreso ($)" class="w-full p-2 border rounded-lg text-base tabular-nums">
                             <input type="text" id="gasto-desc" placeholder="Descripción o detalle" class="w-full p-2 border rounded-lg text-base">
-                            <button onclick="registrarTransaccionCloud('gasto')" class="w-full bg-rose-700 hover:bg-rose-800 text-white py-2.5 rounded-lg font-semibold">
+                            <button type="button" id="btn-registrar-gasto" class="w-full bg-rose-700 hover:bg-rose-800 text-white py-2.5 rounded-lg font-semibold">
                                 Guardar Egreso en Google Sheet
                             </button>
                         </div>
@@ -203,7 +202,7 @@
                             <option value="2do Nivel">2do Nivel (Operador de Caja)</option>
                             <option value="3er Nivel">3er Nivel (Tesorero Supremo)</option>
                         </select>
-                        <button onclick="crudCrearUsuario()" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 py-2.5 rounded-lg font-bold">
+                        <button type="button" id="btn-crud-crear" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 py-2.5 rounded-lg font-bold">
                             Insertar Hermano en Nube
                         </button>
                     </div>
@@ -212,7 +211,7 @@
                 <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="font-serif text-lg font-bold text-slate-900">Padrón y Edición Directa (CRUD)</h3>
-                        <button onclick="cargarDatosCloud()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3 py-1.5 rounded-lg border">
+                        <button type="button" id="btn-refresh-padron" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3 py-1.5 rounded-lg border">
                             ↻ Refrescar Padrón
                         </button>
                     </div>
@@ -236,7 +235,7 @@
             <div id="tab-panel-auditoria" class="admin-tab-panel hidden bg-white p-6 rounded-xl shadow-md border border-slate-200 space-y-4">
                 <div class="flex justify-between items-center">
                     <h3 class="font-serif text-xl font-bold text-slate-900">Libro Diario de Transacciones (Cloud)</h3>
-                    <button onclick="exportarAuditoriaPDF()" class="bg-slate-900 text-amber-400 px-4 py-2 rounded-lg text-xs font-bold uppercase">Exportar a PDF</button>
+                    <button type="button" id="btn-exportar-pdf" class="bg-slate-900 text-amber-400 px-4 py-2 rounded-lg text-xs font-bold uppercase">Exportar a PDF</button>
                 </div>
                 <div class="overflow-x-auto rounded-lg border border-slate-200">
                     <table class="min-w-full divide-y divide-slate-200 text-xs">
@@ -252,8 +251,7 @@
     </main>
 
     <script>
-        // URL OFICIAL VERSIÓN 12:
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxyxfn-VEKy6kiCdyNWEfrchEDCzGSU3cKrVc-28J3Qr14DDng32KbA7eklUaUrx_O1Jg/exec';
+        const APPS_SCRIPT_URL = '[https://script.google.com/macros/s/AKfycbxyxfn-VEKy6kiCdyNWEfrchEDCzGSU3cKrVc-28J3Qr14DDng32KbA7eklUaUrx_O1Jg/exec](https://script.google.com/macros/s/AKfycbxyxfn-VEKy6kiCdyNWEfrchEDCzGSU3cKrVc-28J3Qr14DDng32KbA7eklUaUrx_O1Jg/exec)';
 
         let appData = { usuarios: [], transacciones: [] };
         let datosCargados = false;
@@ -272,11 +270,11 @@
             const script = document.createElement('script');
             script.id = 'jsonp-cloud';
             script.src = `${APPS_SCRIPT_URL}?${params.toString()}`;
-            script.onerror = () => {
+            script.onerror = function() {
                 const syncBox = document.getElementById('login-sync-box');
                 if (syncBox) {
                     syncBox.className = "mb-5 px-3 py-2 rounded-lg bg-rose-50 border border-rose-300 text-center text-xs font-mono text-rose-700";
-                    syncBox.innerText = "⚠️ Error de acceso a la URL de Apps Script. Verifica que en 'Gestionar implementaciones' el acceso sea 'Cualquier usuario' (Anyone).";
+                    syncBox.innerText = "⚠️ No se pudo leer Google Sheets. Verifica en Apps Script que la implementación tenga acceso 'Cualquier usuario'.";
                 }
                 if (loginCallbackPendiente) {
                     const cb = loginCallbackPendiente;
@@ -291,7 +289,7 @@
             ejecutarLlamadaJSONP({});
         }
 
-        function procesarDatosCloud(res) {
+        window.procesarDatosCloud = function(res) {
             if (!res) return;
             if (res.status === 'error') {
                 alert("Error en Google Sheets: " + res.message);
@@ -299,16 +297,93 @@
             }
 
             appData.usuarios = res.usuarios || [];
-            appData.transacciones = (res.transacciones || []).filter(t => parseFloat(t.monto) > 0);
+            appData.transacciones = (res.transacciones || []).filter(function(t) {
+                return parseFloat(t.monto) > 0;
+            });
             datosCargados = true;
 
             const syncBox = document.getElementById('login-sync-box');
             if (syncBox) {
                 syncBox.className = "mb-5 px-3 py-2 rounded-lg bg-emerald-50 border border-emerald-300 text-center text-xs font-mono text-emerald-800";
-                syncBox.innerText = `● Padrón sincronizado: ${appData.usuarios.length} hermano(s) en línea`; }  const badge = document.getElementById('api-badge'); if (res.version_api === 'v2_get_only') { badge.innerText = "● API v2 Activa"; badge.className = "text-[11px] font-mono px-2 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-700"; } else { badge.innerText = "⚠️ API Vieja"; badge.className = "text-[11px] font-mono px-2 py-1 rounded bg-rose-950 text-rose-300 border border-rose-700"; }  if (res.op_result === "OK_USUARIO_CREADO") { alert("¡Hermano guardado directamente en la pestaña 'usuarios'!"); } else if (res.op_result === "ERROR_CEDULA_DUPLICADA") { alert("Atención: Esa cédula ya existe en la pestaña 'usuarios'."); } else if (res.op_result === "OK_USUARIO_EDITADO") { alert("¡Datos del hermano actualizados en Google Sheets!"); } else if (res.op_result === "OK_USUARIO_ELIMINADO") { alert("¡Hermano eliminado del padrón!"); } else if (res.op_result === "OK_TRANSACCION_CREADA") { alert("¡Transacción registrada en Google Sheets!"); }  if (loginCallbackPendiente) { const cb = loginCallbackPendiente; loginCallbackPendiente = null; cb(true); }  if (currentUser) routeDashboard(); }  window.addEventListener('DOMContentLoaded', () => { const fechaHoy = new Date().toISOString().split('T')[0]; document.getElementById('ingreso-fecha').value = fechaHoy; document.getElementById('gasto-fecha').value = fechaHoy; cargarDatosCloud();  const saved = localStorage.getItem("cloud_session"); if (saved) { currentUser = JSON.parse(saved); routeDashboard(); } });  function handleAuth() { const cedulaInput = document.getElementById('auth-cedula').value.trim(); const password = document.getElementById('auth-password').value.trim();  if (!cedulaInput) return alert("Introduce tu número de Cédula o ID.");  const cedulaNorm = cedulaInput.toLowerCase();  // 1. Acceso Maestro directo (admin / 1234) if (cedulaNorm === 'admin' && password === '1234') { currentUser = { id: 0, cedula: 'admin', nombre: 'Tesorero Supremo', membresia: '3er Nivel' }; localStorage.setItem("cloud_session", JSON.stringify(currentUser)); routeDashboard(); return; }  // 2. Si el padrón aún no ha terminado de cargar desde Google Sheets, lo esperamos automáticamente if (!datosCargados) { const btn = document.getElementById('btn-login'); btn.innerText = "Consultando Google Sheets..."; btn.disabled = true;  loginCallbackPendiente = () => { btn.innerText = "Validar Credenciales"; btn.disabled = false; validarUsuarioEnPadron(cedulaInput, password); }; cargarDatosCloud(); return; }  validarUsuarioEnPadron(cedulaInput, password); }  function validarUsuarioEnPadron(cedulaInput, password) { // Limpiamos puntos, espacios o prefijos como V- para que encuentre la cédula sin fallar const limpiarCed = (str) => String(str \vert{}\vert{} "").toLowerCase().replace(/[^0-9a-z]/g, ''); const cedulaBuscada = limpiarCed(cedulaInput);  const user = appData.usuarios.find(u => limpiarCed(u.cedula) === cedulaBuscada);  if (!user) { return alert(`La cédula "${cedulaInput}" no figura en la pestaña 'usuarios' de Google Sheets (Actualmente hay ${appData.usuarios.length} usuarios cargados).`);
+                syncBox.innerText = "● Padrón sincronizado: " + appData.usuarios.length + " hermano(s) en línea";
             }
 
-            // Si es un hermano de 1er Nivel o si entra sin poner contraseña -> entra a su Estado de Cuenta Personal
+            const badge = document.getElementById('api-badge');
+            if (res.version_api === 'v2_get_only') {
+                badge.innerText = "● API v2 Activa";
+                badge.className = "text-[11px] font-mono px-2 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-700";
+            } else {
+                badge.innerText = "⚠️ API Vieja";
+                badge.className = "text-[11px] font-mono px-2 py-1 rounded bg-rose-950 text-rose-300 border border-rose-700";
+            }
+
+            if (res.op_result === "OK_USUARIO_CREADO") {
+                alert("¡Hermano guardado directamente en la pestaña 'usuarios'!");
+            } else if (res.op_result === "ERROR_CEDULA_DUPLICADA") {
+                alert("Atención: Esa cédula ya existe en la pestaña 'usuarios'.");
+            } else if (res.op_result === "OK_USUARIO_EDITADO") {
+                alert("¡Datos del hermano actualizados en Google Sheets!");
+            } else if (res.op_result === "OK_USUARIO_ELIMINADO") {
+                alert("¡Hermano eliminado del padrón!");
+            } else if (res.op_result === "OK_TRANSACCION_CREADA") {
+                alert("¡Transacción registrada en Google Sheets!");
+            }
+
+            if (loginCallbackPendiente) {
+                const cb = loginCallbackPendiente;
+                loginCallbackPendiente = null;
+                cb(true);
+            }
+
+            if (currentUser) routeDashboard();
+        };
+
+        function handleAuth() {
+            const cedulaInput = document.getElementById('auth-cedula').value.trim();
+            const password = document.getElementById('auth-password').value.trim();
+
+            if (!cedulaInput) return alert("Introduce tu número de Cédula o ID.");
+
+            const cedulaNorm = cedulaInput.toLowerCase();
+
+            if (cedulaNorm === 'admin' && password === '1234') {
+                currentUser = { id: 0, cedula: 'admin', nombre: 'Tesorero Supremo', membresia: '3er Nivel', vistaSocio: false };
+                localStorage.setItem("cloud_session", JSON.stringify(currentUser));
+                routeDashboard();
+                return;
+            }
+
+            if (!datosCargados) {
+                const btn = document.getElementById('btn-login');
+                btn.innerText = "Consultando Google Sheets...";
+                btn.disabled = true;
+
+                loginCallbackPendiente = function() {
+                    btn.innerText = "Validar Credenciales";
+                    btn.disabled = false;
+                    validarUsuarioEnPadron(cedulaInput, password);
+                };
+                cargarDatosCloud();
+                return;
+            }
+
+            validarUsuarioEnPadron(cedulaInput, password);
+        }
+
+        function validarUsuarioEnPadron(cedulaInput, password) {
+            const limpiarCed = function(str) {
+                return String(str || "").toLowerCase().replace(/[^0-9a-z]/g, '');
+            };
+            const cedulaBuscada = limpiarCed(cedulaInput);
+
+            const user = appData.usuarios.find(function(u) {
+                return limpiarCed(u.cedula) === cedulaBuscada;
+            });
+
+            if (!user) {
+                return alert("La cédula '" + cedulaInput + "' no figura en la pestaña 'usuarios' de Google Sheets (Hermano(s) cargados: " + appData.usuarios.length + ").");
+            }
+
             if (user.membresia === '1er Nivel' || !password) {
                 currentUser = Object.assign({}, user, { vistaSocio: true });
                 localStorage.setItem("cloud_session", JSON.stringify(currentUser));
@@ -316,7 +391,6 @@
                 return;
             }
 
-            // Si es 2do Nivel o 3er Nivel y puso contraseña, la validamos
             if (user.membresia === '2do Nivel' && (password === '4321' || password === '1234')) {
                 currentUser = Object.assign({}, user, { vistaSocio: false });
                 localStorage.setItem("cloud_session", JSON.stringify(currentUser));
@@ -331,7 +405,7 @@
                 return;
             }
 
-            alert("Clave administrativa incorrecta. (Si solo deseas consultar tu estado de cuenta como hermano, deja el campo de clave en blanco).");
+            alert("Clave administrativa incorrecta. Si deseas consultar tu estado de cuenta como hermano, deja la clave en blanco.");
         }
 
         function logout() {
@@ -346,39 +420,66 @@
 
         function cambiarTabAdmin(tabName) {
             activeAdminTab = tabName;
-            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+            document.querySelectorAll('.admin-tab-btn').forEach(function(btn) {
                 btn.classList.remove('bg-amber-500', 'text-slate-950', 'shadow');
                 btn.classList.add('text-slate-300', 'hover:text-amber-300', 'hover:bg-slate-800');
             });
-            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            const activeBtn = document.getElementById('tab-btn-' + tabName);
             if (activeBtn) {
                 activeBtn.classList.remove('text-slate-300', 'hover:text-amber-300', 'hover:bg-slate-800');
                 activeBtn.classList.add('bg-amber-500', 'text-slate-950', 'shadow');
             }
-            document.querySelectorAll('.admin-tab-panel').forEach(panel => panel.classList.add('hidden'));
-            document.getElementById(`tab-panel-${tabName}`).classList.remove('hidden'); if(tabName === 'padron') renderCrudUsuarios(); }  function routeDashboard() { document.getElementById('auth-section').classList.add('hidden'); document.getElementById('session-info').classList.remove('hidden'); document.getElementById('user-display').innerText = `ID: ${currentUser.cedula} | ${currentUser.membresia}`;  if (currentUser.membresia === '1er Nivel' \vert{}\vert{} currentUser.vistaSocio === true) { document.getElementById('panel-nivel-socio').classList.remove('hidden'); document.getElementById('panel-entorno-admin').classList.add('hidden'); renderSocioView(); } else { document.getElementById('panel-nivel-socio').classList.add('hidden'); document.getElementById('panel-entorno-admin').classList.remove('hidden'); renderAdminView(); cambiarTabAdmin(activeAdminTab); } }  function renderSocioView() { document.getElementById('socio-nombre-saludo').innerText = currentUser.nombre; document.getElementById('socio-cedula-display').innerText = `C.I: ${currentUser.cedula}`;
+            document.querySelectorAll('.admin-tab-panel').forEach(function(panel) {
+                panel.classList.add('hidden');
+            });
+            document.getElementById('tab-panel-' + tabName).classList.remove('hidden');
+            if (tabName === 'padron') renderCrudUsuarios();
+        }
+
+        function routeDashboard() {
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('session-info').classList.remove('hidden');
+            document.getElementById('user-display').innerText = "ID: " + currentUser.cedula + " | " + currentUser.membresia;
+
+            if (currentUser.membresia === '1er Nivel' || currentUser.vistaSocio === true) {
+                document.getElementById('panel-nivel-socio').classList.remove('hidden');
+                document.getElementById('panel-entorno-admin').classList.add('hidden');
+                renderSocioView();
+            } else {
+                document.getElementById('panel-nivel-socio').classList.add('hidden');
+                document.getElementById('panel-entorno-admin').classList.remove('hidden');
+                renderAdminView();
+                cambiarTabAdmin(activeAdminTab);
+            }
+        }
+
+        function renderSocioView() {
+            document.getElementById('socio-nombre-saludo').innerText = currentUser.nombre;
+            document.getElementById('socio-cedula-display').innerText = "C.I: " + currentUser.cedula;
             const tbody = document.getElementById('tabla-historial-socio');
             tbody.innerHTML = "";
 
-            const limpiar = (s) => String(s || "").toLowerCase().replace(/[^0-9a-z]/g, '');
+            const limpiar = function(s) {
+                return String(s || "").toLowerCase().replace(/[^0-9a-z]/g, '');
+            };
             const miCedula = limpiar(currentUser.cedula);
             const miId = String(currentUser.id || "").trim();
 
-            const misTrans = appData.transacciones.filter(t => {
+            const misTrans = appData.transacciones.filter(function(t) {
                 const tUser = String(t.usuario_id || "").trim();
                 return (tUser === miId || limpiar(tUser) === miCedula) && t.tipo === 'ingreso';
             });
             
             if (misTrans.length > 0) {
-                misTrans.forEach(t => {
-                    tbody.innerHTML += `
-                        <tr class="hover:bg-stone-50">
-                            <td class="px-4 py-2.5 font-mono">${String(t.fecha).split('T')[0]}</td>
-                            <td class="px-4 py-2.5">${t.descripcion || t.subtipo.toUpperCase()} <span class="text-xs text-slate-400">(${t.subtipo})</span></td> <td class="px-4 py-2.5 text-right font-bold text-emerald-700">$${parseFloat(t.monto).toFixed(2)}</td>
-                        </tr>`;
+                misTrans.forEach(function(t) {
+                    tbody.innerHTML += '<tr class="hover:bg-stone-50">' +
+                        '<td class="px-4 py-2.5 font-mono">' + String(t.fecha).split('T')[0] + '</td>' +
+                        '<td class="px-4 py-2.5">' + (t.descripcion || t.subtipo.toUpperCase()) + ' <span class="text-xs text-slate-400">(' + t.subtipo + ')</span></td>' +
+                        '<td class="px-4 py-2.5 text-right font-bold text-emerald-700">$' + parseFloat(t.monto).toFixed(2) + '</td>' +
+                    '</tr>';
                 });
             } else {
-                tbody.innerHTML = `<tr><td colspan="3" class="text-center py-6 text-slate-400">No registras pagos o aportes cargados bajo la cédula ${currentUser.cedula}.</td></tr>`;
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center py-6 text-slate-400">No registras pagos o aportes bajo la cédula ' + currentUser.cedula + '.</td></tr>';
             }
         }
 
@@ -386,10 +487,10 @@
             const select = document.getElementById('ingreso-usuario');
             const valPrevio = select.value;
             select.innerHTML = "";
-            appData.usuarios.forEach(u => {
-                select.innerHTML += `<option value="${u.cedula}">C.I: ${u.cedula} -${u.nombre}</option>`;
+            appData.usuarios.forEach(function(u) {
+                select.innerHTML += '<option value="' + u.cedula + '">C.I: ' + u.cedula + ' - ' + u.nombre + '</option>';
             });
-            if (valPrevio && Array.from(select.options).some(o => o.value === valPrevio)) {
+            if (valPrevio && Array.from(select.options).some(function(o) { return o.value === valPrevio; })) {
                 select.value = valPrevio;
             }
 
@@ -397,38 +498,219 @@
             const tbodyAuditoria = document.getElementById('tabla-auditoria-rows');
             tbodyAuditoria.innerHTML = "";
 
-            appData.transacciones.forEach(t => {
+            appData.transacciones.forEach(function(t) {
                 const montoNum = parseFloat(t.monto) || 0;
                 if (t.tipo === 'ingreso') ingresos += montoNum;
                 if (t.tipo === 'gasto') gastos += montoNum;
 
                 const colorT = t.tipo === 'ingreso' ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold';
-                tbodyAuditoria.innerHTML += `
-                    <tr class="hover:bg-stone-50">
-                        <td class="px-3 py-2 font-mono">${String(t.fecha).split('T')[0]}</td>
-                        <td class="px-3 py-2 uppercase ${colorT}">${t.tipo}</td>
-                        <td class="px-3 py-2 uppercase text-[10px]">${t.subtipo}</td>
-                        <td class="px-3 py-2 text-slate-700">${t.descripcion || '-'}</td>
-                        <td class="px-3 py-2 text-right font-bold">$${montoNum.toFixed(2)}</td> </tr>`; });  document.getElementById('admin-card-ingresos').innerText = `$${ingresos.toFixed(2)}`;
-            document.getElementById('admin-card-gastos').innerText = `$${gastos.toFixed(2)}`; document.getElementById('admin-card-saldo').innerText = `$${(ingresos - gastos).toFixed(2)}`;
+                tbodyAuditoria.innerHTML += '<tr class="hover:bg-stone-50">' +
+                    '<td class="px-3 py-2 font-mono">' + String(t.fecha).split('T')[0] + '</td>' +
+                    '<td class="px-3 py-2 uppercase ' + colorT + '">' + t.tipo + '</td>' +
+                    '<td class="px-3 py-2 uppercase text-[10px]">' + t.subtipo + '</td>' +
+                    '<td class="px-3 py-2 text-slate-700">' + (t.descripcion || '-') + '</td>' +
+                    '<td class="px-3 py-2 text-right font-bold">$' + montoNum.toFixed(2) + '</td>' +
+                '</tr>';
+            });
+
+            document.getElementById('admin-card-ingresos').innerText = "$" + ingresos.toFixed(2);
+            document.getElementById('admin-card-gastos').innerText = "$" + gastos.toFixed(2);
+            document.getElementById('admin-card-saldo').innerText = "$" + (ingresos - gastos).toFixed(2);
             renderCrudUsuarios();
         }
 
         function renderCrudUsuarios() {
             const tbody = document.getElementById('crud-tabla-usuarios');
             tbody.innerHTML = "";
-            appData.usuarios.forEach(u => {
-                tbody.innerHTML += `
-                    <tr class="hover:bg-stone-50">
-                        <td class="p-2"><input type="text" id="edit-ced-${u.cedula}" value="${u.cedula}" class="w-full font-mono font-bold bg-transparent border-b"></td>
-                        <td class="p-2"><input type="text" id="edit-nom-${u.cedula}" value="${u.nombre}" class="w-full capitalize bg-transparent border-b"></td>
-                        <td class="p-2">
-                            <select id="edit-mem-${u.cedula}" class="bg-transparent font-semibold">
-                                <option value="1er Nivel" ${u.membresia==='1er Nivel'?'selected':''}>1er Nivel</option>
-                                <option value="2do Nivel" ${u.membresia==='2do Nivel'?'selected':''}>2do Nivel</option>
-                                <option value="3er Nivel" ${u.membresia==='3er Nivel'?'selected':''}>3er Nivel</option>
-                            </select>
-                        </td>
-                        <td class="p-2 text-center flex justify-center gap-1.5">
-                            <button onclick="crudEditarUsuario('${u.cedula}')" class="bg-slate-800 text-amber-400 px-2.5 py-1 rounded text-xs font-bold">Guardar</button>
-                            <button onclick="crudEliminarUsuario('${u.cedula}')" class="bg-rose-800 text-white px-2.5
+            appData.usuarios.forEach(function(u) {
+                tbody.innerHTML += '<tr class="hover:bg-stone-50">' +
+                    '<td class="p-2"><input type="text" id="edit-ced-' + u.cedula + '" value="' + u.cedula + '" class="w-full font-mono font-bold bg-transparent border-b"></td>' +
+                    '<td class="p-2"><input type="text" id="edit-nom-' + u.cedula + '" value="' + u.nombre + '" class="w-full capitalize bg-transparent border-b"></td>' +
+                    '<td class="p-2">' +
+                        '<select id="edit-mem-' + u.cedula + '" class="bg-transparent font-semibold">' +
+                            '<option value="1er Nivel" ' + (u.membresia === '1er Nivel' ? 'selected' : '') + '>1er Nivel</option>' +
+                            '<option value="2do Nivel" ' + (u.membresia === '2do Nivel' ? 'selected' : '') + '>2do Nivel</option>' +
+                            '<option value="3er Nivel" ' + (u.membresia === '3er Nivel' ? 'selected' : '') + '>3er Nivel</option>' +
+                        '</select>' +
+                    '</td>' +
+                    '<td class="p-2 text-center flex justify-center gap-1.5">' +
+                        '<button type="button" data-action="edit" data-cedula="' + u.cedula + '" class="bg-slate-800 text-amber-400 px-2.5 py-1 rounded text-xs font-bold">Guardar</button>' +
+                        '<button type="button" data-action="delete" data-cedula="' + u.cedula + '" class="bg-rose-800 text-white px-2.5 py-1 rounded text-xs font-bold">Eliminar</button>' +
+                    '</td>' +
+                '</tr>';
+            });
+        }
+
+        function crudCrearUsuario() {
+            const cedula = document.getElementById('crud-cedula').value.trim();
+            const nombre = document.getElementById('crud-nombre').value.trim();
+            const membresia = document.getElementById('crud-membresia').value;
+            if (!cedula || !nombre) return alert("Rellena la cédula y el nombre.");
+
+            ejecutarLlamadaJSONP({
+                action: 'crear_usuario',
+                cedula: cedula,
+                nombre: nombre,
+                membresia: membresia
+            });
+
+            document.getElementById('crud-cedula').value = "";
+            document.getElementById('crud-nombre').value = "";
+        }
+
+        function crudEditarUsuario(cedulaOriginal) {
+            const cedula = document.getElementById('edit-ced-' + cedulaOriginal).value.trim();
+            const nombre = document.getElementById('edit-nom-' + cedulaOriginal).value.trim();
+            const membresia = document.getElementById('edit-mem-' + cedulaOriginal).value;
+
+            ejecutarLlamadaJSONP({
+                action: 'editar_usuario',
+                cedula_original: cedulaOriginal,
+                cedula: cedula,
+                nombre: nombre,
+                membresia: membresia
+            });
+        }
+
+        function crudEliminarUsuario(cedula) {
+            if (!confirm("¿Deseas eliminar al hermano con cédula " + cedula + " de Google Sheets?")) return;
+            ejecutarLlamadaJSONP({
+                action: 'eliminar_usuario',
+                cedula: cedula
+            });
+        }
+
+        function registrarTransaccionCloud(tipo) {
+            const fecha = document.getElementById(tipo + '-fecha').value;
+            const subtipo = document.getElementById(tipo + '-subtipo').value;
+            const monto = parseFloat(document.getElementById(tipo + '-monto').value);
+            const descripcion = document.getElementById(tipo + '-desc').value.trim();
+            const usuario_id = tipo === 'ingreso' ? document.getElementById('ingreso-usuario').value : 'admin';
+
+            if (isNaN(monto) || monto <= 0 || !fecha) {
+                return alert("Introduce un monto mayor a $0.00 y fecha válidos.");
+            }
+
+            if (tipo === 'ingreso') {
+                imprimirReciboPDF(usuario_id, subtipo, monto, descripcion, fecha);
+            }
+
+            ejecutarLlamadaJSONP({
+                action: 'crear_transaccion',
+                usuario_id: usuario_id,
+                tipo: tipo,
+                subtipo: subtipo,
+                monto: monto,
+                descripcion: descripcion,
+                fecha: fecha
+            });
+
+            document.getElementById(tipo + '-monto').value = "";
+            document.getElementById(tipo + '-desc').value = "";
+        }
+
+        function imprimirReciboPDF(usuarioId, subtipo, monto, desc, fecha) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ format: 'a6' });
+            const usuario = appData.usuarios.find(function(u) {
+                return String(u.id) === String(usuarioId) || String(u.cedula) === String(usuarioId);
+            });
+            const nombre = usuario ? usuario.nombre.toUpperCase() : "HERMANO";
+            const cedula = usuario ? usuario.cedula.toUpperCase() : usuarioId;
+
+            doc.setFillColor(15, 23, 42);
+            doc.rect(0, 0, 105, 20, 'F');
+            doc.setTextColor(251, 191, 36);
+            doc.setFontSize(8.5);
+            doc.text("TESORERÍA R.·. L.·. RENOVACIÓN N° 72", 8, 9);
+            doc.setTextColor(226, 232, 240);
+            doc.setFontSize(7.5);
+            doc.text("COMPROBANTE OFICIAL DE INGRESO", 8, 15);
+
+            doc.setTextColor(30, 41, 59);
+            doc.setFontSize(8);
+            doc.text("Fecha: " + fecha, 8, 28);
+            doc.text("Hermano: " + nombre, 8, 35);
+            doc.text("Cédula: C.I. " + cedula, 8, 42);
+            doc.text("Concepto: " + subtipo.toUpperCase(), 8, 49);
+            doc.text("Observación: " + (desc || 'Sin observaciones'), 8, 56);
+            
+            doc.setFillColor(248, 250, 252);
+            doc.setDrawColor(217, 119, 6);
+            doc.rect(8, 65, 89, 13, 'FD');
+            doc.setFontSize(10);
+            doc.text("TOTAL PROCESADO: $" + monto.toFixed(2) + " USD", 12, 73.5);
+
+            doc.save("Recibo_Tesoreria_CI_" + cedula + "_" + fecha + ".pdf");
+        }
+
+        function exportarAuditoriaPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.setFontSize(14);
+            doc.text("TESORERÍA R.·. L.·. RENOVACIÓN N° 72 — REPORTE DE AUDITORÍA", 14, 18);
+            
+            const rows = [];
+            appData.transacciones.forEach(function(t) {
+                rows.push([String(t.fecha).split('T')[0], t.tipo.toUpperCase(), t.subtipo.toUpperCase(), t.descripcion || '-', "$" + parseFloat(t.monto).toFixed(2)]);
+            });
+
+            doc.autoTable({
+                head: [["Fecha", "Tipo", "Concepto", "Descripción", "Monto"]],
+                body: rows,
+                startY: 25,
+                theme: 'striped',
+                headStyles: { fillColor: [15, 23, 42], textColor: [251, 191, 36] }
+            });
+
+            doc.save("Tesoreria_Reporte_Auditoria_" + new Date().toISOString().split('T')[0] + ".pdf");
+        }
+
+        // Inicialización de eventos segura (sin depender de onclick inline)
+        window.addEventListener('DOMContentLoaded', function() {
+            const fechaHoy = new Date().toISOString().split('T')[0];
+            document.getElementById('ingreso-fecha').value = fechaHoy;
+            document.getElementById('gasto-fecha').value = fechaHoy;
+
+            document.getElementById('btn-login').addEventListener('click', handleAuth);
+            document.getElementById('btn-logout').addEventListener('click', logout);
+            document.getElementById('btn-refresh-socio').addEventListener('click', cargarDatosCloud);
+            document.getElementById('btn-refresh-padron').addEventListener('click', cargarDatosCloud);
+            document.getElementById('btn-registrar-ingreso').addEventListener('click', function() { registrarTransaccionCloud('ingreso'); });
+            document.getElementById('btn-registrar-gasto').addEventListener('click', function() { registrarTransaccionCloud('gasto'); });
+            document.getElementById('btn-crud-crear').addEventListener('click', crudCrearUsuario);
+            document.getElementById('btn-exportar-pdf').addEventListener('click', exportarAuditoriaPDF);
+
+            document.getElementById('auth-cedula').addEventListener('keydown', function(e) { if (e.key === 'Enter') handleAuth(); });
+            document.getElementById('auth-password').addEventListener('keydown', function(e) { if (e.key === 'Enter') handleAuth(); });
+
+            document.querySelectorAll('.admin-tab-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    cambiarTabAdmin(this.getAttribute('data-tab'));
+                });
+            });
+
+            document.getElementById('crud-tabla-usuarios').addEventListener('click', function(e) {
+                const target = e.target.closest('button');
+                if (!target) return;
+                const action = target.getAttribute('data-action');
+                const cedula = target.getAttribute('data-cedula');
+                if (action === 'edit') crudEditarUsuario(cedula);
+                if (action === 'delete') crudEliminarUsuario(cedula);
+            });
+
+            cargarDatosCloud();
+            
+            const saved = localStorage.getItem("cloud_session");
+            if (saved) {
+                try {
+                    currentUser = JSON.parse(saved);
+                    routeDashboard();
+                } catch (err) {
+                    localStorage.removeItem("cloud_session");
+                }
+            }
+        });
+    </script>
+</body>
+</html>
