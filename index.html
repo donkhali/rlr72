@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tesorería R.·. L.·. Renovación N° 72</title>
-    <!-- Tipografías Institucionales: Cinzel + Inter -->
+    <!-- Tipografías Institucionales -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
             }
         }
     </script>
-    <!-- jsPDF y jsPDF-AutoTable -->
+    <!-- jsPDF y AutoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
     <style>
@@ -37,13 +37,13 @@
 </head>
 <body class="bg-masonic-pattern text-slate-800 font-sans min-h-screen flex flex-col selection:bg-amber-600 selection:text-white">
 
-    <!-- Barra de Navegación Institucional -->
+    <!-- Barra de Navegación -->
     <header class="bg-slate-900 text-stone-100 shadow-lg border-b-2 border-amber-500/80 px-4 py-3.5 flex flex-wrap justify-between items-center gap-3">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-slate-800 border border-amber-500/60 flex items-center justify-center shadow-inner shrink-0">
-                <svg class="w-6 h-6 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="w-6 h-6 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
                     <path d="M12 3L4 19h16L12 3z" stroke-opacity="0.35"/>
-                    <path d="M12 4L6 18" /><path d="M12 4l6 14" /><path d="M5 13l7 6 7-6" />
+                    <path d="M12 4L6 18"/><path d="M12 4l6 14"/><path d="M5 13l7 6 7-6"/>
                     <circle cx="12" cy="4" r="1.3" fill="currentColor"/>
                 </svg>
             </div>
@@ -52,61 +52,55 @@
                     Tesorería R.·. L.·. Renovación N° 72
                 </h1>
                 <p class="text-[11px] uppercase tracking-[0.2em] text-slate-400 font-medium">
-                    Fraternidad &bull; Google Sheets Direct Backend
+                    Google Sheets Cloud Direct Backend
                 </p>
             </div>
         </div>
         <div id="session-info" class="hidden text-xs sm:text-sm flex items-center gap-3">
             <span id="user-display" class="font-mono font-semibold bg-slate-800 text-amber-300 border border-amber-500/40 px-3 py-1.5 rounded"></span>
-            <button onclick="logout()" class="bg-rose-900/95 hover:bg-rose-800 text-stone-100 border border-rose-700/70 px-3 py-1.5 rounded transition font-semibold inline-flex items-center gap-1.5">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-                <span>Cerrar Sesión</span>
+            <button onclick="logout()" class="bg-rose-900 hover:bg-rose-800 text-stone-100 border border-rose-700/70 px-3 py-1.5 rounded transition font-semibold">
+                Cerrar Sesión
             </button>
         </div>
     </header>
 
     <main class="flex-grow p-4 md:p-8 max-w-6xl mx-auto w-full">
         
-        <!-- SECCIÓN 1: Autenticación Unificada -->
+        <!-- SECCIÓN 1: Autenticación -->
         <section id="auth-section" class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-xl mt-10 border border-slate-200 border-t-4 border-t-amber-600">
-            <div class="flex justify-center mb-4">
-                <div class="w-14 h-14 rounded-full bg-slate-900 border-2 border-amber-500 flex items-center justify-center shadow-md">
-                    <svg class="w-8 h-8 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3L4 19h16L12 3z" stroke-opacity="0.35"/><path d="M12 4L6 18"/><path d="M12 4l6 14"/><path d="M5 13l7 6 7-6"/><circle cx="12" cy="4" r="1.3" fill="currentColor"/></svg>
-                </div>
-            </div>
             <h2 class="font-serif text-lg sm:text-xl font-bold mb-1 text-center text-slate-900 tracking-wide">
                 Tesorería R.·. L.·. Renovación N° 72
             </h2>
             <p class="text-xs text-center text-slate-500 mb-6">
-                Conectando directamente con Google Sheets. Ingresa con tu Cédula.
+                Ingresa con tu Cédula o usa <b>admin</b> con clave <b>1234</b>.
             </p>
             
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Cédula de Identidad</label>
-                    <input type="text" id="auth-cedula" class="block w-full rounded-lg border-slate-300 shadow-sm p-2.5 bg-stone-50 border focus:outline-none focus:border-amber-600 font-mono font-bold text-slate-900" placeholder="Ej: 1111 o admin">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Cédula o ID</label>
+                    <input type="text" id="auth-cedula" class="block w-full rounded-lg border-slate-300 shadow-sm p-2.5 bg-stone-50 border font-mono font-bold text-slate-900" placeholder="Ej: admin o 1111">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Clave de Acceso <span class="text-[11px] text-slate-400 font-normal normal-case">(Opcional para socios)</span></label>
-                    <input type="password" id="auth-password" class="block w-full rounded-lg border-slate-300 shadow-sm p-2.5 bg-stone-50 border focus:outline-none focus:border-amber-600 tracking-widest text-center text-slate-900" placeholder="••••">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Clave de Acceso</label>
+                    <input type="password" id="auth-password" class="block w-full rounded-lg border-slate-300 shadow-sm p-2.5 bg-stone-50 border tracking-widest text-center text-slate-900" placeholder="••••">
                 </div>
-                <button onclick="handleAuth()" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/50 py-2.5 rounded-lg transition font-semibold text-sm shadow-md tracking-wide uppercase">
-                    Validar en Google Sheets
+                <button onclick="handleAuth()" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/50 py-2.5 rounded-lg transition font-semibold text-sm shadow-md uppercase">
+                    Validar Credenciales
                 </button>
             </div>
         </section>
 
-        <!-- SECCIÓN 2: Panel del Hermano Regular -->
+        <!-- SECCIÓN 2: Panel del Hermano -->
         <section id="panel-nivel-socio" class="hidden space-y-6">
-            <div id="socio-status-box" class="p-6 rounded-xl border text-center shadow-md flex flex-col items-center justify-center">
-                <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-1">Estado de Cuenta Cloud</span>
-                <h3 id="socio-nombre-saludo" class="font-serif text-2xl font-bold text-slate-900 capitalize mb-1">---</h3>
-                <p id="socio-cedula-display" class="text-xs font-mono text-slate-500 mb-4">C.I: ---</p>
-                <div id="socio-badge-status" class="text-2xl font-extrabold tracking-widest inline-block px-7 py-2 rounded-full border mb-4">---</div>
+            <div id="socio-status-box" class="p-6 rounded-xl border text-center shadow-md bg-emerald-50 border-emerald-300 text-emerald-900">
+                <span class="text-[11px] font-bold uppercase tracking-[0.2em] mb-1 block">Estado de Cuenta Cloud</span>
+                <h3 id="socio-nombre-saludo" class="font-serif text-2xl font-bold capitalize mb-1">---</h3>
+                <p id="socio-cedula-display" class="text-xs font-mono mb-4">C.I: ---</p>
+                <div id="socio-badge-status" class="text-xl font-extrabold tracking-widest inline-block px-6 py-1.5 rounded-full border bg-emerald-100 border-emerald-400 text-emerald-800">ACTIVO</div>
             </div>
 
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                <h3 class="font-serif text-lg font-bold text-slate-900 mb-4">Historial de Cápitas y Aportes</h3>
+                <h3 class="font-serif text-lg font-bold text-slate-900 mb-4">Historial de Cápitas y Aportes (Cloud)</h3>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-slate-200 text-sm">
                         <thead class="bg-slate-900 text-amber-300 uppercase text-[11px]">
@@ -118,7 +112,7 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 3: Entorno Administrativo (Caja y Movimientos) -->
+        <!-- SECCIÓN 3: Entorno Administrativo -->
         <section id="panel-entorno-admin" class="hidden space-y-6">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-l-emerald-700">
@@ -135,9 +129,9 @@
                 </div>
             </div>
 
-            <!-- Formulario de Registro de Ingreso -->
+            <!-- Formulario de Registro -->
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-emerald-700 max-w-xl mx-auto">
-                <h3 class="font-serif text-base font-bold text-slate-900 mb-4">Registrar Pago / Ingreso Directo a Google Sheets</h3>
+                <h3 class="font-serif text-base font-bold text-slate-900 mb-4">Registrar Ingreso Directo a Google Sheets</h3>
                 <div class="space-y-3 text-sm">
                     <div>
                         <label class="block text-xs font-bold text-slate-600 mb-1">Fecha</label>
@@ -166,13 +160,11 @@
     </main>
 
     <script>
-        // URL Oficial de tu Google Apps Script desplegado
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyK1mC8unJaWJHdXLQjXzDhmBt8_dXzZcX9MP_9ubTHTZmM-tODJyz5oqZsAfbxQXv4SA/exec';
 
         let appData = { usuarios: [], transacciones: [], cuota_mensual: 50 };
         let currentUser = null;
 
-        // Cargar datos en vivo directamente desde Google Sheets mediante JSONP
         function cargarDatosCloud() {
             const scriptViejo = document.getElementById('jsonp-cloud');
             if (scriptViejo) scriptViejo.remove();
@@ -187,13 +179,10 @@
             if (res && res.status === 'success') {
                 appData = res;
                 if (currentUser) routeDashboard();
-                console.log("Datos sincronizados en tiempo real con Google Sheets.");
-            } else {
-                alert("Error al cargar datos desde Google Sheets.");
+                console.log("Datos cargados desde Google Sheets con éxito.");
             }
         }
 
-        // Inicializar app consultando la nube
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('ingreso-fecha').value = new Date().toISOString().split('T')[0];
             cargarDatosCloud();
@@ -206,16 +195,27 @@
         });
 
         function handleAuth() {
-            const cedula = document.getElementById('auth-cedula').value.trim();
-            if (!cedula) return alert("Introduce tu cédula.");
+            const cedula = document.getElementById('auth-cedula').value.trim().toLowerCase();
+            const password = document.getElementById('auth-password').value;
 
-            const user = appData.usuarios.find(u => u.cedula.toLowerCase() === cedula.toLowerCase());
+            if (!cedula) return alert("Introduce tu Cédula o ID.");
+
+            // Acceso maestro de emergencia / administrador
+            if (cedula === 'admin' && password === '1234') {
+                currentUser = { id: 0, cedula: 'admin', nombre: 'Tesorero Supremo', membresia: '3er Nivel' };
+                localStorage.setItem("cloud_session", JSON.stringify(currentUser));
+                routeDashboard();
+                return;
+            }
+
+            // Buscar en el padrón descargado de Google Sheets
+            const user = appData.usuarios.find(u => String(u.cedula).toLowerCase() === cedula);
             if (user) {
                 currentUser = user;
                 localStorage.setItem("cloud_session", JSON.stringify(currentUser));
                 routeDashboard();
             } else {
-                alert("Cédula no encontrada en el padrón de Google Sheets.");
+                alert("Cédula no encontrada en el padrón de Google Sheets. Asegúrate de registrarla en la pestaña 'usuarios' de tu hoja de cálculo.");
             }
         }
 
@@ -247,10 +247,6 @@
         function renderSocioView() {
             document.getElementById('socio-nombre-saludo').innerText = currentUser.nombre;
             document.getElementById('socio-cedula-display').innerText = `C.I: ${currentUser.cedula}`;
-            
-            const badge = document.getElementById('socio-badge-status');
-            badge.innerText = "ACTIVO / CONSULTA CLOUD";
-            badge.className = "text-xl font-extrabold tracking-widest inline-block px-7 py-2 rounded-full border bg-emerald-100 border-emerald-400 text-emerald-800";
 
             const tbody = document.getElementById('tabla-historial-socio');
             tbody.innerHTML = "";
@@ -283,7 +279,6 @@
             document.getElementById('admin-card-saldo').innerText = `$${(ingresos - gastos).toFixed(2)}`;
         }
 
-        // Envío directo al Apps Script mediante POST (manejado de forma síncrona con recarga)
         async function registrarTransaccionCloud() {
             const usuario_id = document.getElementById('ingreso-usuario').value;
             const fecha = document.getElementById('ingreso-fecha').value;
@@ -305,9 +300,7 @@
             };
 
             try {
-                // Indicador visual rápido
-                alert("Enviando registro directamente a Google Sheets...");
-                
+                alert("Guardando transacción directamente en Google Sheets...");
                 await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -315,13 +308,13 @@
                     body: JSON.stringify(payload)
                 });
 
-                alert("¡Registrado en la nube! Actualizando datos...");
-                setTimeout(() => {
-                    cargarDatosCloud(); // Recarga fresca desde Google Sheets
-                }, 1500);
-
+                alert("¡Guardado con éxito en la nube!");
+                document.getElementById('ingreso-monto').value = "";
+                document.getElementById('ingreso-desc').value = "";
+                
+                setTimeout(cargarDatosCloud, 2000); // Refrescar vista
             } catch (err) {
-                alert("Error al conectar con Google Sheets: " + err.message);
+                alert("Error al registrar en Google Sheets: " + err.message);
             }
         }
     </script>
