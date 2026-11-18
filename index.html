@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tesorería R.·. L.·. Renovación N° 72</title>
-    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-    <link href="[https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600;700;800&display=swap)" rel="stylesheet">
-    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -20,8 +20,8 @@
             }
         };
     </script>
-    <script src="[https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js](https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js)"></script>
-    <script src="[https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js](https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js)"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
     <style>
         .tabular-nums { font-variant-numeric: tabular-nums; }
         .bg-masonic-pattern {
@@ -251,7 +251,7 @@
     </main>
 
     <script>
-        const APPS_SCRIPT_URL = '[https://script.google.com/macros/s/AKfycbxyxfn-VEKy6kiCdyNWEfrchEDCzGSU3cKrVc-28J3Qr14DDng32KbA7eklUaUrx_O1Jg/exec](https://script.google.com/macros/s/AKfycbxyxfn-VEKy6kiCdyNWEfrchEDCzGSU3cKrVc-28J3Qr14DDng32KbA7eklUaUrx_O1Jg/exec)';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxyxfn-VEKy6kiCdyNWEfrchEDCzGSU3cKrVc-28J3Qr14DDng32KbA7eklUaUrx_O1Jg/exec';
 
         let appData = { usuarios: [], transacciones: [] };
         let datosCargados = false;
@@ -269,7 +269,7 @@
 
             const script = document.createElement('script');
             script.id = 'jsonp-cloud';
-            script.src = `${APPS_SCRIPT_URL}?${params.toString()}`;
+            script.src = APPS_SCRIPT_URL + '?' + params.toString();
             script.onerror = function() {
                 const syncBox = document.getElementById('login-sync-box');
                 if (syncBox) {
@@ -338,7 +338,7 @@
             if (currentUser) routeDashboard();
         };
 
-        function handleAuth() {
+        window.handleAuth = function() {
             const cedulaInput = document.getElementById('auth-cedula').value.trim();
             const password = document.getElementById('auth-password').value.trim();
 
@@ -368,7 +368,7 @@
             }
 
             validarUsuarioEnPadron(cedulaInput, password);
-        }
+        };
 
         function validarUsuarioEnPadron(cedulaInput, password) {
             const limpiarCed = function(str) {
@@ -408,7 +408,7 @@
             alert("Clave administrativa incorrecta. Si deseas consultar tu estado de cuenta como hermano, deja la clave en blanco.");
         }
 
-        function logout() {
+        window.logout = function() {
             currentUser = null;
             localStorage.removeItem("cloud_session");
             document.getElementById('auth-password').value = "";
@@ -416,9 +416,9 @@
             document.getElementById('panel-nivel-socio').classList.add('hidden');
             document.getElementById('panel-entorno-admin').classList.add('hidden');
             document.getElementById('session-info').classList.add('hidden');
-        }
+        };
 
-        function cambiarTabAdmin(tabName) {
+        window.cambiarTabAdmin = function(tabName) {
             activeAdminTab = tabName;
             document.querySelectorAll('.admin-tab-btn').forEach(function(btn) {
                 btn.classList.remove('bg-amber-500', 'text-slate-950', 'shadow');
@@ -434,7 +434,7 @@
             });
             document.getElementById('tab-panel-' + tabName).classList.remove('hidden');
             if (tabName === 'padron') renderCrudUsuarios();
-        }
+        };
 
         function routeDashboard() {
             document.getElementById('auth-section').classList.add('hidden');
@@ -541,7 +541,7 @@
             });
         }
 
-        function crudCrearUsuario() {
+        window.crudCrearUsuario = function() {
             const cedula = document.getElementById('crud-cedula').value.trim();
             const nombre = document.getElementById('crud-nombre').value.trim();
             const membresia = document.getElementById('crud-membresia').value;
@@ -556,9 +556,9 @@
 
             document.getElementById('crud-cedula').value = "";
             document.getElementById('crud-nombre').value = "";
-        }
+        };
 
-        function crudEditarUsuario(cedulaOriginal) {
+        window.crudEditarUsuario = function(cedulaOriginal) {
             const cedula = document.getElementById('edit-ced-' + cedulaOriginal).value.trim();
             const nombre = document.getElementById('edit-nom-' + cedulaOriginal).value.trim();
             const membresia = document.getElementById('edit-mem-' + cedulaOriginal).value;
@@ -570,17 +570,17 @@
                 nombre: nombre,
                 membresia: membresia
             });
-        }
+        };
 
-        function crudEliminarUsuario(cedula) {
+        window.crudEliminarUsuario = function(cedula) {
             if (!confirm("¿Deseas eliminar al hermano con cédula " + cedula + " de Google Sheets?")) return;
             ejecutarLlamadaJSONP({
                 action: 'eliminar_usuario',
                 cedula: cedula
             });
-        }
+        };
 
-        function registrarTransaccionCloud(tipo) {
+        window.registrarTransaccionCloud = function(tipo) {
             const fecha = document.getElementById(tipo + '-fecha').value;
             const subtipo = document.getElementById(tipo + '-subtipo').value;
             const monto = parseFloat(document.getElementById(tipo + '-monto').value);
@@ -607,7 +607,7 @@
 
             document.getElementById(tipo + '-monto').value = "";
             document.getElementById(tipo + '-desc').value = "";
-        }
+        };
 
         function imprimirReciboPDF(usuarioId, subtipo, monto, desc, fecha) {
             const { jsPDF } = window.jspdf;
@@ -644,7 +644,7 @@
             doc.save("Recibo_Tesoreria_CI_" + cedula + "_" + fecha + ".pdf");
         }
 
-        function exportarAuditoriaPDF() {
+        window.exportarAuditoriaPDF = function() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             doc.setFontSize(14);
@@ -664,29 +664,28 @@
             });
 
             doc.save("Tesoreria_Reporte_Auditoria_" + new Date().toISOString().split('T')[0] + ".pdf");
-        }
+        };
 
-        // Inicialización de eventos segura (sin depender de onclick inline)
         window.addEventListener('DOMContentLoaded', function() {
             const fechaHoy = new Date().toISOString().split('T')[0];
             document.getElementById('ingreso-fecha').value = fechaHoy;
             document.getElementById('gasto-fecha').value = fechaHoy;
 
-            document.getElementById('btn-login').addEventListener('click', handleAuth);
-            document.getElementById('btn-logout').addEventListener('click', logout);
+            document.getElementById('btn-login').addEventListener('click', window.handleAuth);
+            document.getElementById('btn-logout').addEventListener('click', window.logout);
             document.getElementById('btn-refresh-socio').addEventListener('click', cargarDatosCloud);
             document.getElementById('btn-refresh-padron').addEventListener('click', cargarDatosCloud);
-            document.getElementById('btn-registrar-ingreso').addEventListener('click', function() { registrarTransaccionCloud('ingreso'); });
-            document.getElementById('btn-registrar-gasto').addEventListener('click', function() { registrarTransaccionCloud('gasto'); });
-            document.getElementById('btn-crud-crear').addEventListener('click', crudCrearUsuario);
-            document.getElementById('btn-exportar-pdf').addEventListener('click', exportarAuditoriaPDF);
+            document.getElementById('btn-registrar-ingreso').addEventListener('click', function() { window.registrarTransaccionCloud('ingreso'); });
+            document.getElementById('btn-registrar-gasto').addEventListener('click', function() { window.registrarTransaccionCloud('gasto'); });
+            document.getElementById('btn-crud-crear').addEventListener('click', window.crudCrearUsuario);
+            document.getElementById('btn-exportar-pdf').addEventListener('click', window.exportarAuditoriaPDF);
 
-            document.getElementById('auth-cedula').addEventListener('keydown', function(e) { if (e.key === 'Enter') handleAuth(); });
-            document.getElementById('auth-password').addEventListener('keydown', function(e) { if (e.key === 'Enter') handleAuth(); });
+            document.getElementById('auth-cedula').addEventListener('keydown', function(e) { if (e.key === 'Enter') window.handleAuth(); });
+            document.getElementById('auth-password').addEventListener('keydown', function(e) { if (e.key === 'Enter') window.handleAuth(); });
 
             document.querySelectorAll('.admin-tab-btn').forEach(function(btn) {
                 btn.addEventListener('click', function() {
-                    cambiarTabAdmin(this.getAttribute('data-tab'));
+                    window.cambiarTabAdmin(this.getAttribute('data-tab'));
                 });
             });
 
@@ -695,8 +694,8 @@
                 if (!target) return;
                 const action = target.getAttribute('data-action');
                 const cedula = target.getAttribute('data-cedula');
-                if (action === 'edit') crudEditarUsuario(cedula);
-                if (action === 'delete') crudEliminarUsuario(cedula);
+                if (action === 'edit') window.crudEditarUsuario(cedula);
+                if (action === 'delete') window.crudEliminarUsuario(cedula);
             });
 
             cargarDatosCloud();
