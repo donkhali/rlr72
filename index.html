@@ -22,7 +22,7 @@
             }
         }
     </script>
-    <!-- jsPDF y AutoTable -->
+    <!-- jsPDF y jsPDF-AutoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
     <style>
@@ -37,7 +37,7 @@
 </head>
 <body class="bg-masonic-pattern text-slate-800 font-sans min-h-screen flex flex-col selection:bg-amber-600 selection:text-white">
 
-    <!-- Barra de Navegación -->
+    <!-- Barra de Navegación Institucional -->
     <header class="bg-slate-900 text-stone-100 shadow-lg border-b-2 border-amber-500/80 px-4 py-3.5 flex flex-wrap justify-between items-center gap-3">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-slate-800 border border-amber-500/60 flex items-center justify-center shadow-inner shrink-0">
@@ -90,7 +90,7 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 2: Panel del Hermano -->
+        <!-- SECCIÓN 2: Panel del Hermano Regular -->
         <section id="panel-nivel-socio" class="hidden space-y-6">
             <div id="socio-status-box" class="p-6 rounded-xl border text-center shadow-md bg-emerald-50 border-emerald-300 text-emerald-900">
                 <span class="text-[11px] font-bold uppercase tracking-[0.2em] mb-1 block">Estado de Cuenta Cloud</span>
@@ -100,7 +100,7 @@
             </div>
 
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                <h3 class="font-serif text-lg font-bold text-slate-900 mb-4">Historial de Cápitas y Aportes (Cloud)</h3>
+                <h3 class="font-serif text-lg font-bold text-slate-900 mb-4">Historial de Cápitas y Aportes</h3>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-slate-200 text-sm">
                         <thead class="bg-slate-900 text-amber-300 uppercase text-[11px]">
@@ -112,8 +112,10 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 3: Entorno Administrativo -->
+        <!-- SECCIÓN 3: Entorno Administrativo Completo con Pestañas -->
         <section id="panel-entorno-admin" class="hidden space-y-6">
+            
+            <!-- Tarjetas de Balance General -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-l-emerald-700">
                     <span class="text-[11px] text-slate-500 font-bold uppercase">Ingresos Totales</span>
@@ -129,32 +131,81 @@
                 </div>
             </div>
 
-            <!-- Formulario de Registro -->
-            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-emerald-700 max-w-xl mx-auto">
-                <h3 class="font-serif text-base font-bold text-slate-900 mb-4">Registrar Ingreso Directo a Google Sheets</h3>
-                <div class="space-y-3 text-sm">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-600 mb-1">Fecha</label>
-                        <input type="date" id="ingreso-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold">
+            <!-- Navegación por Pestañas (Tabs) -->
+            <nav class="bg-slate-900 p-1.5 rounded-xl shadow-md border border-slate-800 flex flex-wrap gap-1.5">
+                <button type="button" id="tab-btn-caja" onclick="cambiarTabAdmin('caja')" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 bg-amber-500 text-slate-950 shadow">
+                    <span>Caja y Movimientos</span>
+                </button>
+                <button type="button" id="tab-btn-padron" onclick="cambiarTabAdmin('padron')" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
+                    <span>Padrón de Hermanos</span>
+                </button>
+                <button type="button" id="tab-btn-auditoria" onclick="cambiarTabAdmin('auditoria')" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
+                    <span>Libro Diario y Auditoría</span>
+                </button>
+            </nav>
+
+            <!-- PESTAÑA 1: CAJA Y MOVIMIENTOS -->
+            <div id="tab-panel-caja" class="admin-tab-panel space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-emerald-700 max-w-xl mx-auto">
+                    <h3 class="font-serif text-base font-bold text-slate-900 mb-4">Registrar Ingreso Directo a Google Sheets</h3>
+                    <div class="space-y-3 text-sm">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">Fecha</label>
+                            <input type="date" id="ingreso-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Hermano</label>
+                            <select id="ingreso-usuario" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono"></select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Concepto</label>
+                            <select id="ingreso-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold">
+                                <option value="cuota">Pago de Cápita Mensual</option>
+                                <option value="eventual">Aporte Extraordinario</option>
+                            </select>
+                        </div>
+                        <input type="number" id="ingreso-monto" step="0.01" placeholder="Monto ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums">
+                        <input type="text" id="ingreso-desc" placeholder="Descripción" class="w-full p-2 border border-slate-300 rounded-lg text-base">
+                        <button onclick="registrarTransaccionCloud()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm">
+                            Guardar en Google Sheet e Imprimir Recibo
+                        </button>
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Hermano</label>
-                        <select id="ingreso-usuario" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono"></select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 mb-1">Concepto</label>
-                        <select id="ingreso-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold">
-                            <option value="cuota">Pago de Cápita Mensual</option>
-                            <option value="eventual">Aporte Extraordinario</option>
-                        </select>
-                    </div>
-                    <input type="number" id="ingreso-monto" step="0.01" placeholder="Monto ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums">
-                    <input type="text" id="ingreso-desc" placeholder="Descripción" class="w-full p-2 border border-slate-300 rounded-lg text-base">
-                    <button onclick="registrarTransaccionCloud()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm">
-                        Guardar Directo en Google Sheet
-                    </button>
                 </div>
             </div>
+
+            <!-- PESTAÑA 2: PADRÓN DE HERMANOS -->
+            <div id="tab-panel-padron" class="admin-tab-panel hidden space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                    <h3 class="font-serif text-xl font-bold text-slate-900 mb-4">Padrón General de Hermanos (Cloud)</h3>
+                    <div class="overflow-x-auto rounded-lg border border-slate-200">
+                        <table class="min-w-full divide-y divide-slate-200 text-sm">
+                            <thead class="bg-slate-900 text-amber-300 text-[11px] uppercase tracking-wider">
+                                <tr><th class="px-4 py-3 text-left">ID</th><th class="px-4 py-3 text-left">Cédula</th><th class="px-4 py-3 text-left">Nombre Completo</th><th class="px-4 py-3 text-left">Nivel</th></tr>
+                            </thead>
+                            <tbody id="tabla-usuarios-admin" class="divide-y divide-slate-100 text-slate-700"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PESTAÑA 3: LIBRO DIARIO Y AUDITORÍA -->
+            <div id="tab-panel-auditoria" class="admin-tab-panel hidden space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-serif text-lg font-bold text-slate-900">Libro Diario de Transacciones (Cloud)</h3>
+                        <button onclick="exportarReportePDF()" class="bg-slate-900 hover:bg-slate-800 text-amber-400 text-xs font-bold px-4 py-2 rounded-lg shadow">Exportar a PDF</button>
+                    </div>
+                    <div class="overflow-x-auto max-h-80 rounded-lg border border-slate-200 text-xs">
+                        <table class="min-w-full divide-y divide-slate-200">
+                            <thead class="bg-slate-900 text-amber-300 uppercase">
+                                <tr><th class="px-3 py-2 text-left">Fecha</th><th class="px-3 py-2 text-left">Tipo</th><th class="px-3 py-2 text-left">Concepto</th><th class="px-3 py-2 text-left">Descripción</th><th class="px-3 py-2 text-right">Monto</th></tr>
+                            </thead>
+                            <tbody id="tabla-auditoria-rows" class="divide-y divide-slate-100 text-slate-700 tabular-nums"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </section>
 
     </main>
@@ -164,6 +215,7 @@
 
         let appData = { usuarios: [], transacciones: [], cuota_mensual: 50 };
         let currentUser = null;
+        let activeAdminTab = 'caja';
 
         function cargarDatosCloud() {
             const scriptViejo = document.getElementById('jsonp-cloud');
@@ -179,7 +231,7 @@
             if (res && res.status === 'success') {
                 appData = res;
                 if (currentUser) routeDashboard();
-                console.log("Datos cargados desde Google Sheets con éxito.");
+                console.log("Datos sincronizados con Google Sheets.");
             }
         }
 
@@ -200,7 +252,6 @@
 
             if (!cedula) return alert("Introduce tu Cédula o ID.");
 
-            // Acceso maestro de emergencia / administrador
             if (cedula === 'admin' && password === '1234') {
                 currentUser = { id: 0, cedula: 'admin', nombre: 'Tesorero Supremo', membresia: '3er Nivel' };
                 localStorage.setItem("cloud_session", JSON.stringify(currentUser));
@@ -208,14 +259,13 @@
                 return;
             }
 
-            // Buscar en el padrón descargado de Google Sheets
             const user = appData.usuarios.find(u => String(u.cedula).toLowerCase() === cedula);
             if (user) {
                 currentUser = user;
                 localStorage.setItem("cloud_session", JSON.stringify(currentUser));
                 routeDashboard();
             } else {
-                alert("Cédula no encontrada en el padrón de Google Sheets. Asegúrate de registrarla en la pestaña 'usuarios' de tu hoja de cálculo.");
+                alert("Cédula no encontrada en el padrón de Google Sheets.");
             }
         }
 
@@ -226,6 +276,21 @@
             document.getElementById('panel-nivel-socio').classList.add('hidden');
             document.getElementById('panel-entorno-admin').classList.add('hidden');
             document.getElementById('session-info').classList.add('hidden');
+        }
+
+        function cambiarTabAdmin(tabName) {
+            activeAdminTab = tabName;
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-amber-500', 'text-slate-950', 'shadow');
+                btn.classList.add('text-slate-300', 'hover:text-amber-300', 'hover:bg-slate-800');
+            });
+            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-300', 'hover:text-amber-300', 'hover:bg-slate-800');
+                activeBtn.classList.add('bg-amber-500', 'text-slate-950', 'shadow');
+            }
+            document.querySelectorAll('.admin-tab-panel').forEach(panel => panel.classList.add('hidden'));
+            document.getElementById(`tab-panel-${tabName}`).classList.remove('hidden');
         }
 
         function routeDashboard() {
@@ -241,6 +306,7 @@
                 document.getElementById('panel-nivel-socio').classList.add('hidden');
                 document.getElementById('panel-entorno-admin').classList.remove('hidden');
                 renderAdminView();
+                cambiarTabAdmin(activeAdminTab);
             }
         }
 
@@ -257,7 +323,7 @@
                     tbody.innerHTML += `<tr class="hover:bg-stone-50"><td class="px-4 py-2.5 font-mono">${t.fecha}</td><td class="px-4 py-2.5">${t.descripcion || t.subtipo}</td><td class="px-4 py-2.5 text-right font-bold text-emerald-700">$${parseFloat(t.monto).toFixed(2)}</td></tr>`;
                 });
             } else {
-                tbody.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-slate-400">Sin movimientos registrados en Google Sheets.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-slate-400">Sin movimientos registrados.</td></tr>`;
             }
         }
 
@@ -277,6 +343,18 @@
             document.getElementById('admin-card-ingresos').innerText = `$${ingresos.toFixed(2)}`;
             document.getElementById('admin-card-gastos').innerText = `$${gastos.toFixed(2)}`;
             document.getElementById('admin-card-saldo').innerText = `$${(ingresos - gastos).toFixed(2)}`;
+
+            const tUsuarios = document.getElementById('tabla-usuarios-admin');
+            tUsuarios.innerHTML = "";
+            appData.usuarios.forEach(u => {
+                tUsuarios.innerHTML += `<tr class="hover:bg-stone-50"><td class="px-4 py-2.5 font-mono">${u.id || '-'}</td><td class="px-4 py-2.5 font-mono font-bold">${u.cedula}</td><td class="px-4 py-2.5 capitalize">${u.nombre}</td><td class="px-4 py-2.5 text-slate-500">${u.membresia}</td></tr>`;
+            });
+
+            const tAuditoria = document.getElementById('tabla-auditoria-rows');
+            tAuditoria.innerHTML = "";
+            appData.transacciones.forEach(t => {
+                tAuditoria.innerHTML += `<tr class="hover:bg-stone-50"><td class="px-3 py-2 font-mono">${t.fecha}</td><td class="px-3 py-2 uppercase font-bold text-emerald-700">${t.tipo}</td><td class="px-3 py-2 uppercase">${t.subtipo}</td><td class="px-3 py-2">${t.descripcion || '-'}</td><td class="px-3 py-2 text-right font-bold">$${parseFloat(t.monto).toFixed(2)}</td></tr>`;
+            });
         }
 
         async function registrarTransaccionCloud() {
@@ -308,14 +386,30 @@
                     body: JSON.stringify(payload)
                 });
 
-                alert("¡Guardado con éxito en la nube!");
+                alert("¡Guardado con éxito en Google Sheets!");
                 document.getElementById('ingreso-monto').value = "";
                 document.getElementById('ingreso-desc').value = "";
                 
-                setTimeout(cargarDatosCloud, 2000); // Refrescar vista
+                setTimeout(cargarDatosCloud, 2000);
             } catch (err) {
                 alert("Error al registrar en Google Sheets: " + err.message);
             }
+        }
+
+        function exportarReportePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text("Tesorería R.·. L.·. Renovación N° 72 - Reporte Cloud", 14, 18);
+            
+            let rows = appData.transacciones.map(t => [t.fecha, t.tipo.toUpperCase(), t.subtipo, t.descripcion || '-', `$${parseFloat(t.monto).toFixed(2)}`]);
+            
+            doc.autoTable({
+                head: [["Fecha", "Tipo", "Concepto", "Descripción", "Monto"]],
+                body: rows,
+                startY: 25,
+                theme: 'striped'
+            });
+            doc.save("Reporte_Tesoreria_Cloud.pdf");
         }
     </script>
 </body>
