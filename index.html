@@ -22,7 +22,7 @@
             }
         }
     </script>
-    <!-- jsPDF y jsPDF-AutoTable -->
+    <!-- jsPDF y AutoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
     <style>
@@ -37,7 +37,7 @@
 </head>
 <body class="bg-masonic-pattern text-slate-800 font-sans min-h-screen flex flex-col selection:bg-amber-600 selection:text-white">
 
-    <!-- Barra de Navegación Institucional -->
+    <!-- Barra de Navegación -->
     <header class="bg-slate-900 text-stone-100 shadow-lg border-b-2 border-amber-500/80 px-4 py-3.5 flex flex-wrap justify-between items-center gap-3">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-slate-800 border border-amber-500/60 flex items-center justify-center shadow-inner shrink-0">
@@ -90,7 +90,7 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 2: Panel del Hermano Regular -->
+        <!-- SECCIÓN 2: Panel del Hermano -->
         <section id="panel-nivel-socio" class="hidden space-y-6">
             <div id="socio-status-box" class="p-6 rounded-xl border text-center shadow-md bg-emerald-50 border-emerald-300 text-emerald-900">
                 <span class="text-[11px] font-bold uppercase tracking-[0.2em] mb-1 block">Estado de Cuenta Cloud</span>
@@ -100,7 +100,7 @@
             </div>
 
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                <h3 class="font-serif text-lg font-bold text-slate-900 mb-4">Historial de Cápitas y Aportes</h3>
+                <h3 class="font-serif text-lg font-bold text-slate-900 mb-4">Historial de Cápitas y Aportes (Cloud)</h3>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-slate-200 text-sm">
                         <thead class="bg-slate-900 text-amber-300 uppercase text-[11px]">
@@ -112,10 +112,8 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 3: Entorno Administrativo Completo con Pestañas -->
+        <!-- SECCIÓN 3: Entorno Administrativo -->
         <section id="panel-entorno-admin" class="hidden space-y-6">
-            
-            <!-- Tarjetas de Balance General -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-l-emerald-700">
                     <span class="text-[11px] text-slate-500 font-bold uppercase">Ingresos Totales</span>
@@ -131,7 +129,7 @@
                 </div>
             </div>
 
-            <!-- Navegación por Pestañas (Tabs) -->
+            <!-- BARRA DE NAVEGACIÓN POR PESTAÑAS -->
             <nav class="bg-slate-900 p-1.5 rounded-xl shadow-md border border-slate-800 flex flex-wrap gap-1.5">
                 <button type="button" id="tab-btn-caja" onclick="cambiarTabAdmin('caja')" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 bg-amber-500 text-slate-950 shadow">
                     <span>Caja y Movimientos</span>
@@ -144,68 +142,97 @@
                 </button>
             </nav>
 
-            <!-- PESTAÑA 1: CAJA Y MOVIMIENTOS -->
+            <!-- PESTAÑA 1: CAJA Y MOVIMIENTOS (Ingresos y Egresos) -->
             <div id="tab-panel-caja" class="admin-tab-panel space-y-6">
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-emerald-700 max-w-xl mx-auto">
-                    <h3 class="font-serif text-base font-bold text-slate-900 mb-4">Registrar Ingreso Directo a Google Sheets</h3>
-                    <div class="space-y-3 text-sm">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-600 mb-1">Fecha</label>
-                            <input type="date" id="ingreso-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Formulario Ingresos -->
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-emerald-700">
+                        <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+                            <h3 class="font-serif text-base font-bold text-slate-900">Registrar Ingreso</h3>
+                            <span class="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">Entrada</span>
                         </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Hermano</label>
-                            <select id="ingreso-usuario" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono"></select>
+                        <div class="space-y-3 text-sm">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1">Fecha</label>
+                                <input type="date" id="ingreso-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Concepto</label>
+                                <select id="ingreso-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold">
+                                    <option value="cuota">Pago de Cápita Mensual</option>
+                                    <option value="eventual">Aporte Extraordinario</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Hermano</label>
+                                <select id="ingreso-usuario" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono"></select>
+                            </div>
+                            <input type="number" id="ingreso-monto" step="0.01" placeholder="Monto ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums">
+                            <input type="text" id="ingreso-desc" placeholder="Descripción" class="w-full p-2 border border-slate-300 rounded-lg text-base">
+                            <button onclick="registrarTransaccionCloud('ingreso')" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm">
+                                Guardar Ingreso en Google Sheet e Imprimir Recibo
+                            </button>
                         </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Concepto</label>
-                            <select id="ingreso-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold">
-                                <option value="cuota">Pago de Cápita Mensual</option>
-                                <option value="eventual">Aporte Extraordinario</option>
-                            </select>
+                    </div>
+
+                    <!-- Formulario Egresos (Gastos) -->
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-rose-700">
+                        <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+                            <h3 class="font-serif text-base font-bold text-slate-900">Registrar Egreso / Gasto</h3>
+                            <span class="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200">Salida</span>
                         </div>
-                        <input type="number" id="ingreso-monto" step="0.01" placeholder="Monto ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums">
-                        <input type="text" id="ingreso-desc" placeholder="Descripción" class="w-full p-2 border border-slate-300 rounded-lg text-base">
-                        <button onclick="registrarTransaccionCloud()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm">
-                            Guardar en Google Sheet e Imprimir Recibo
-                        </button>
+                        <div class="space-y-3 text-sm">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1">Fecha</label>
+                                <input type="date" id="gasto-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold text-rose-800">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">Concepto de Gasto</label>
+                                <select id="gasto-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold">
+                                    <option value="gasto_fijo">Gasto Fijo</option>
+                                    <option value="gasto_variable">Gasto Variable</option>
+                                    <option value="mantenimiento">Mantenimiento de Templo</option>
+                                    <option value="servicios">Servicios Públicos</option>
+                                </select>
+                            </div>
+                            <input type="number" id="gasto-monto" step="0.01" placeholder="Monto Egreso ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums">
+                            <input type="text" id="gasto-desc" placeholder="Descripción o detalle del gasto" class="w-full p-2 border border-slate-300 rounded-lg text-base">
+                            <button onclick="registrarTransaccionCloud('gasto')" class="w-full bg-rose-700 hover:bg-rose-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm">
+                                Guardar Egreso en Google Sheet
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- PESTAÑA 2: PADRÓN DE HERMANOS -->
-            <div id="tab-panel-padron" class="admin-tab-panel hidden space-y-6">
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                    <h3 class="font-serif text-xl font-bold text-slate-900 mb-4">Padrón General de Hermanos (Cloud)</h3>
-                    <div class="overflow-x-auto rounded-lg border border-slate-200">
-                        <table class="min-w-full divide-y divide-slate-200 text-sm">
-                            <thead class="bg-slate-900 text-amber-300 text-[11px] uppercase tracking-wider">
-                                <tr><th class="px-4 py-3 text-left">ID</th><th class="px-4 py-3 text-left">Cédula</th><th class="px-4 py-3 text-left">Nombre Completo</th><th class="px-4 py-3 text-left">Nivel</th></tr>
-                            </thead>
-                            <tbody id="tabla-usuarios-admin" class="divide-y divide-slate-100 text-slate-700"></tbody>
-                        </table>
-                    </div>
+            <div id="tab-panel-padron" class="admin-tab-panel hidden bg-white p-6 rounded-xl shadow-md border border-slate-200 space-y-4">
+                <h3 class="font-serif text-xl font-bold text-slate-900">Padrón General de Hermanos (Cloud)</h3>
+                <div class="overflow-x-auto rounded-lg border border-slate-200">
+                    <table class="min-w-full divide-y divide-slate-200 text-sm">
+                        <thead class="bg-slate-900 text-amber-300 text-[11px] font-semibold uppercase">
+                            <tr><th class="px-4 py-3 text-left">Cédula</th><th class="px-4 py-3 text-left">Nombre Completo</th><th class="px-4 py-3 text-left">Nivel</th><th class="px-4 py-3 text-left">Registro</th></tr>
+                        </thead>
+                        <tbody id="tabla-usuarios-admin" class="divide-y divide-slate-100 text-slate-700"></tbody>
+                    </table>
                 </div>
             </div>
 
             <!-- PESTAÑA 3: LIBRO DIARIO Y AUDITORÍA -->
-            <div id="tab-panel-auditoria" class="admin-tab-panel hidden space-y-6">
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-serif text-lg font-bold text-slate-900">Libro Diario de Transacciones (Cloud)</h3>
-                        <button onclick="exportarReportePDF()" class="bg-slate-900 hover:bg-slate-800 text-amber-400 text-xs font-bold px-4 py-2 rounded-lg shadow">Exportar a PDF</button>
-                    </div>
-                    <div class="overflow-x-auto max-h-80 rounded-lg border border-slate-200 text-xs">
-                        <table class="min-w-full divide-y divide-slate-200">
-                            <thead class="bg-slate-900 text-amber-300 uppercase">
-                                <tr><th class="px-3 py-2 text-left">Fecha</th><th class="px-3 py-2 text-left">Tipo</th><th class="px-3 py-2 text-left">Concepto</th><th class="px-3 py-2 text-left">Descripción</th><th class="px-3 py-2 text-right">Monto</th></tr>
-                            </thead>
-                            <tbody id="tabla-auditoria-rows" class="divide-y divide-slate-100 text-slate-700 tabular-nums"></tbody>
-                        </table>
-                    </div>
+            <div id="tab-panel-auditoria" class="admin-tab-panel hidden bg-white p-6 rounded-xl shadow-md border border-slate-200 space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-serif text-xl font-bold text-slate-900">Libro Diario de Transacciones (Cloud)</h3>
+                    <button onclick="exportarAuditoriaPDF()" class="bg-slate-900 text-amber-400 px-4 py-2 rounded-lg text-xs font-bold uppercase">Exportar a PDF</button>
+                </div>
+                <div class="overflow-x-auto rounded-lg border border-slate-200">
+                    <table class="min-w-full divide-y divide-slate-200 text-xs">
+                        <thead class="bg-slate-900 text-amber-300 font-bold uppercase">
+                            <tr><th class="px-3 py-2.5 text-left">Fecha</th><th class="px-3 py-2 text-left">Tipo</th><th class="px-3 py-2 text-left">Concepto</th><th class="px-3 py-2 text-left">Descripción</th><th class="px-3 py-2 text-right">Monto</th></tr>
+                        </thead>
+                        <tbody id="tabla-auditoria-rows" class="divide-y divide-slate-100 tabular-nums"></tbody>
+                    </table>
                 </div>
             </div>
-
         </section>
 
     </main>
@@ -231,12 +258,13 @@
             if (res && res.status === 'success') {
                 appData = res;
                 if (currentUser) routeDashboard();
-                console.log("Datos sincronizados con Google Sheets.");
             }
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('ingreso-fecha').value = new Date().toISOString().split('T')[0];
+            const fechaHoy = new Date().toISOString().split('T')[0];
+            document.getElementById('ingreso-fecha').value = fechaHoy;
+            document.getElementById('gasto-fecha').value = fechaHoy;
             cargarDatosCloud();
             
             const saved = localStorage.getItem("cloud_session");
@@ -313,7 +341,6 @@
         function renderSocioView() {
             document.getElementById('socio-nombre-saludo').innerText = currentUser.nombre;
             document.getElementById('socio-cedula-display').innerText = `C.I: ${currentUser.cedula}`;
-
             const tbody = document.getElementById('tabla-historial-socio');
             tbody.innerHTML = "";
             const misTrans = appData.transacciones.filter(t => String(t.usuario_id) === String(currentUser.id) || String(t.usuario_id) === String(currentUser.cedula));
@@ -335,34 +362,52 @@
             });
 
             let ingresos = 0, gastos = 0;
+            const tbodyAuditoria = document.getElementById('tabla-auditoria-rows');
+            tbodyAuditoria.innerHTML = "";
+
             appData.transacciones.forEach(t => {
-                if (t.tipo === 'ingreso') ingresos += parseFloat(t.monto) || 0;
-                if (t.tipo === 'gasto') gastos += parseFloat(t.monto) || 0;
+                const montoNum = parseFloat(t.monto) || 0;
+                if (t.tipo === 'ingreso') ingresos += montoNum;
+                if (t.tipo === 'gasto') gastos += montoNum;
+
+                const colorT = t.tipo === 'ingreso' ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold';
+                tbodyAuditoria.innerHTML += `
+                    <tr class="hover:bg-stone-50">
+                        <td class="px-3 py-2 font-mono">${t.fecha}</td>
+                        <td class="px-3 py-2 uppercase ${colorT}">${t.tipo}</td>
+                        <td class="px-3 py-2 uppercase text-[10px]">${t.subtipo}</td>
+                        <td class="px-3 py-2 text-slate-700">${t.descripcion || '-'}</td>
+                        <td class="px-3 py-2 text-right font-bold">$${montoNum.toFixed(2)}</td>
+                    </tr>`;
             });
 
             document.getElementById('admin-card-ingresos').innerText = `$${ingresos.toFixed(2)}`;
             document.getElementById('admin-card-gastos').innerText = `$${gastos.toFixed(2)}`;
             document.getElementById('admin-card-saldo').innerText = `$${(ingresos - gastos).toFixed(2)}`;
 
-            const tUsuarios = document.getElementById('tabla-usuarios-admin');
-            tUsuarios.innerHTML = "";
+            const tbodyUsuarios = document.getElementById('tabla-usuarios-admin');
+            tbodyUsuarios.innerHTML = "";
             appData.usuarios.forEach(u => {
-                tUsuarios.innerHTML += `<tr class="hover:bg-stone-50"><td class="px-4 py-2.5 font-mono">${u.id || '-'}</td><td class="px-4 py-2.5 font-mono font-bold">${u.cedula}</td><td class="px-4 py-2.5 capitalize">${u.nombre}</td><td class="px-4 py-2.5 text-slate-500">${u.membresia}</td></tr>`;
-            });
-
-            const tAuditoria = document.getElementById('tabla-auditoria-rows');
-            tAuditoria.innerHTML = "";
-            appData.transacciones.forEach(t => {
-                tAuditoria.innerHTML += `<tr class="hover:bg-stone-50"><td class="px-3 py-2 font-mono">${t.fecha}</td><td class="px-3 py-2 uppercase font-bold text-emerald-700">${t.tipo}</td><td class="px-3 py-2 uppercase">${t.subtipo}</td><td class="px-3 py-2">${t.descripcion || '-'}</td><td class="px-3 py-2 text-right font-bold">$${parseFloat(t.monto).toFixed(2)}</td></tr>`;
+                tbodyUsuarios.innerHTML += `
+                    <tr class="text-sm hover:bg-stone-50">
+                        <td class="px-4 py-2.5 font-mono font-bold">${u.cedula}</td>
+                        <td class="px-4 py-2.5 capitalize">${u.nombre}</td>
+                        <td class="px-4 py-2.5 text-slate-500 text-xs">${u.membresia}</td>
+                        <td class="px-4 py-2.5 font-mono text-xs text-slate-400">${u.fecha_registro || '-'}</td>
+                    </tr>`;
             });
         }
 
-        async function registrarTransaccionCloud() {
-            const usuario_id = document.getElementById('ingreso-usuario').value;
-            const fecha = document.getElementById('ingreso-fecha').value;
-            const subtipo = document.getElementById('ingreso-subtipo').value;
-            const monto = parseFloat(document.getElementById('ingreso-monto').value);
-            const descripcion = document.getElementById('ingreso-desc').value.trim();
+        async function registrarTransaccionCloud(tipo) {
+            const fecha = document.getElementById(`${tipo}-fecha`).value;
+            const subtipo = document.getElementById(`${tipo}-subtipo`).value;
+            const monto = parseFloat(document.getElementById(`${tipo}-monto`).value);
+            const descripcion = document.getElementById(`${tipo}-desc`).value.trim();
+            let usuario_id = currentUser.id || 1;
+
+            if (tipo === 'ingreso') {
+                usuario_id = document.getElementById('ingreso-usuario').value;
+            }
 
             if (isNaN(monto) || monto <= 0 || !fecha) {
                 return alert("Introduce un monto y fecha válidos.");
@@ -370,7 +415,7 @@
 
             const payload = {
                 usuario_id: usuario_id,
-                tipo: 'ingreso',
+                tipo: tipo,
                 subtipo: subtipo,
                 monto: monto,
                 descripcion: descripcion,
@@ -378,7 +423,7 @@
             };
 
             try {
-                alert("Guardando transacción directamente en Google Sheets...");
+                alert(`Guardando ${tipo} directamente en Google Sheets...`);
                 await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -386,9 +431,13 @@
                     body: JSON.stringify(payload)
                 });
 
-                alert("¡Guardado con éxito en Google Sheets!");
-                document.getElementById('ingreso-monto').value = "";
-                document.getElementById('ingreso-desc').value = "";
+                alert("¡Guardado con éxito en la nube!");
+                document.getElementById(`${tipo}-monto`).value = "";
+                document.getElementById(`${tipo}-desc`).value = "";
+
+                if (tipo === 'ingreso') {
+                    imprimirReciboPDF(usuario_id, subtipo, monto, descripcion, fecha);
+                }
                 
                 setTimeout(cargarDatosCloud, 2000);
             } catch (err) {
@@ -396,20 +445,59 @@
             }
         }
 
-        function exportarReportePDF() {
+        function imprimirReciboPDF(usuarioId, subtipo, monto, desc, fecha) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ format: 'a6' });
+            const usuario = appData.usuarios.find(u => String(u.id) === String(usuarioId) || String(u.cedula) === String(usuarioId));
+            const nombre = usuario ? usuario.nombre.toUpperCase() : "HERMANO";
+            const cedula = usuario ? usuario.cedula.toUpperCase() : usuarioId;
+
+            doc.setFillColor(15, 23, 42);
+            doc.rect(0, 0, 105, 20, 'F');
+            doc.setTextColor(251, 191, 36);
+            doc.setFontSize(8.5);
+            doc.text("TESORERÍA R.·. L.·. RENOVACIÓN N° 72", 8, 9);
+            doc.setTextColor(226, 232, 240);
+            doc.setFontSize(7.5);
+            doc.text("COMPROBANTE OFICIAL DE INGRESO", 8, 15);
+
+            doc.setTextColor(30, 41, 59);
+            doc.setFontSize(8);
+            doc.text(`Fecha: ${fecha}`, 8, 28);
+            doc.text(`Hermano: ${nombre}`, 8, 35);
+            doc.text(`Cédula: C.I. ${cedula}`, 8, 42);
+            doc.text(`Concepto: ${subtipo.toUpperCase()}`, 8, 49);
+            doc.text(`Observación: ${desc || 'Sin observaciones'}`, 8, 56);
+            
+            doc.setFillColor(248, 250, 252);
+            doc.setDrawColor(217, 119, 6);
+            doc.rect(8, 65, 89, 13, 'FD');
+            doc.setFontSize(10);
+            doc.text(`TOTAL PROCESADO: $${monto.toFixed(2)} USD`, 12, 73.5);
+
+            doc.save(`Recibo_Tesoreria_CI_${cedula}_${fecha}.pdf`);
+        }
+
+        function exportarAuditoriaPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            doc.text("Tesorería R.·. L.·. Renovación N° 72 - Reporte Cloud", 14, 18);
+            doc.setFontSize(14);
+            doc.text("TESORERÍA R.·. L.·. RENOVACIÓN N° 72 — REPORTE DE AUDITORÍA", 14, 18);
             
-            let rows = appData.transacciones.map(t => [t.fecha, t.tipo.toUpperCase(), t.subtipo, t.descripcion || '-', `$${parseFloat(t.monto).toFixed(2)}`]);
-            
+            let rows = [];
+            appData.transacciones.forEach(t => {
+                rows.push([t.fecha, t.tipo.toUpperCase(), t.subtipo.toUpperCase(), t.descripcion || '-', `$${parseFloat(t.monto).toFixed(2)}`]);
+            });
+
             doc.autoTable({
                 head: [["Fecha", "Tipo", "Concepto", "Descripción", "Monto"]],
                 body: rows,
                 startY: 25,
-                theme: 'striped'
+                theme: 'striped',
+                headStyles: { fillColor: [15, 23, 42], textColor: [251, 191, 36] }
             });
-            doc.save("Reporte_Tesoreria_Cloud.pdf");
+
+            doc.save(`Tesoreria_Reporte_Auditoria_${new Date().toISOString().split('T')[0]}.pdf`);
         }
     </script>
 </body>
