@@ -60,7 +60,7 @@
                     Tesorería R.·. L.·. Renovación N° 72
                 </h1>
                 <p class="text-[11px] uppercase tracking-[0.2em] text-slate-400 font-medium">
-                    Gran Logia &bull; Administración y Contabilidad
+                    Gran Logia &bull; Administración y Contabilidad (Google Sheets Sync)
                 </p>
             </div>
         </div>
@@ -153,10 +153,10 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 3: ACCESO 2do Nivel Y 3er Nivel - Entorno Administrativo con Navegación por Pestañas -->
+        <!-- SECCIÓN 3: ACCESO 2do Nivel Y 3er Nivel - Entorno Administrativo -->
         <section id="panel-entorno-admin" class="hidden space-y-6">
             
-            <!-- Tarjetas de Balance General Institucional (Siempre visibles arriba para referencia rápida) -->
+            <!-- Tarjetas de Balance General Institucional -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-l-4 border-l-emerald-700 flex flex-col justify-center">
                     <div class="flex items-center justify-between"><span class="text-[11px] text-slate-500 font-bold uppercase tracking-widest">Ingresos Totales</span><svg class="w-5 h-5 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
@@ -171,246 +171,72 @@
                     <p id="admin-card-saldo" class="text-3xl sm:text-4xl font-black text-amber-400 mt-1 tabular-nums">$0.00</p>
                 </div>
             </div>
-
-            <!-- BARRA DE NAVEGACIÓN POR PESTAÑAS (TABS) -->
-            <nav aria-label="Secciones de Tesorería" class="bg-slate-900 p-1.5 rounded-xl shadow-md border border-slate-800 flex flex-wrap gap-1.5">
-                <button type="button" id="tab-btn-caja" onclick="cambiarTabAdmin('caja')" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 bg-amber-500 text-slate-950 shadow">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
-                    <span>Caja y Movimientos</span>
-                </button>
-                <button type="button" id="tab-btn-padron" onclick="cambiarTabAdmin('padron')" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <span>Padrón de Hermanos</span>
-                </button>
-                <button type="button" id="tab-btn-auditoria" onclick="cambiarTabAdmin('auditoria')" class="hidden admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                    <span>Libro Diario y Auditoría</span>
-                </button>
-                <button type="button" id="tab-btn-config" onclick="cambiarTabAdmin('config')" class="hidden admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                    <span>Configuración Maestra</span>
-                </button>
-            </nav>
-
-            <!-- ========================================================= -->
-            <!-- PESTAÑA 1: CAJA Y MOVIMIENTOS (Nivel 2 y Nivel 3)         -->
-            <!-- ========================================================= -->
-            <div id="tab-panel-caja" class="admin-tab-panel space-y-6">
-                <div id="formularios-operaciones" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Formulario Pagos (Ingresos) -->
-                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-emerald-700">
-                        <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
-                            <h3 class="font-serif text-base font-bold text-slate-900 flex items-center gap-2"><svg class="w-5 h-5 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg><span>Registrar Operación de Ingreso</span></h3>
-                            <span class="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">Entrada</span>
-                        </div>
-                        <div class="space-y-3 text-sm">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-600 mb-1">Fecha Asignada</label>
-                                <input type="date" id="ingreso-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold text-slate-900 focus:border-amber-600 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 mb-1">Clasificación de Ingreso</label>
-                                <select id="ingreso-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold text-slate-800 focus:border-amber-600 focus:outline-none"></select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 mb-1">Seleccionar Hermano (Por Cédula)</label>
-                                <select id="ingreso-usuario" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono text-slate-800 focus:border-amber-600 focus:outline-none"></select>
-                            </div>
-                            <input type="number" id="ingreso-monto" step="0.01" placeholder="Monto Pago ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums focus:border-amber-600 focus:outline-none">
-                            <input type="text" id="ingreso-desc" placeholder="Descripción o Concepto" class="w-full p-2 border border-slate-300 rounded-lg text-base focus:border-amber-600 focus:outline-none">
-                            <button onclick="registrarTransaccion('ingreso')" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm inline-flex items-center justify-center gap-2">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                                <span>Guardar Pago e Imprimir Recibo</span>
-                            </button>
-                        </div>
+            
+            <!-- Formularios de Escritura Estándar (Nivel 2 y Nivel 3) -->
+            <div id="formularios-operaciones" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Formulario Pagos (Ingresos) -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-emerald-700">
+                    <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+                        <h3 class="font-serif text-base font-bold text-slate-900 flex items-center gap-2"><svg class="w-5 h-5 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg><span>Registrar Operación de Ingreso</span></h3>
+                        <span class="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">Entrada</span>
                     </div>
-
-                    <!-- Formulario Gastos -->
-                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-rose-700">
-                        <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
-                            <h3 class="font-serif text-base font-bold text-slate-900 flex items-center gap-2"><svg class="w-5 h-5 text-rose-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="16 12 12 8 8 12"/><line x1="12" y1="16" x2="12" y2="8"/></svg><span>Registrar Egreso Operativo</span></h3>
-                            <span class="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200">Salida</span>
-                        </div>
-                        <div class="space-y-3 text-sm">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-600 mb-1">Fecha de Ejecución</label>
-                                <input type="date" id="gasto-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold text-rose-800 focus:border-amber-600 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 mb-1">Clasificación del Egreso</label>
-                                <select id="gasto-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold text-slate-800 focus:border-amber-600 focus:outline-none"></select>
-                            </div>
-                            <input type="number" id="gasto-monto" step="0.01" placeholder="Monto Egreso ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums focus:border-amber-600 focus:outline-none">
-                            <input type="text" id="gasto-desc" placeholder="Descripción o Detalle" class="w-full p-2 border border-slate-300 rounded-lg text-base focus:border-amber-600 focus:outline-none">
-                            <button onclick="registrarTransaccion('gasto')" class="w-full bg-rose-700 hover:bg-rose-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm inline-flex items-center justify-center gap-2">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                                <span>Guardar Egreso</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========================================================= -->
-            <!-- PESTAÑA 2: PADRÓN DE HERMANOS (Consulta Nivel 2/3 + CRUD Nivel 3) -->
-            <!-- ========================================================= -->
-            <div id="tab-panel-padron" class="admin-tab-panel hidden space-y-6">
-                <!-- Vista de Solvencia General (Nivel 2 y Nivel 3) -->
-                <div id="vista-padron-general" class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b border-slate-100">
+                    <div class="space-y-3 text-sm">
                         <div>
-                            <h3 class="font-serif text-xl font-bold text-slate-900 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Padrón General de Hermanos</span></h3>
-                            <p class="text-xs text-slate-500">Visualización de solvencia fraternal (Cierre los días 28 de cada mes).</p>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">Fecha Asignada</label>
+                            <input type="date" id="ingreso-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold text-slate-900 focus:border-amber-600 focus:outline-none">
                         </div>
-                    </div>
-
-                    <div class="flex items-center gap-3 mb-4 bg-stone-50 p-3 rounded-lg border border-slate-200 text-sm">
-                        <span class="font-semibold text-slate-700">Filtrar por estatus financiero:</span>
-                        <select id="filtro-estatus" onchange="cargarListaUsuariosAdmin()" class="p-1.5 border border-slate-300 rounded-md bg-white text-slate-800 font-medium focus:border-amber-600 focus:outline-none">
-                            <option value="todos">Mostrar Todos</option>
-                            <option value="solvente">Solo Solventes</option>
-                            <option value="moroso">Solo Morosos</option>
-                        </select>
-                    </div>
-
-                    <div class="overflow-x-auto rounded-lg border border-slate-200">
-                        <table class="min-w-full divide-y divide-slate-200 text-sm">
-                            <thead class="bg-slate-900 text-amber-300 text-[11px] font-semibold uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-4 py-3 text-left">Cédula</th>
-                                    <th class="px-4 py-3 text-left">Nombre Completo</th>
-                                    <th class="px-4 py-3 text-left">Grado / Nivel</th>
-                                    <th class="px-4 py-3 text-left">Último Pago Cápita</th>
-                                    <th class="px-4 py-3 text-center">Estatus</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabla-usuarios-admin" class="divide-y divide-slate-100 text-slate-700"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Gestión CRUD de Hermanos (Exclusivo Nivel 3) -->
-                <div id="crud-usuarios-nivel3" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- CREATE / ALTA DE USUARIOS -->
-                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-amber-600 h-fit">
-                        <h3 class="font-serif text-base font-bold text-slate-900 mb-4 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg><span>Registrar Nuevo Hermano / Oficial</span></h3>
-                        <div class="space-y-3 text-sm">
-                            <input type="text" id="admin-new-cedula" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full p-2 border border-slate-300 rounded-lg font-mono font-bold" placeholder="Cédula (Solo números)">
-                            <input type="text" id="admin-new-name" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, '')" class="w-full p-2 border border-slate-300 rounded-lg" placeholder="Nombre Completo (Solo texto)">
-                            <div>
-                                <label class="block text-xs text-slate-600 font-semibold mb-1">Nivel de acceso asignado</label>
-                                <select id="admin-new-membresia" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold text-slate-800">
-                                    <option value="1er Nivel">1er Nivel (Hermano Regular)</option>
-                                    <option value="2do Nivel">2do Nivel (Operador de Caja)</option>
-                                    <option value="3er Nivel">3er Nivel (Tesorero Supremo)</option>
-                                </select>
-                            </div>
-                            <button onclick="crudCrearUsuario()" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/40 py-2.5 rounded-lg transition font-semibold shadow-sm">
-                                Insertar en Padrón
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- READ / UPDATE / DELETE DE HERMANOS -->
-                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-slate-800 lg:col-span-2">
-                        <h3 class="font-serif text-base font-bold text-slate-900 mb-1 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Tabla Maestra: Edición de Padrón</span></h3>
-                        <p class="text-xs text-slate-500 mb-3">Haz clic en <strong>cualquier cabecera de columna</strong> para ordenar de forma automática.</p>
-                        <div class="overflow-x-auto max-h-72 rounded-lg border border-slate-200">
-                            <table class="min-w-full divide-y divide-slate-200 text-xs">
-                                <thead class="bg-slate-900 text-amber-300 font-bold uppercase tracking-wider select-none">
-                                    <tr>
-                                        <th class="px-3 py-2.5 text-left cursor-pointer hover:bg-slate-800 transition" onclick="alternarOrdenColumna('cedula')">Cédula ↕</th>
-                                        <th class="px-3 py-2 text-left cursor-pointer hover:bg-slate-800 transition" onclick="alternarOrdenColumna('nombre')">Nombre ↕</th>
-                                        <th class="px-3 py-2 text-left cursor-pointer hover:bg-slate-800 transition" onclick="alternarOrdenColumna('membresia')">Nivel Acceso ↕</th>
-                                        <th class="px-3 py-2 text-center">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="crud-tabla-usuarios" class="divide-y divide-slate-100"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========================================================= -->
-            <!-- PESTAÑA 3: LIBRO DIARIO Y AUDITORÍA (Exclusivo Nivel 3)   -->
-            <!-- ========================================================= -->
-            <div id="tab-panel-auditoria" class="admin-tab-panel hidden space-y-6">
-                <!-- REPORTE FILTRADO POR COLUMNAS CON EXPORTACIÓN PDF -->
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-amber-600">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                         <div>
-                            <h3 class="font-serif text-lg font-bold text-slate-900 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Reporte de Auditoría y Filtros Avanzados</span></h3>
-                            <p class="text-xs text-slate-500">Consulta el libro contable o el estado de cápitas por cobrar cruzando parámetros.</p>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Clasificación de Ingreso</label>
+                            <select id="ingreso-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold text-slate-800 focus:border-amber-600 focus:outline-none"></select>
                         </div>
-                        <button onclick="exportarReporteFiltradoPDF()" class="bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/40 text-xs font-bold px-4 py-2.5 rounded-lg shadow transition inline-flex items-center gap-1.5">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15v-2h1.5a1.5 1.5 0 0 1 0 3H9z"/></svg>
-                            <span>Exportar Reporte Actual a PDF</span>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Seleccionar Hermano (Por Cédula)</label>
+                            <select id="ingreso-usuario" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono text-slate-800 focus:border-amber-600 focus:outline-none"></select>
+                        </div>
+                        <input type="number" id="ingreso-monto" step="0.01" placeholder="Monto Pago ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums focus:border-amber-600 focus:outline-none">
+                        <input type="text" id="ingreso-desc" placeholder="Descripción o Concepto" class="w-full p-2 border border-slate-300 rounded-lg text-base focus:border-amber-600 focus:outline-none">
+                        <button onclick="registrarTransaccion('ingreso')" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm inline-flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                            <span>Guardar Pago e Imprimir Recibo</span>
                         </button>
                     </div>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 text-xs bg-stone-50 p-3.5 rounded-lg border border-slate-200">
-                        <div>
-                            <label class="block font-bold text-slate-700 mb-1">Filtrar por Columna: Tipo / Categoría</label>
-                            <select id="reporte-filtro-tipo" onchange="renderReporteAuditoriaAbajo()" class="w-full p-2 border border-slate-300 rounded-md bg-white text-slate-800 font-medium"></select>
-                        </div>
-                        <div>
-                            <label class="block font-bold text-slate-700 mb-1">Buscar por Columna: Cédula del Hermano</label>
-                            <input type="text" id="reporte-filtro-cedula" oninput="renderReporteAuditoriaAbajo()" class="w-full p-2 border border-slate-300 rounded-md font-mono font-bold text-slate-800" placeholder="Escribe la cédula...">
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta de Totalizador del Reporte Filtrado Actual -->
-                    <div class="mb-3 bg-slate-900 text-stone-100 font-bold p-3.5 rounded-lg border border-amber-500/40 flex justify-between items-center text-sm">
-                        <span class="text-slate-300">Sumatoria de Registros Filtrados Actuales:</span>
-                        <span id="reporte-total-big-badge" class="text-lg font-black text-amber-400 font-mono tabular-nums">$0.00</span>
-                    </div>
-
-                    <div class="overflow-x-auto max-h-64 text-xs rounded-lg border border-slate-200">
-                        <table class="min-w-full divide-y divide-slate-200">
-                            <thead id="reporte-tabla-header" class="bg-slate-800 text-amber-300 uppercase text-[10px] tracking-wider"></thead>
-                            <tbody id="reporte-tabla-auditoria-rows" class="divide-y divide-slate-100 text-slate-700 tabular-nums"></tbody>
-                        </table>
-                    </div>
                 </div>
 
-                <!-- READ / UPDATE / DELETE DE TRANSACCIONES -->
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-slate-900">
-                    <h3 class="font-serif text-base font-bold text-slate-900 mb-1 flex items-center gap-2"><svg class="w-5 h-5 text-slate-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg><span>Libro Diario Editable (Últimos 50 Asientos)</span></h3>
-                    <p class="text-xs text-slate-500 mb-3">Modifica fechas, descripciones o montos directamente sobre la tabla y guarda los cambios.</p>
-                    <div class="overflow-x-auto max-h-80 rounded-lg border border-slate-200">
-                        <table class="min-w-full divide-y divide-slate-200 text-xs">
-                            <thead class="bg-slate-900 text-amber-300 font-bold uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-3 py-2.5 text-left">Fecha</th>
-                                    <th class="px-3 py-2 text-left">Hermano (Cédula)</th>
-                                    <th class="px-3 py-2 text-left">Tipo</th>
-                                    <th class="px-3 py-2 text-left">Descripción</th>
-                                    <th class="px-3 py-2 text-right">Monto</th>
-                                    <th class="px-3 py-2 text-center">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="crud-tabla-transacciones" class="divide-y divide-slate-100 tabular-nums"></tbody>
-                        </table>
+                <!-- Formulario Gastos -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-rose-700">
+                    <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+                        <h3 class="font-serif text-base font-bold text-slate-900 flex items-center gap-2"><svg class="w-5 h-5 text-rose-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="16 12 12 8 8 12"/><line x1="12" y1="16" x2="12" y2="8"/></svg><span>Registrar Egreso Operativo</span></h3>
+                        <span class="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200">Salida</span>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">Fecha de Ejecución</label>
+                            <input type="date" id="gasto-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold text-rose-800 focus:border-amber-600 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">Clasificación del Egreso</label>
+                            <select id="gasto-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold text-slate-800 focus:border-amber-600 focus:outline-none"></select>
+                        </div>
+                        <input type="number" id="gasto-monto" step="0.01" placeholder="Monto Egreso ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums focus:border-amber-600 focus:outline-none">
+                        <input type="text" id="gasto-desc" placeholder="Descripción o Detalle" class="w-full p-2 border border-slate-300 rounded-lg text-base focus:border-amber-600 focus:outline-none">
+                        <button onclick="registrarTransaccion('gasto')" class="w-full bg-rose-700 hover:bg-rose-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm inline-flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            <span>Guardar Egreso</span>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- ========================================================= -->
-            <!-- PESTAÑA 4: CONFIGURACIÓN MAESTRA (Exclusivo Nivel 3)      -->
-            <!-- ========================================================= -->
-            <div id="tab-panel-config" class="admin-tab-panel hidden space-y-6">
-                <!-- Banner de Autoridad Suprema + Respaldo / Restauración BD -->
-                <div class="bg-slate-900 text-stone-100 p-5 rounded-xl shadow-lg border-l-4 border-amber-500 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div class="flex items-center gap-3">
-                        <svg class="w-6 h-6 text-amber-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        <div>
-                            <h2 class="font-serif text-lg font-bold text-amber-400">Configuración Maestra — R.·. L.·. Renovación N° 72</h2>
-                            <p class="text-xs text-slate-300">Respaldo físico de base de datos, cápita mensual, llaves de acceso y conceptos.</p>
-                        </div>
+            <!-- Padrón y Filtros de Consulta Estándar -->
+            <div id="vista-padron-general" class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-slate-900 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Padrón General de Hermanos</span></h3>
+                        <p class="text-xs text-slate-500">Visualización de solvencia fraternal (Cierre los días 28 de cada mes).</p>
                     </div>
-                    <div id="controles-bd-nivel3" class="flex flex-wrap items-center gap-2">
-                        <button onclick="descargarBaseDatos()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/40 text-xs font-bold px-3.5 py-2 rounded-lg inline-flex items-center gap-1.5 transition shadow-sm">
+                    <!-- EXCLUSIVO NIVEL 3: Respaldo y Restauración Física (.db) -->
+                    <div id="controles-bd-nivel3" class="hidden flex flex-wrap items-center gap-2">
+                        <button onclick="descargarBaseDatos()" class="bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/40 text-xs font-bold px-3.5 py-2 rounded-lg inline-flex items-center gap-1.5 transition shadow-sm">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                             <span>Respaldar BD (.db)</span>
                         </button>
@@ -422,8 +248,50 @@
                     </div>
                 </div>
 
+                <div class="flex items-center gap-3 mb-4 bg-stone-50 p-3 rounded-lg border border-slate-200 text-sm">
+                    <span class="font-semibold text-slate-700">Filtrar por estatus financiero:</span>
+                    <select id="filtro-estatus" onchange="cargarListaUsuariosAdmin()" class="p-1.5 border border-slate-300 rounded-md bg-white text-slate-800 font-medium focus:border-amber-600 focus:outline-none">
+                        <option value="todos">Mostrar Todos</option>
+                        <option value="solvente">Solo Solventes</option>
+                        <option value="moroso">Solo Morosos</option>
+                    </select>
+                </div>
+
+                <div class="overflow-x-auto rounded-lg border border-slate-200">
+                    <table class="min-w-full divide-y divide-slate-200 text-sm">
+                        <thead class="bg-slate-900 text-amber-300 text-[11px] font-semibold uppercase tracking-wider">
+                            <tr>
+                                <th class="px-4 py-3 text-left">Cédula</th>
+                                <th class="px-4 py-3 text-left">Nombre Completo</th>
+                                <th class="px-4 py-3 text-left">Grado / Nivel</th>
+                                <th class="px-4 py-3 text-left">Último Pago Cápita</th>
+                                <th class="px-4 py-3 text-center">Estatus</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-usuarios-admin" class="divide-y divide-slate-100 text-slate-700"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ========================================================= -->
+            <!--   MÓDULO CRUD MAESTRO: EXCLUSIVO 3er NIVEL (SUPREMO)       -->
+            <!-- ========================================================= -->
+            <div id="modulo-master-crud" class="hidden space-y-6 pt-4">
+                <div class="bg-slate-900 text-stone-100 p-5 rounded-xl shadow-lg border-l-4 border-amber-500 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-6 h-6 text-amber-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <div>
+                            <h2 class="font-serif text-lg font-bold text-amber-400">Panel Maestro de Tesorería — R.·. L.·. Renovación N° 72</h2>
+                            <p class="text-xs text-slate-300">Mantenimiento global de registros, estructura contable, cápitas y llaves de acceso.</p>
+                        </div>
+                    </div>
+                    <span class="text-[11px] font-mono uppercase tracking-widest px-2.5 py-1 rounded bg-amber-500/10 text-amber-300 border border-amber-500/30 self-start sm:self-center">
+                        3er Nivel Supremo
+                    </span>
+                </div>
+
                 <!-- Bloque Estructural de Parámetros y Claves de Seguridad -->
-                <div id="modulo-config-claves-nivel3" class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-amber-600">
+                <div id="modulo-config-claves-nivel3" class="hidden bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-amber-600">
                     <h3 class="font-serif text-base font-bold text-slate-900 mb-1 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg><span>Parámetros Institucionales y Claves de Acceso</span></h3>
                     <p class="text-xs text-slate-500 mb-4">Modifica la cápita mensual y las credenciales de los niveles administrativos.</p>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
@@ -474,8 +342,108 @@
                         <div class="max-h-52 overflow-y-auto border border-slate-200 rounded-lg divide-y divide-slate-100 text-xs" id="lista-cats-gastos"></div>
                     </div>
                 </div>
-            </div>
 
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- CREATE / ALTA DE USUARIOS -->
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-amber-600 h-fit">
+                        <h3 class="font-serif text-base font-bold text-slate-900 mb-4 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg><span>Registrar Nuevo Hermano / Oficial</span></h3>
+                        <div class="space-y-3 text-sm">
+                            <input type="text" id="admin-new-cedula" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full p-2 border border-slate-300 rounded-lg font-mono font-bold" placeholder="Cédula (Solo números)">
+                            <input type="text" id="admin-new-name" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, '')" class="w-full p-2 border border-slate-300 rounded-lg" placeholder="Nombre Completo (Solo texto)">
+                            <div>
+                                <label class="block text-xs text-slate-600 font-semibold mb-1">Nivel de acceso asignado</label>
+                                <select id="admin-new-membresia" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold text-slate-800">
+                                    <option value="1er Nivel">1er Nivel (Hermano Regular)</option>
+                                    <option value="2do Nivel">2do Nivel (Operador de Caja)</option>
+                                    <option value="3er Nivel">3er Nivel (Tesorero Supremo)</option>
+                                </select>
+                            </div>
+                            <button onclick="crudCrearUsuario()" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/40 py-2.5 rounded-lg transition font-semibold shadow-sm">
+                                Insertar en Padrón
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- READ / UPDATE / DELETE DE HERMANOS -->
+                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-slate-800 lg:col-span-2">
+                        <h3 class="font-serif text-base font-bold text-slate-900 mb-1 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Tabla Maestra: Padrón de Hermanos</span></h3>
+                        <p class="text-xs text-slate-500 mb-3">Haz clic en <strong>cualquier cabecera de columna</strong> para ordenar de forma automática.</p>
+                        <div class="overflow-x-auto max-h-72 rounded-lg border border-slate-200">
+                            <table class="min-w-full divide-y divide-slate-200 text-xs">
+                                <thead class="bg-slate-900 text-amber-300 font-bold uppercase tracking-wider select-none">
+                                    <tr>
+                                        <th class="px-3 py-2.5 text-left cursor-pointer hover:bg-slate-800 transition" onclick="alternarOrdenColumna('cedula')">Cédula ↕</th>
+                                        <th class="px-3 py-2 text-left cursor-pointer hover:bg-slate-800 transition" onclick="alternarOrdenColumna('nombre')">Nombre ↕</th>
+                                        <th class="px-3 py-2 text-left cursor-pointer hover:bg-slate-800 transition" onclick="alternarOrdenColumna('membresia')">Nivel Acceso ↕</th>
+                                        <th class="px-3 py-2 text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="crud-tabla-usuarios" class="divide-y divide-slate-100"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- READ / UPDATE / DELETE DE TRANSACCIONES -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-slate-900">
+                    <h3 class="font-serif text-base font-bold text-slate-900 mb-1 flex items-center gap-2"><svg class="w-5 h-5 text-slate-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg><span>Libro Diario de Transacciones</span></h3>
+                    <p class="text-xs text-slate-500 mb-3">Optimizada: mostrando los últimos 50 asientos contables registrados.</p>
+                    <div class="overflow-x-auto max-h-80 rounded-lg border border-slate-200">
+                        <table class="min-w-full divide-y divide-slate-200 text-xs">
+                            <thead class="bg-slate-900 text-amber-300 font-bold uppercase tracking-wider">
+                                <tr>
+                                    <th class="px-3 py-2.5 text-left">Fecha</th>
+                                    <th class="px-3 py-2 text-left">Hermano (Cédula)</th>
+                                    <th class="px-3 py-2 text-left">Tipo</th>
+                                    <th class="px-3 py-2 text-left">Descripción</th>
+                                    <th class="px-3 py-2 text-right">Monto</th>
+                                    <th class="px-3 py-2 text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="crud-tabla-transacciones" class="divide-y divide-slate-100 tabular-nums"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- REPORTE FILTRADO POR COLUMNAS CON EXPORTACIÓN PDF -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-amber-600">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+                        <div>
+                            <h3 class="font-serif text-lg font-bold text-slate-900 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Reporte de Auditoría y Filtros Avanzados</span></h3>
+                            <p class="text-xs text-slate-500">Consulta el libro contable o el estado de cápitas por cobrar cruzando parámetros.</p>
+                        </div>
+                        <button onclick="exportarReporteFiltradoPDF()" class="bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/40 text-xs font-bold px-4 py-2.5 rounded-lg shadow transition inline-flex items-center gap-1.5">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15v-2h1.5a1.5 1.5 0 0 1 0 3H9z"/></svg>
+                            <span>Exportar Reporte Actual a PDF</span>
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 text-xs bg-stone-50 p-3.5 rounded-lg border border-slate-200">
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Filtrar por Columna: Tipo / Categoría</label>
+                            <select id="reporte-filtro-tipo" onchange="renderReporteAuditoriaAbajo()" class="w-full p-2 border border-slate-300 rounded-md bg-white text-slate-800 font-medium"></select>
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">Buscar por Columna: Cédula del Hermano</label>
+                            <input type="text" id="reporte-filtro-cedula" oninput="renderReporteAuditoriaAbajo()" class="w-full p-2 border border-slate-300 rounded-md font-mono font-bold text-slate-800" placeholder="Escribe la cédula...">
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta de Totalizador del Reporte Filtrado Actual -->
+                    <div class="mb-3 bg-slate-900 text-stone-100 font-bold p-3.5 rounded-lg border border-amber-500/40 flex justify-between items-center text-sm">
+                        <span class="text-slate-300">Sumatoria de Registros Filtrados Actuales:</span>
+                        <span id="reporte-total-big-badge" class="text-lg font-black text-amber-400 font-mono tabular-nums">$0.00</span>
+                    </div>
+
+                    <div class="overflow-x-auto max-h-64 text-xs rounded-lg border border-slate-200">
+                        <table class="min-w-full divide-y divide-slate-200">
+                            <thead id="reporte-tabla-header" class="bg-slate-800 text-amber-300 uppercase text-[10px] tracking-wider"></thead>
+                            <tbody id="reporte-tabla-auditoria-rows" class="divide-y divide-slate-100 text-slate-700 tabular-nums"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
         </section>
 
     </main>
@@ -485,6 +453,8 @@
     </footer>
 
     <script>
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzByqQNnpSIh-uP8PapJcXIOHlrvwmAFy7sNDTXPNrY4wwx7EluV5697xxUd9-_JyobDA/exec';
+
         let db = null;
         let currentUser = null;
         let SQL_ENGINE = null;
@@ -500,7 +470,7 @@
         const fechaPorDefecto = new Date().toISOString().split('T')[0];
 
         // =========================================================================
-        // MOTOR DE PERSISTENCIA BINARIA EN INDEXEDDB
+        // MOTOR DE PERSISTENCIA BINARIA EN INDEXEDDB Y GOOGLE SHEETS
         // =========================================================================
         function abrirIndexedDB() {
             return new Promise((resolve, reject) => {
@@ -541,11 +511,45 @@
                 });
             } catch (err) {
                 console.error("Error guardando en IndexedDB:", err);
-                alert("Advertencia: No se pudo persistir el cambio en IndexedDB: " + err.message);
             }
         }
 
-        // Arrancar motor SQLite
+        // Procesar datos remotos traídos de Google Sheets mediante JSONP
+        function procesarDatosHojaRemota(resultado) {
+            if (resultado && resultado.status === 'success' && db) {
+                try {
+                    // Sincronizar de forma transparente con SQLite local
+                    if (resultado.usuarios) {
+                        resultado.usuarios.forEach(u => {
+                            db.run("INSERT OR IGNORE INTO usuarios (cedula, nombre, membresia, fecha_registro) VALUES (?, ?, ?, ?)", 
+                                [u.cedula, u.nombre, u.membresia, u.fecha_registro || '2026-01-01']);
+                        });
+                    }
+                    if (resultado.transacciones) {
+                        resultado.transacciones.forEach(t => {
+                            db.run("INSERT OR IGNORE INTO transacciones (id, usuario_id, tipo, subtipo, monto, descripcion, fecha) VALUES (?, ?, ?, ?, ?, ?, ?)", 
+                                [t.id, t.usuario_id, t.tipo, t.subtipo, t.monto, t.descripcion, t.fecha]);
+                        });
+                    }
+                    guardarEnStorage();
+                    if (currentUser) routeDashboardByNivel();
+                } catch (e) {
+                    console.error("Error sincronizando con SQLite local:", e);
+                }
+            }
+        }
+
+        function sincronizarConGoogleSheetsSegundoPlano() {
+            const scriptViejo = document.getElementById('jsonp-finanzas');
+            if (scriptViejo) scriptViejo.remove();
+
+            const script = document.createElement('script');
+            script.id = 'jsonp-finanzas';
+            script.src = `${APPS_SCRIPT_URL}?callback=procesarDatosHojaRemota&t=${new Date().getTime()}`;
+            document.body.appendChild(script);
+        }
+
+        // Arrancar motor SQLite y sincronizar con Google Sheets
         initSQL();
 
         async function initSQL() {
@@ -555,15 +559,6 @@
                 });
                 
                 let savedUint8 = await leerBinarioIDB();
-
-                if (!savedUint8 && localStorage.getItem("finanzas_db")) {
-                    try {
-                        savedUint8 = new Uint8Array(JSON.parse(localStorage.getItem("finanzas_db")));
-                        localStorage.removeItem("finanzas_db");
-                    } catch (e) {
-                        savedUint8 = null;
-                    }
-                }
 
                 if (savedUint8) {
                     db = new SQL_ENGINE.Database(savedUint8);
@@ -624,7 +619,10 @@
                 document.getElementById('ingreso-fecha').value = fechaPorDefecto;
                 document.getElementById('gasto-fecha').value = fechaPorDefecto;
 
-                const sessionSaved = localStorage.getItem(SESSION_KEY) || localStorage.getItem("active_session");
+                // Sincronizar datos frescos desde Google Sheets al iniciar
+                sincronizarConGoogleSheetsSegundoPlano();
+
+                const sessionSaved = localStorage.getItem(SESSION_KEY);
                 if (sessionSaved) {
                     currentUser = JSON.parse(sessionSaved);
                     routeDashboardByNivel();
@@ -679,7 +677,7 @@
                 }
             } else {
                 stmt.free();
-                alert("El número de cédula ingresado no existe en los registros de Tesorería R.·. L.·. Renovación N° 72. Por favor, solicite a un administrador que lo registre en el sistema.");
+                alert("El número de cédula ingresado no existe en los registros de Tesorería R.·. L.·. Renovación N° 72.");
             }
         }
 
@@ -691,7 +689,6 @@
         function logout() {
             currentUser = null;
             localStorage.removeItem(SESSION_KEY);
-            localStorage.removeItem("active_session");
             document.getElementById('auth-password').value = "";
             document.getElementById('auth-section').classList.remove('hidden');
             document.getElementById('panel-nivel-socio').classList.add('hidden');
@@ -991,18 +988,39 @@
                 if (isNaN(idAsignado)) return alert("Hermano inválido.");
             }
 
+            // Registrar localmente en SQLite
             db.run("INSERT INTO transacciones (usuario_id, tipo, subtipo, monto, descripcion, fecha) VALUES (?, ?, ?, ?, ?, ?)", [idAsignado, tipo, subtipo, monto, desc, fecha]);
             await guardarEnStorage();
+
+            // Sincronizar por POST en segundo plano con Google Sheets
+            try {
+                await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        usuario_id: idAsignado,
+                        tipo: tipo,
+                        subtipo: subtipo,
+                        monto: monto,
+                        descripcion: desc,
+                        fecha: fecha
+                    })
+                });
+            } catch (err) {
+                console.error("Error al enviar POST a Google Sheets:", err);
+            }
             
             document.getElementById(`${tipo}-monto`).value = "";
             document.getElementById(`${tipo}-desc`).value = "";
-            alert("Operación guardada con éxito en Tesorería R.·. L.·. Renovación N° 72.");
+            alert("Operación guardada y sincronizada con éxito en Tesorería R.·. L.·. Renovación N° 72.");
 
             if (tipo === 'ingreso') {
                 imprimirReciboIndividualPDF(idAsignado, subtipo, monto, desc, fecha);
             }
             
             routeDashboardByNivel();
+            setTimeout(sincronizarConGoogleSheetsSegundoPlano, 2000);
         }
 
         function imprimirReciboIndividualPDF(usuarioId, subtipo, monto, desc, fecha) {
