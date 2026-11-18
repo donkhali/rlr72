@@ -420,14 +420,16 @@
             const membresia = document.getElementById('crud-membresia').value;
             if(!cedula || !nombre) return alert("Rellena la cédula y el nombre.");
 
+            const payload = { action: 'crear_usuario', cedula, nombre, membresia };
+
             try {
-                alert("Insertando hermano en Google Sheets...");
+                alert("Insertando hermano en la pestaña 'usuarios' de Google Sheets...");
                 await fetch(APPS_SCRIPT_URL, {
                     method: 'POST', mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'crear_usuario', cedula, nombre, membresia })
+                    body: JSON.stringify(payload)
                 });
-                alert("¡Hermano agregado con éxito!");
+                alert("¡Hermano agregado con éxito en la nube!");
                 document.getElementById('crud-cedula').value = "";
                 document.getElementById('crud-nombre').value = "";
                 setTimeout(cargarDatosCloud, 2000);
@@ -439,12 +441,14 @@
             const nombre = document.getElementById(`edit-nom-${cedulaOriginal}`).value.trim();
             const membresia = document.getElementById(`edit-mem-${cedulaOriginal}`).value;
 
+            const payload = { action: 'editar_usuario', cedula_original: cedulaOriginal, cedula, nombre, membresia };
+
             try {
                 alert("Actualizando datos en Google Sheets...");
                 await fetch(APPS_SCRIPT_URL, {
                     method: 'POST', mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'editar_usuario', cedula_original: cedulaOriginal, cedula, nombre, membresia })
+                    body: JSON.stringify(payload)
                 });
                 alert("¡Actualizado con éxito!");
                 setTimeout(cargarDatosCloud, 2000);
@@ -453,12 +457,15 @@
 
         async function crudEliminarUsuario(cedula) {
             if(!confirm(`¿Deseas eliminar al hermano con cédula ${cedula} de Google Sheets?`)) return;
+            
+            const payload = { action: 'eliminar_usuario', cedula };
+
             try {
                 alert("Eliminando de Google Sheets...");
                 await fetch(APPS_SCRIPT_URL, {
                     method: 'POST', mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'eliminar_usuario', cedula })
+                    body: JSON.stringify(payload)
                 });
                 alert("¡Eliminado con éxito!");
                 setTimeout(cargarDatosCloud, 2000);
