@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tesorería R.·. L.·. Renovación N° 72</title>
-    <!-- Tipografías Institucionales: Cinzel (Solemnidad) + Inter (Claridad Operativa) -->
+    <!-- Tipografías Institucionales: Cinzel + Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -22,16 +22,11 @@
             }
         }
     </script>
-    <!-- SQL.js (SQLite en WebAssembly) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
-    <!-- jsPDF y jsPDF-AutoTable para generación de PDF en caliente -->
+    <!-- jsPDF y jsPDF-AutoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
     <style>
-        .tabular-nums {
-            font-variant-numeric: tabular-nums;
-        }
-        /* Sello de agua geométrico sutil en el fondo institucional */
+        .tabular-nums { font-variant-numeric: tabular-nums; }
         .bg-masonic-pattern {
             background-color: #f8fafc;
             background-image: radial-gradient(#cbd5e1 0.65px, transparent 0.65px), radial-gradient(#cbd5e1 0.65px, #f8fafc 0.65px);
@@ -42,16 +37,13 @@
 </head>
 <body class="bg-masonic-pattern text-slate-800 font-sans min-h-screen flex flex-col selection:bg-amber-600 selection:text-white">
 
-    <!-- Barra de Navegación Institucional (Azul Marino Profundo + Dorado Envejecido) -->
+    <!-- Barra de Navegación Institucional -->
     <header class="bg-slate-900 text-stone-100 shadow-lg border-b-2 border-amber-500/80 px-4 py-3.5 flex flex-wrap justify-between items-center gap-3">
         <div class="flex items-center gap-3">
-            <!-- Emblema Geométrico Institucional (Escuadra, Compás y Columnas estilizadas en SVG) -->
             <div class="w-10 h-10 rounded-full bg-slate-800 border border-amber-500/60 flex items-center justify-center shadow-inner shrink-0">
                 <svg class="w-6 h-6 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 3L4 19h16L12 3z" stroke-opacity="0.35"/>
-                    <path d="M12 4L6 18" />
-                    <path d="M12 4l6 14" />
-                    <path d="M5 13l7 6 7-6" />
+                    <path d="M12 4L6 18" /><path d="M12 4l6 14" /><path d="M5 13l7 6 7-6" />
                     <circle cx="12" cy="4" r="1.3" fill="currentColor"/>
                 </svg>
             </div>
@@ -60,14 +52,14 @@
                     Tesorería R.·. L.·. Renovación N° 72
                 </h1>
                 <p class="text-[11px] uppercase tracking-[0.2em] text-slate-400 font-medium">
-                    Fraternidad &bull; Administración y Contabilidad (Google Sheets Sync)
+                    Fraternidad &bull; Google Sheets Direct Backend
                 </p>
             </div>
         </div>
         <div id="session-info" class="hidden text-xs sm:text-sm flex items-center gap-3">
             <span id="user-display" class="font-mono font-semibold bg-slate-800 text-amber-300 border border-amber-500/40 px-3 py-1.5 rounded"></span>
-            <button onclick="logout()" class="bg-rose-900/90 hover:bg-rose-800 text-stone-100 border border-rose-700/70 px-3 py-1.5 rounded transition font-semibold inline-flex items-center gap-1.5">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <button onclick="logout()" class="bg-rose-900/95 hover:bg-rose-800 text-stone-100 border border-rose-700/70 px-3 py-1.5 rounded transition font-semibold inline-flex items-center gap-1.5">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                 <span>Cerrar Sesión</span>
             </button>
         </div>
@@ -79,1480 +71,259 @@
         <section id="auth-section" class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-xl mt-10 border border-slate-200 border-t-4 border-t-amber-600">
             <div class="flex justify-center mb-4">
                 <div class="w-14 h-14 rounded-full bg-slate-900 border-2 border-amber-500 flex items-center justify-center shadow-md">
-                    <svg class="w-8 h-8 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 3L4 19h16L12 3z" stroke-opacity="0.35"/>
-                        <path d="M12 4L6 18" />
-                        <path d="M12 4l6 14" />
-                        <path d="M5 13l7 6 7-6" />
-                        <circle cx="12" cy="4" r="1.3" fill="currentColor"/>
-                    </svg>
+                    <svg class="w-8 h-8 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3L4 19h16L12 3z" stroke-opacity="0.35"/><path d="M12 4L6 18"/><path d="M12 4l6 14"/><path d="M5 13l7 6 7-6"/><circle cx="12" cy="4" r="1.3" fill="currentColor"/></svg>
                 </div>
             </div>
             <h2 class="font-serif text-lg sm:text-xl font-bold mb-1 text-center text-slate-900 tracking-wide">
                 Tesorería R.·. L.·. Renovación N° 72
             </h2>
             <p class="text-xs text-center text-slate-500 mb-6">
-                Hermanos ingresan solo con Cédula. Oficiales sin clave entrarán como consulta (Nivel 1).
+                Conectando directamente con Google Sheets. Ingresa con tu Cédula.
             </p>
             
             <div class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Número de Cédula / Identificación</label>
-                    <input type="text" id="auth-cedula" class="block w-full rounded-lg border-slate-300 shadow-sm p-2.5 bg-stone-50 border focus:outline-none focus:border-amber-600 focus:ring-1 focus:ring-amber-600 font-mono font-bold text-slate-900" placeholder="Ej: 1111 o admin">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Cédula de Identidad</label>
+                    <input type="text" id="auth-cedula" class="block w-full rounded-lg border-slate-300 shadow-sm p-2.5 bg-stone-50 border focus:outline-none focus:border-amber-600 font-mono font-bold text-slate-900" placeholder="Ej: 1111 o admin">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Clave de Acceso <span class="text-[11px] text-slate-400 font-normal normal-case">(Solo para Administrar)</span></label>
-                    <input type="password" id="auth-password" class="block w-full rounded-lg border-slate-300 shadow-sm p-2.5 bg-stone-50 border focus:outline-none focus:border-amber-600 focus:ring-1 focus:ring-amber-600 tracking-widest text-center text-slate-900" placeholder="••••">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Clave de Acceso <span class="text-[11px] text-slate-400 font-normal normal-case">(Opcional para socios)</span></label>
+                    <input type="password" id="auth-password" class="block w-full rounded-lg border-slate-300 shadow-sm p-2.5 bg-stone-50 border focus:outline-none focus:border-amber-600 tracking-widest text-center text-slate-900" placeholder="••••">
                 </div>
-                
-                <button onclick="handleAuth()" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/50 py-2.5 rounded-lg transition font-semibold text-sm shadow-md tracking-wide uppercase inline-flex items-center justify-center gap-2">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-                    <span>Validar Credenciales</span>
+                <button onclick="handleAuth()" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/50 py-2.5 rounded-lg transition font-semibold text-sm shadow-md tracking-wide uppercase">
+                    Validar en Google Sheets
                 </button>
             </div>
         </section>
 
-        <!-- SECCIÓN 2: ACCESO 1er Nivel - Panel del Hermano Regular / Consulta de Cuenta -->
+        <!-- SECCIÓN 2: Panel del Hermano Regular -->
         <section id="panel-nivel-socio" class="hidden space-y-6">
             <div id="socio-status-box" class="p-6 rounded-xl border text-center shadow-md flex flex-col items-center justify-center">
-                <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-1">Estado de Cuenta Fraternal</span>
+                <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-1">Estado de Cuenta Cloud</span>
                 <h3 id="socio-nombre-saludo" class="font-serif text-2xl font-bold text-slate-900 capitalize mb-1">---</h3>
                 <p id="socio-cedula-display" class="text-xs font-mono text-slate-500 mb-4">C.I: ---</p>
                 <div id="socio-badge-status" class="text-2xl font-extrabold tracking-widest inline-block px-7 py-2 rounded-full border mb-4">---</div>
-                
-                <!-- Bloque detallado de Meses Atrasados y Monto de Deuda -->
-                <div id="socio-deuda-container" class="hidden grid grid-cols-2 gap-4 w-full max-w-sm mt-2 border-t border-rose-200 pt-4 text-sm">
-                    <div class="bg-white/90 p-3 rounded-lg border border-rose-200 shadow-sm">
-                        <span class="text-[11px] text-slate-500 font-bold block uppercase tracking-wider">Meses Vencidos</span>
-                        <span id="socio-meses-deuda" class="text-xl font-black text-rose-700 font-mono tabular-nums">0</span>
-                    </div>
-                    <div class="bg-white/90 p-3 rounded-lg border border-rose-200 shadow-sm">
-                        <span class="text-[11px] text-slate-500 font-bold block uppercase tracking-wider">Total Pendiente</span>
-                        <span id="socio-monto-deuda" class="text-xl font-black text-rose-800 font-mono tabular-nums">$0.00</span>
-                    </div>
-                </div>
             </div>
 
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
-                    <h3 class="font-serif text-lg font-bold text-slate-900 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>Historial de Cápitas y Aportes</span></h3>
-                    <span class="text-xs font-mono text-slate-400 uppercase">Libro Personal</span>
-                </div>
+                <h3 class="font-serif text-lg font-bold text-slate-900 mb-4">Historial de Cápitas y Aportes</h3>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-slate-200 text-sm">
-                        <thead class="bg-slate-900 text-amber-300 uppercase text-[11px] tracking-wider">
-                            <tr>
-                                <th class="px-4 py-3 text-left font-semibold">Fecha de Pago</th>
-                                <th class="px-4 py-3 text-left font-semibold">Descripción / Concepto</th>
-                                <th class="px-4 py-3 text-right font-semibold">Monto Procesado</th>
-                            </tr>
+                        <thead class="bg-slate-900 text-amber-300 uppercase text-[11px]">
+                            <tr><th class="px-4 py-3 text-left">Fecha</th><th class="px-4 py-3 text-left">Concepto</th><th class="px-4 py-3 text-right">Monto</th></tr>
                         </thead>
-                        <tbody id="tabla-historial-socio" class="divide-y divide-slate-100 text-slate-700 tabular-nums"></tbody>
+                        <tbody id="tabla-historial-socio" class="divide-y divide-slate-100 text-slate-700"></tbody>
                     </table>
                 </div>
             </div>
         </section>
 
-        <!-- SECCIÓN 3: ACCESO 2do Nivel Y 3er Nivel - Entorno Administrativo con Navegación por Pestañas -->
+        <!-- SECCIÓN 3: Entorno Administrativo (Caja y Movimientos) -->
         <section id="panel-entorno-admin" class="hidden space-y-6">
-            
-            <!-- Tarjetas de Balance General Institucional (Siempre visibles arriba para referencia rápida) -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-l-4 border-l-emerald-700 flex flex-col justify-center">
-                    <div class="flex items-center justify-between"><span class="text-[11px] text-slate-500 font-bold uppercase tracking-widest">Ingresos Totales</span><svg class="w-5 h-5 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
-                    <p id="admin-card-ingresos" class="text-3xl sm:text-4xl font-black text-emerald-700 mt-1 tabular-nums">$0.00</p>
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-l-emerald-700">
+                    <span class="text-[11px] text-slate-500 font-bold uppercase">Ingresos Totales</span>
+                    <p id="admin-card-ingresos" class="text-3xl font-black text-emerald-700 mt-1 tabular-nums">$0.00</p>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-l-4 border-l-rose-700 flex flex-col justify-center">
-                    <div class="flex items-center justify-between"><span class="text-[11px] text-slate-500 font-bold uppercase tracking-widest">Egresos Totales</span><svg class="w-5 h-5 text-rose-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg></div>
-                    <p id="admin-card-gastos" class="text-3xl sm:text-4xl font-black text-rose-700 mt-1 tabular-nums">$0.00</p>
+                <div class="bg-white p-6 rounded-xl shadow-md border-l-4 border-l-rose-700">
+                    <span class="text-[11px] text-slate-500 font-bold uppercase">Egresos Totales</span>
+                    <p id="admin-card-gastos" class="text-3xl font-black text-rose-700 mt-1 tabular-nums">$0.00</p>
                 </div>
-                <div class="bg-slate-900 p-6 rounded-xl shadow-md border border-amber-500/40 border-l-4 border-l-amber-500 flex flex-col justify-center">
-                    <div class="flex items-center justify-between"><span class="text-[11px] text-amber-400/80 font-bold uppercase tracking-widest">Saldo Neto en Tesorería</span><svg class="w-5 h-5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="7" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="17"/><line x1="7" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="17" y2="12"/></svg></div>
-                    <p id="admin-card-saldo" class="text-3xl sm:text-4xl font-black text-amber-400 mt-1 tabular-nums">$0.00</p>
-                </div>
-            </div>
-
-            <!-- BARRA DE NAVEGACIÓN POR PESTAÑAS (TABS) -->
-            <nav aria-label="Secciones de Tesorería" class="bg-slate-900 p-1.5 rounded-xl shadow-md border border-slate-800 flex flex-wrap gap-1.5">
-                <button type="button" id="tab-btn-caja" onclick="cambiarTabAdmin('caja')" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 bg-amber-500 text-slate-950 shadow">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
-                    <span>Caja y Movimientos</span>
-                </button>
-                <button type="button" id="tab-btn-padron" onclick="cambiarTabAdmin('padron')" class="admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    <span>Padrón de Hermanos</span>
-                </button>
-                <button type="button" id="tab-btn-auditoria" onclick="cambiarTabAdmin('auditoria')" class="hidden admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                    <span>Libro Diario y Auditoría</span>
-                </button>
-                <button type="button" id="tab-btn-config" onclick="cambiarTabAdmin('config')" class="hidden admin-tab-btn flex-1 min-w-[140px] px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition inline-flex items-center justify-center gap-2 text-slate-300 hover:text-amber-300 hover:bg-slate-800">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                    <span>Configuración Maestra</span>
-                </button>
-            </nav>
-
-            <!-- ========================================================= -->
-            <!-- PESTAÑA 1: CAJA Y MOVIMIENTOS (Nivel 2 y Nivel 3)         -->
-            <!-- ========================================================= -->
-            <div id="tab-panel-caja" class="admin-tab-panel space-y-6">
-                <div id="formularios-operaciones" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Formulario Pagos (Ingresos) -->
-                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-emerald-700">
-                        <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
-                            <h3 class="font-serif text-base font-bold text-slate-900 flex items-center gap-2"><svg class="w-5 h-5 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 12 16 16 12"/><line x1="12" y1="8" x2="12" y2="16"/></svg><span>Registrar Operación de Ingreso</span></h3>
-                            <span class="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">Entrada</span>
-                        </div>
-                        <div class="space-y-3 text-sm">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-600 mb-1">Fecha Asignada</label>
-                                <input type="date" id="ingreso-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold text-slate-900 focus:border-amber-600 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 mb-1">Clasificación de Ingreso</label>
-                                <select id="ingreso-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold text-slate-800 focus:border-amber-600 focus:outline-none"></select>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 mb-1">Seleccionar Hermano (Por Cédula)</label>
-                                <select id="ingreso-usuario" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono text-slate-800 focus:border-amber-600 focus:outline-none"></select>
-                            </div>
-                            <input type="number" id="ingreso-monto" step="0.01" placeholder="Monto Pago ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums focus:border-amber-600 focus:outline-none">
-                            <input type="text" id="ingreso-desc" placeholder="Descripción o Concepto" class="w-full p-2 border border-slate-300 rounded-lg text-base focus:border-amber-600 focus:outline-none">
-                            <button onclick="registrarTransaccion('ingreso')" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm inline-flex items-center justify-center gap-2">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                                <span>Guardar Pago e Imprimir Recibo</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Formulario Gastos -->
-                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-rose-700">
-                        <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
-                            <h3 class="font-serif text-base font-bold text-slate-900 flex items-center gap-2"><svg class="w-5 h-5 text-rose-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="16 12 12 8 8 12"/><line x1="12" y1="16" x2="12" y2="8"/></svg><span>Registrar Egreso Operativo</span></h3>
-                            <span class="text-[11px] font-bold uppercase px-2 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200">Salida</span>
-                        </div>
-                        <div class="space-y-3 text-sm">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-600 mb-1">Fecha de Ejecución</label>
-                                <input type="date" id="gasto-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold text-rose-800 focus:border-amber-600 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-600 mb-1">Clasificación del Egreso</label>
-                                <select id="gasto-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold text-slate-800 focus:border-amber-600 focus:outline-none"></select>
-                            </div>
-                            <input type="number" id="gasto-monto" step="0.01" placeholder="Monto Egreso ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums focus:border-amber-600 focus:outline-none">
-                            <input type="text" id="gasto-desc" placeholder="Descripción o Detalle" class="w-full p-2 border border-slate-300 rounded-lg text-base focus:border-amber-600 focus:outline-none">
-                            <button onclick="registrarTransaccion('gasto')" class="w-full bg-rose-700 hover:bg-rose-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm inline-flex items-center justify-center gap-2">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                                <span>Guardar Egreso</span>
-                            </button>
-                        </div>
-                    </div>
+                <div class="bg-slate-900 p-6 rounded-xl shadow-md border-l-4 border-l-amber-500 text-stone-100">
+                    <span class="text-[11px] text-amber-400 font-bold uppercase">Saldo Neto Cloud</span>
+                    <p id="admin-card-saldo" class="text-3xl font-black text-amber-400 mt-1 tabular-nums">$0.00</p>
                 </div>
             </div>
 
-            <!-- ========================================================= -->
-            <!-- PESTAÑA 2: PADRÓN DE HERMANOS (Consulta Nivel 2/3 + CRUD Nivel 3) -->
-            <!-- ========================================================= -->
-            <div id="tab-panel-padron" class="admin-tab-panel hidden space-y-6">
-                <!-- Vista de Solvencia General (Nivel 2 y Nivel 3) -->
-                <div id="vista-padron-general" class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b border-slate-100">
-                        <div>
-                            <h3 class="font-serif text-xl font-bold text-slate-900 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Padrón General de Hermanos</span></h3>
-                            <p class="text-xs text-slate-500">Visualización de solvencia fraternal (Cierre los días 28 de cada mes).</p>
-                        </div>
+            <!-- Formulario de Registro de Ingreso -->
+            <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-emerald-700 max-w-xl mx-auto">
+                <h3 class="font-serif text-base font-bold text-slate-900 mb-4">Registrar Pago / Ingreso Directo a Google Sheets</h3>
+                <div class="space-y-3 text-sm">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Fecha</label>
+                        <input type="date" id="ingreso-fecha" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono font-bold">
                     </div>
-
-                    <div class="flex items-center gap-3 mb-4 bg-stone-50 p-3 rounded-lg border border-slate-200 text-sm">
-                        <span class="font-semibold text-slate-700">Filtrar por estatus financiero:</span>
-                        <select id="filtro-estatus" onchange="cargarListaUsuariosAdmin()" class="p-1.5 border border-slate-300 rounded-md bg-white text-slate-800 font-medium focus:border-amber-600 focus:outline-none">
-                            <option value="todos">Mostrar Todos</option>
-                            <option value="solvente">Solo Solventes</option>
-                            <option value="moroso">Solo Morosos</option>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Hermano</label>
+                        <select id="ingreso-usuario" class="w-full p-2 border border-slate-300 rounded-lg bg-stone-50 font-mono"></select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1">Concepto</label>
+                        <select id="ingreso-subtipo" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold">
+                            <option value="cuota">Pago de Cápita Mensual</option>
+                            <option value="eventual">Aporte Extraordinario</option>
                         </select>
                     </div>
-
-                    <div class="overflow-x-auto rounded-lg border border-slate-200">
-                        <table class="min-w-full divide-y divide-slate-200 text-sm">
-                            <thead class="bg-slate-900 text-amber-300 text-[11px] font-semibold uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-4 py-3 text-left">Cédula</th>
-                                    <th class="px-4 py-3 text-left">Nombre Completo</th>
-                                    <th class="px-4 py-3 text-left">Grado / Nivel</th>
-                                    <th class="px-4 py-3 text-left">Último Pago Cápita</th>
-                                    <th class="px-4 py-3 text-center">Estatus</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabla-usuarios-admin" class="divide-y divide-slate-100 text-slate-700"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Gestión CRUD de Hermanos (Exclusivo Nivel 3) -->
-                <div id="crud-usuarios-nivel3" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- CREATE / ALTA DE USUARIOS -->
-                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-amber-600 h-fit">
-                        <h3 class="font-serif text-base font-bold text-slate-900 mb-4 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg><span>Registrar Nuevo Hermano / Oficial</span></h3>
-                        <div class="space-y-3 text-sm">
-                            <input type="text" id="admin-new-cedula" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full p-2 border border-slate-300 rounded-lg font-mono font-bold" placeholder="Cédula (Solo números)">
-                            <input type="text" id="admin-new-name" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, '')" class="w-full p-2 border border-slate-300 rounded-lg" placeholder="Nombre Completo (Solo texto)">
-                            <div>
-                                <label class="block text-xs text-slate-600 font-semibold mb-1">Nivel de acceso asignado</label>
-                                <select id="admin-new-membresia" class="w-full p-2 border border-slate-300 rounded-lg bg-white font-semibold text-slate-800">
-                                    <option value="1er Nivel">1er Nivel (Hermano Regular)</option>
-                                    <option value="2do Nivel">2do Nivel (Operador de Caja)</option>
-                                    <option value="3er Nivel">3er Nivel (Tesorero Supremo)</option>
-                                </select>
-                            </div>
-                            <button onclick="crudCrearUsuario()" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/40 py-2.5 rounded-lg transition font-semibold shadow-sm">
-                                Insertar en Padrón
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- READ / UPDATE / DELETE DE HERMANOS -->
-                    <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-slate-800 lg:col-span-2">
-                        <h3 class="font-serif text-base font-bold text-slate-900 mb-1 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Tabla Maestra: Edición de Padrón</span></h3>
-                        <p class="text-xs text-slate-500 mb-3">Haz clic en <strong>cualquier cabecera de columna</strong> para ordenar de forma automática.</p>
-                        <div class="overflow-x-auto max-h-72 rounded-lg border border-slate-200">
-                            <table class="min-w-full divide-y divide-slate-200 text-xs">
-                                <thead class="bg-slate-900 text-amber-300 font-bold uppercase tracking-wider select-none">
-                                    <tr>
-                                        <th class="px-3 py-2.5 text-left cursor-pointer hover:bg-slate-800 transition" onclick="alternarOrdenColumna('cedula')">Cédula ↕</th>
-                                        <th class="px-3 py-2 text-left cursor-pointer hover:bg-slate-800 transition" onclick="alternarOrdenColumna('nombre')">Nombre ↕</th>
-                                        <th class="px-3 py-2 text-left cursor-pointer hover:bg-slate-800 transition" onclick="alternarOrdenColumna('membresia')">Nivel Acceso ↕</th>
-                                        <th class="px-3 py-2 text-center">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="crud-tabla-usuarios" class="divide-y divide-slate-100"></tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <input type="number" id="ingreso-monto" step="0.01" placeholder="Monto ($)" class="w-full p-2 border border-slate-300 rounded-lg text-base tabular-nums">
+                    <input type="text" id="ingreso-desc" placeholder="Descripción" class="w-full p-2 border border-slate-300 rounded-lg text-base">
+                    <button onclick="registrarTransaccionCloud()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg transition font-semibold shadow-sm">
+                        Guardar Directo en Google Sheet
+                    </button>
                 </div>
             </div>
-
-            <!-- ========================================================= -->
-            <!-- PESTAÑA 3: LIBRO DIARIO Y AUDITORÍA (Exclusivo Nivel 3)   -->
-            <!-- ========================================================= -->
-            <div id="tab-panel-auditoria" class="admin-tab-panel hidden space-y-6">
-                <!-- REPORTE FILTRADO POR COLUMNAS CON EXPORTACIÓN PDF -->
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-amber-600">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
-                        <div>
-                            <h3 class="font-serif text-lg font-bold text-slate-900 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Reporte de Auditoría y Filtros Avanzados</span></h3>
-                            <p class="text-xs text-slate-500">Consulta el libro contable o el estado de cápitas por cobrar cruzando parámetros.</p>
-                        </div>
-                        <button onclick="exportarReporteFiltradoPDF()" class="bg-slate-900 hover:bg-slate-800 text-amber-400 border border-amber-500/40 text-xs font-bold px-4 py-2.5 rounded-lg shadow transition inline-flex items-center gap-1.5">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15v-2h1.5a1.5 1.5 0 0 1 0 3H9z"/></svg>
-                            <span>Exportar Reporte Actual a PDF</span>
-                        </button>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4 text-xs bg-stone-50 p-3.5 rounded-lg border border-slate-200">
-                        <div>
-                            <label class="block font-bold text-slate-700 mb-1">Filtrar por Columna: Tipo / Categoría</label>
-                            <select id="reporte-filtro-tipo" onchange="renderReporteAuditoriaAbajo()" class="w-full p-2 border border-slate-300 rounded-md bg-white text-slate-800 font-medium"></select>
-                        </div>
-                        <div>
-                            <label class="block font-bold text-slate-700 mb-1">Buscar por Columna: Cédula del Hermano</label>
-                            <input type="text" id="reporte-filtro-cedula" oninput="renderReporteAuditoriaAbajo()" class="w-full p-2 border border-slate-300 rounded-md font-mono font-bold text-slate-800" placeholder="Escribe la cédula...">
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta de Totalizador del Reporte Filtrado Actual -->
-                    <div class="mb-3 bg-slate-900 text-stone-100 font-bold p-3.5 rounded-lg border border-amber-500/40 flex justify-between items-center text-sm">
-                        <span class="text-slate-300">Sumatoria de Registros Filtrados Actuales:</span>
-                        <span id="reporte-total-big-badge" class="text-lg font-black text-amber-400 font-mono tabular-nums">$0.00</span>
-                    </div>
-
-                    <div class="overflow-x-auto max-h-64 text-xs rounded-lg border border-slate-200">
-                        <table class="min-w-full divide-y divide-slate-200">
-                            <thead id="reporte-tabla-header" class="bg-slate-800 text-amber-300 uppercase text-[10px] tracking-wider"></thead>
-                            <tbody id="reporte-tabla-auditoria-rows" class="divide-y divide-slate-100 text-slate-700 tabular-nums"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- READ / UPDATE / DELETE DE TRANSACCIONES -->
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-slate-900">
-                    <h3 class="font-serif text-base font-bold text-slate-900 mb-1 flex items-center gap-2"><svg class="w-5 h-5 text-slate-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg><span>Libro Diario Editable (Últimos 50 Asientos)</span></h3>
-                    <p class="text-xs text-slate-500 mb-3">Modifica fechas, descripciones o montos directamente sobre la tabla y guarda los cambios.</p>
-                    <div class="overflow-x-auto max-h-80 rounded-lg border border-slate-200">
-                        <table class="min-w-full divide-y divide-slate-200 text-xs">
-                            <thead class="bg-slate-900 text-amber-300 font-bold uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-3 py-2.5 text-left">Fecha</th>
-                                    <th class="px-3 py-2 text-left">Hermano (Cédula)</th>
-                                    <th class="px-3 py-2 text-left">Tipo</th>
-                                    <th class="px-3 py-2 text-left">Descripción</th>
-                                    <th class="px-3 py-2 text-right">Monto</th>
-                                    <th class="px-3 py-2 text-center">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="crud-tabla-transacciones" class="divide-y divide-slate-100 tabular-nums"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ========================================================= -->
-            <!-- PESTAÑA 4: CONFIGURACIÓN MAESTRA (Exclusivo Nivel 3)      -->
-            <!-- ========================================================= -->
-            <div id="tab-panel-config" class="admin-tab-panel hidden space-y-6">
-                <!-- Banner de Autoridad Suprema + Respaldo / Restauración BD -->
-                <div class="bg-slate-900 text-stone-100 p-5 rounded-xl shadow-lg border-l-4 border-amber-500 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div class="flex items-center gap-3">
-                        <svg class="w-6 h-6 text-amber-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        <div>
-                            <h2 class="font-serif text-lg font-bold text-amber-400">Configuración Maestra — R.·. L.·. Renovación N° 72</h2>
-                            <p class="text-xs text-slate-300">Respaldo físico de base de datos, cápita mensual, llaves de acceso y conceptos.</p>
-                        </div>
-                    </div>
-                    <div id="controles-bd-nivel3" class="flex flex-wrap items-center gap-2">
-                        <button onclick="descargarBaseDatos()" class="bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/40 text-xs font-bold px-3.5 py-2 rounded-lg inline-flex items-center gap-1.5 transition shadow-sm">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                            <span>Respaldar BD (.db)</span>
-                        </button>
-                        <label class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3.5 py-2 rounded-lg inline-flex items-center gap-1.5 transition shadow-sm cursor-pointer">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                            <span>Restaurar BD (.db)</span>
-                            <input type="file" id="input-importar-db" accept=".db,.sqlite,.sqlite3" onchange="importarBaseDatos(event)" class="hidden">
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Bloque Estructural de Parámetros y Claves de Seguridad -->
-                <div id="modulo-config-claves-nivel3" class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-amber-600">
-                    <h3 class="font-serif text-base font-bold text-slate-900 mb-1 flex items-center gap-2"><svg class="w-5 h-5 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg><span>Parámetros Institucionales y Claves de Acceso</span></h3>
-                    <p class="text-xs text-slate-500 mb-4">Modifica la cápita mensual y las credenciales de los niveles administrativos.</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                        <div class="p-3.5 bg-stone-50 rounded-lg border border-slate-200">
-                            <label class="block text-xs font-bold text-slate-700 mb-1.5">Cápita Mensual ($)</label>
-                            <div class="flex gap-2">
-                                <input type="number" id="cfg-input-cuota" step="0.01" class="w-full p-1.5 border border-slate-300 rounded font-mono font-bold text-center text-slate-900 tabular-nums">
-                                <button onclick="actualizarCuotaClubBD()" class="bg-amber-600 hover:bg-amber-700 text-white text-xs px-3 py-1.5 rounded font-bold transition">Fijar</button>
-                            </div>
-                        </div>
-                        <div class="p-3.5 bg-stone-50 rounded-lg border border-slate-200">
-                            <label class="block text-xs font-bold text-slate-700 mb-1">Clave Operador (Nivel 2)</label>
-                            <div class="flex gap-2">
-                                <input type="text" id="key-input-nivel2" class="w-full p-1.5 border border-slate-300 rounded font-mono font-bold text-center text-slate-900">
-                                <button onclick="actualizarClaveBD('2do Nivel')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs px-3 py-1.5 rounded font-bold transition">Actualizar</button>
-                            </div>
-                        </div>
-                        <div class="p-3.5 bg-stone-50 rounded-lg border border-slate-200">
-                            <label class="block text-xs font-bold text-slate-700 mb-1">Clave Tesorero Supremo (Nivel 3)</label>
-                            <div class="flex gap-2">
-                                <input type="text" id="key-input-nivel3" class="w-full p-1.5 border border-slate-300 rounded font-mono font-bold text-center text-slate-900">
-                                <button onclick="actualizarClaveBD('3er Nivel')" class="bg-amber-600 hover:bg-amber-700 text-white text-xs px-3 py-1.5 rounded font-bold transition">Actualizar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PANEL CRUD MAESTRO DE CATEGORÍAS -->
-                <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-slate-800 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <h3 class="font-serif text-base font-bold text-slate-900 mb-1 flex items-center gap-2"><svg class="w-5 h-5 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span>Conceptos de Ingresos</span></h3>
-                        <p class="text-xs text-slate-500 mb-3">Crea, edita o elimina clasificaciones de entrada.</p>
-                        <div class="flex gap-2 mb-4 text-xs">
-                            <input type="text" id="new-cat-ingreso-id" class="w-1/4 p-2 border border-slate-300 rounded-lg font-mono font-bold uppercase" placeholder="ID ÚNICO">
-                            <input type="text" id="new-cat-ingreso-name" class="w-2/4 p-2 border border-slate-300 rounded-lg" placeholder="Nombre del Concepto">
-                            <button onclick="crearCategoriaBD('ingreso')" class="w-1/4 bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold px-2 py-2 rounded-lg transition shadow-sm inline-flex items-center justify-center gap-1"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>Crear</span></button>
-                        </div>
-                        <div class="max-h-52 overflow-y-auto border border-slate-200 rounded-lg divide-y divide-slate-100 text-xs" id="lista-cats-ingresos"></div>
-                    </div>
-                    <div>
-                        <h3 class="font-serif text-base font-bold text-slate-900 mb-1 flex items-center gap-2"><svg class="w-5 h-5 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span>Conceptos de Egresos</span></h3>
-                        <p class="text-xs text-slate-500 mb-3">Crea, edita o elimina clasificaciones de salida.</p>
-                        <div class="flex gap-2 mb-4 text-xs">
-                            <input type="text" id="new-cat-gasto-id" class="w-1/4 p-2 border border-slate-300 rounded-lg font-mono font-bold uppercase" placeholder="ID ÚNICO">
-                            <input type="text" id="new-cat-gasto-name" class="w-2/4 p-2 border border-slate-300 rounded-lg" placeholder="Nombre del Concepto">
-                            <button onclick="crearCategoriaBD('gasto')" class="w-1/4 bg-slate-900 hover:bg-slate-800 text-amber-400 font-bold px-2 py-2 rounded-lg transition shadow-sm inline-flex items-center justify-center gap-1"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>Crear</span></button>
-                        </div>
-                        <div class="max-h-52 overflow-y-auto border border-slate-200 rounded-lg divide-y divide-slate-100 text-xs" id="lista-cats-gastos"></div>
-                    </div>
-                </div>
-            </div>
-
         </section>
 
     </main>
 
-    <footer class="bg-slate-900 text-slate-400 text-xs py-4 border-t border-slate-800 text-center">
-        <span class="font-serif text-amber-400/90 font-semibold tracking-wider">Tesorería R.·. L.·. Renovación N° 72</span> &copy; 2026 &mdash; Sistema Contable Fraternal
-    </footer>
-
     <script>
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzByqQNnpSIh-uP8PapJcXIOHlrvwmAFy7sNDTXPNrY4wwx7EluV5697xxUd9-_JyobDA/exec';
+        // URL Oficial de tu Google Apps Script desplegado
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyK1mC8unJaWJHdXLQjXzDhmBt8_dXzZcX9MP_9ubTHTZmM-tODJyz5oqZsAfbxQXv4SA/exec';
 
-        let db = null;
+        let appData = { usuarios: [], transacciones: [], cuota_mensual: 50 };
         let currentUser = null;
-        let SQL_ENGINE = null;
-        
-        let columnaOrdenActual = "nombre";
-        let ordenAscendente = true;
-        let activeAdminTab = "caja";
-        
-        const DB_STORE_NAME = "fraternoapp_idb";
-        const DB_STORE_OBJ = "sqlite_store";
-        const DB_RECORD_KEY = "fraternoapp_db_bin";
-        const SESSION_KEY = "fraternoapp_active_session";
 
-        const fechaPorDefecto = new Date().toISOString().split('T')[0];
-
-        // =========================================================================
-        // MOTOR DE PERSISTENCIA BINARIA EN INDEXEDDB
-        // =========================================================================
-        function abrirIndexedDB() {
-            return new Promise((resolve, reject) => {
-                const request = indexedDB.open(DB_STORE_NAME, 1);
-                request.onupgradeneeded = (e) => {
-                    const idb = e.target.result;
-                    if (!idb.objectStoreNames.contains(DB_STORE_OBJ)) {
-                        idb.createObjectStore(DB_STORE_OBJ);
-                    }
-                };
-                request.onsuccess = (e) => resolve(e.target.result);
-                request.onerror = (e) => reject(e.target.error);
-            });
-        }
-
-        async function leerBinarioIDB() {
-            const idb = await abrirIndexedDB();
-            return new Promise((resolve, reject) => {
-                const tx = idb.transaction(DB_STORE_OBJ, "readonly");
-                const store = tx.objectStore(DB_STORE_OBJ);
-                const req = store.get(DB_RECORD_KEY);
-                req.onsuccess = () => resolve(req.result || null);
-                req.onerror = () => reject(req.error);
-            });
-        }
-
-        async function guardarEnStorage() {
-            if (!db) return;
-            try {
-                const binaryArray = db.export();
-                const idb = await abrirIndexedDB();
-                await new Promise((resolve, reject) => {
-                    const tx = idb.transaction(DB_STORE_OBJ, "readwrite");
-                    const store = tx.objectStore(DB_STORE_OBJ);
-                    const req = store.put(binaryArray, DB_RECORD_KEY);
-                    req.onsuccess = () => resolve();
-                    req.onerror = () => reject(req.error);
-                });
-            } catch (err) {
-                console.error("Error guardando en IndexedDB:", err);
-                mostrarToast("No se pudo persistir el cambio en IndexedDB: " + err.message, "error");
-            }
-        }
-
-        // Procesar datos remotos traídos de Google Sheets mediante JSONP
-        function procesarDatosHojaRemota(resultado) {
-            if (resultado && resultado.status === 'success' && db) {
-                try {
-                    if (resultado.usuarios) {
-                        resultado.usuarios.forEach(u => {
-                            db.run("INSERT OR IGNORE INTO usuarios (cedula, nombre, membresia, fecha_registro) VALUES (?, ?, ?, ?)", 
-                                [u.cedula, u.nombre, u.membresia, u.fecha_registro || '2026-01-01']);
-                        });
-                    }
-                    if (resultado.transacciones) {
-                        resultado.transacciones.forEach(t => {
-                            db.run("INSERT OR IGNORE INTO transacciones (id, usuario_id, tipo, subtipo, monto, descripcion, fecha) VALUES (?, ?, ?, ?, ?, ?, ?)", 
-                                [t.id, t.usuario_id, t.tipo, t.subtipo, t.monto, t.descripcion, t.fecha]);
-                        });
-                    }
-                    guardarEnStorage();
-                    if (currentUser) routeDashboardByNivel();
-                } catch (e) {
-                    console.error("Error sincronizando con SQLite local:", e);
-                }
-            }
-        }
-
-        function sincronizarConGoogleSheetsSegundoPlano() {
-            const scriptViejo = document.getElementById('jsonp-finanzas');
+        // Cargar datos en vivo directamente desde Google Sheets mediante JSONP
+        function cargarDatosCloud() {
+            const scriptViejo = document.getElementById('jsonp-cloud');
             if (scriptViejo) scriptViejo.remove();
 
             const script = document.createElement('script');
-            script.id = 'jsonp-finanzas';
-            script.src = `${APPS_SCRIPT_URL}?callback=procesarDatosHojaRemota&t=${new Date().getTime()}`;
+            script.id = 'jsonp-cloud';
+            script.src = `${APPS_SCRIPT_URL}?callback=procesarDatosCloud&t=${new Date().getTime()}`;
             document.body.appendChild(script);
         }
 
-        // Arrancar motor SQLite
-        initSQL();
-
-        async function initSQL() {
-            try {
-                SQL_ENGINE = await initSqlJs({
-                    locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
-                });
-                
-                let savedUint8 = await leerBinarioIDB();
-
-                if (!savedUint8 && localStorage.getItem("finanzas_db")) {
-                    try {
-                        savedUint8 = new Uint8Array(JSON.parse(localStorage.getItem("finanzas_db")));
-                        localStorage.removeItem("finanzas_db");
-                    } catch (e) {
-                        savedUint8 = null;
-                    }
-                }
-
-                if (savedUint8) {
-                    db = new SQL_ENGINE.Database(savedUint8);
-                } else {
-                    db = new SQL_ENGINE.Database();
-                }
-
-                db.run(`
-                    CREATE TABLE IF NOT EXISTS usuarios (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        cedula TEXT UNIQUE NOT NULL,
-                        nombre TEXT NOT NULL,
-                        membresia TEXT NOT NULL CHECK(membresia IN ('1er Nivel', '2do Nivel', '3er Nivel')),
-                        fecha_registro TEXT DEFAULT (DATE('now'))
-                    );
-                    CREATE TABLE IF NOT EXISTS transacciones (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        usuario_id INTEGER NOT NULL,
-                        tipo TEXT NOT NULL CHECK(tipo IN ('ingreso', 'gasto')),
-                        subtipo TEXT DEFAULT 'cuota',
-                        monto REAL NOT NULL,
-                        descripcion TEXT,
-                        fecha TEXT NOT NULL,
-                        FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
-                    );
-                    CREATE TABLE IF NOT EXISTS config_claves (
-                        membresia TEXT PRIMARY KEY,
-                        clave TEXT NOT NULL
-                    );
-                    CREATE TABLE IF NOT EXISTS config_club (
-                        parametro TEXT PRIMARY KEY,
-                        valor REAL NOT NULL
-                    );
-                    CREATE TABLE IF NOT EXISTS categorias_conceptos (
-                        subtipo TEXT PRIMARY KEY,
-                        nombre TEXT NOT NULL,
-                        tipo_movimiento TEXT NOT NULL CHECK(tipo_movimiento IN ('ingreso', 'gasto'))
-                    );
-                `);
-
-                db.run("INSERT OR IGNORE INTO usuarios (cedula, nombre, membresia, fecha_registro) VALUES ('1111', 'Hermano de Prueba 1', '1er Nivel', '2026-01-01')");
-                db.run("INSERT OR IGNORE INTO usuarios (cedula, nombre, membresia, fecha_registro) VALUES ('2222', 'Admin Operativo', '2do Nivel', '2026-01-01')");
-                db.run("INSERT OR IGNORE INTO usuarios (cedula, nombre, membresia, fecha_registro) VALUES ('admin', 'Administrador Supremo', '3er Nivel', '2026-01-01')");
-                
-                db.run("INSERT OR IGNORE INTO config_claves (membresia, clave) VALUES ('2do Nivel', '4321')");
-                db.run("INSERT OR IGNORE INTO config_claves (membresia, clave) VALUES ('3er Nivel', '1234')");
-                db.run("INSERT OR IGNORE INTO config_club (parametro, valor) VALUES ('cuota_mensual', 50.00)");
-
-                db.run("INSERT OR IGNORE INTO categorias_conceptos (subtipo, nombre, tipo_movimiento) VALUES ('cuota', 'Pago de Cápita Mensual', 'ingreso')");
-                db.run("INSERT OR IGNORE INTO categorias_conceptos (subtipo, nombre, tipo_movimiento) VALUES ('eventual', 'Aporte Extraordinario', 'ingreso')");
-                db.run("INSERT OR IGNORE INTO categorias_conceptos (subtipo, nombre, tipo_movimiento) VALUES ('gasto_fijo', 'Gasto Fijo', 'gasto')");
-                db.run("INSERT OR IGNORE INTO categorias_conceptos (subtipo, nombre, tipo_movimiento) VALUES ('gasto_variable', 'Gasto Variable', 'gasto')");
-                db.run("INSERT OR IGNORE INTO categorias_conceptos (subtipo, nombre, tipo_movimiento) VALUES ('mantenimiento', 'Mantenimiento de Templo', 'gasto')");
-                db.run("INSERT OR IGNORE INTO categorias_conceptos (subtipo, nombre, tipo_movimiento) VALUES ('servicios', 'Servicios Públicos', 'gasto')");
-                
-                await guardarEnStorage();
-                
-                document.getElementById('ingreso-fecha').value = fechaPorDefecto;
-                document.getElementById('gasto-fecha').value = fechaPorDefecto;
-
-                // Sincronizar con Google Sheets en segundo plano al iniciar
-                sincronizarConGoogleSheetsSegundoPlano();
-
-                const sessionSaved = localStorage.getItem(SESSION_KEY) || localStorage.getItem("active_session");
-                if (sessionSaved) {
-                    currentUser = JSON.parse(sessionSaved);
-                    routeDashboardByNivel();
-                }
-
-            } catch (err) {
-                mostrarToast("Error relacional crítico: " + err.message, "error");
+        function procesarDatosCloud(res) {
+            if (res && res.status === 'success') {
+                appData = res;
+                if (currentUser) routeDashboard();
+                console.log("Datos sincronizados en tiempo real con Google Sheets.");
+            } else {
+                alert("Error al cargar datos desde Google Sheets.");
             }
         }
 
-        function obtenerCuotaMensualBD() {
-            const res = db.exec("SELECT valor FROM config_club WHERE parametro = 'cuota_mensual'");
-            return res.length > 0 ? parseFloat(res[0].values[0][0]) : 50.00;
-        }
+        // Inicializar app consultando la nube
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('ingreso-fecha').value = new Date().toISOString().split('T')[0];
+            cargarDatosCloud();
+            
+            const saved = localStorage.getItem("cloud_session");
+            if (saved) {
+                currentUser = JSON.parse(saved);
+                routeDashboard();
+            }
+        });
 
         function handleAuth() {
             const cedula = document.getElementById('auth-cedula').value.trim();
-            const password = document.getElementById('auth-password').value;
+            if (!cedula) return alert("Introduce tu cédula.");
 
-            if (!cedula) return mostrarToast("Introduce tu Cédula o ID.", "warning");
-
-            const stmt = db.prepare("SELECT * FROM usuarios WHERE LOWER(cedula) = LOWER(?)");
-            stmt.bind([cedula]);
-            
-            if (stmt.step()) {
-                const userFound = stmt.getAsObject();
-                stmt.free();
-
-                if (!password) {
-                    currentUser = userFound;
-                    currentUser.forzarVistaSocio = true;
-                    saveSessionAndRedirect();
-                    return;
-                }
-                
-                if (userFound.membresia === '1er Nivel') {
-                    currentUser = userFound;
-                    currentUser.forzarVistaSocio = false;
-                    saveSessionAndRedirect();
-                    return;
-                }
-
-                const resKey = db.exec("SELECT clave FROM config_claves WHERE membresia = ?", [userFound.membresia]);
-                const claveCorrecta = resKey[0].values[0][0];
-
-                if (password === claveCorrecta) {
-                    currentUser = userFound;
-                    currentUser.forzarVistaSocio = false;
-                    saveSessionAndRedirect();
-                } else {
-                    mostrarToast("Clave incorrecta para el nivel administrativo.", "error");
-                }
+            const user = appData.usuarios.find(u => u.cedula.toLowerCase() === cedula.toLowerCase());
+            if (user) {
+                currentUser = user;
+                localStorage.setItem("cloud_session", JSON.stringify(currentUser));
+                routeDashboard();
             } else {
-                stmt.free();
-                mostrarToast("El número de cédula ingresado no existe en los registros de Tesorería.", "error");
+                alert("Cédula no encontrada en el padrón de Google Sheets.");
             }
-        }
-
-        function saveSessionAndRedirect() {
-            localStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
-            routeDashboardByNivel();
         }
 
         function logout() {
             currentUser = null;
-            activeAdminTab = 'caja';
-            localStorage.removeItem(SESSION_KEY);
-            localStorage.removeItem("active_session");
-            document.getElementById('auth-password').value = "";
+            localStorage.removeItem("cloud_session");
             document.getElementById('auth-section').classList.remove('hidden');
             document.getElementById('panel-nivel-socio').classList.add('hidden');
             document.getElementById('panel-entorno-admin').classList.add('hidden');
             document.getElementById('session-info').classList.add('hidden');
-            mostrarToast("Sesión finalizada con éxito.", "info");
         }
 
-        function cambiarTabAdmin(tabName) {
-            if (currentUser && currentUser.membresia !== '3er Nivel' && (tabName === 'auditoria' || tabName === 'config')) {
-                tabName = 'caja';
-            }
-            activeAdminTab = tabName;
-
-            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
-                btn.classList.remove('bg-amber-500', 'text-slate-950', 'shadow');
-                btn.classList.add('text-slate-300', 'hover:text-amber-300', 'hover:bg-slate-800');
-            });
-
-            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
-            if (activeBtn) {
-                activeBtn.classList.remove('text-slate-300', 'hover:text-amber-300', 'hover:bg-slate-800');
-                activeBtn.classList.add('bg-amber-500', 'text-slate-950', 'shadow');
-            }
-
-            document.querySelectorAll('.admin-tab-panel').forEach(panel => {
-                panel.classList.add('hidden');
-            });
-
-            const activePanel = document.getElementById(`tab-panel-${tabName}`);
-            if (activePanel) {
-                activePanel.classList.remove('hidden');
-            }
-        }
-
-        function routeDashboardByNivel() {
+        function routeDashboard() {
             document.getElementById('auth-section').classList.add('hidden');
             document.getElementById('session-info').classList.remove('hidden');
-            document.getElementById('user-display').innerText = `ID: ${currentUser.cedula.toUpperCase()} | ${currentUser.membresia.toUpperCase()}`;
+            document.getElementById('user-display').innerText = `ID: ${currentUser.cedula} | ${currentUser.membresia}`;
 
-            if (currentUser.membresia === '1er Nivel' || currentUser.forzarVistaSocio === true) {
+            if (currentUser.membresia === '1er Nivel') {
                 document.getElementById('panel-nivel-socio').classList.remove('hidden');
                 document.getElementById('panel-entorno-admin').classList.add('hidden');
-                renderVistasNivelSocio();
+                renderSocioView();
             } else {
                 document.getElementById('panel-nivel-socio').classList.add('hidden');
                 document.getElementById('panel-entorno-admin').classList.remove('hidden');
-                
-                cargarSelectorUsuarios();
-                cargarFormulariosConceptosDinamicos();
-
-                if (currentUser.membresia === '3er Nivel') {
-                    document.getElementById('tab-btn-auditoria').classList.remove('hidden');
-                    document.getElementById('tab-btn-config').classList.remove('hidden');
-                    document.getElementById('crud-usuarios-nivel3').classList.remove('hidden');
-                    
-                    const pass2 = db.exec("SELECT clave FROM config_claves WHERE membresia = '2do Nivel'")[0].values[0][0];
-                    const pass3 = db.exec("SELECT clave FROM config_claves WHERE membresia = '3er Nivel'")[0].values[0][0];
-                    
-                    if(document.getElementById('key-input-nivel2')) document.getElementById('key-input-nivel2').value = pass2;
-                    if(document.getElementById('key-input-nivel3')) document.getElementById('key-input-nivel3').value = pass3;
-                    if(document.getElementById('cfg-input-cuota')) document.getElementById('cfg-input-cuota').value = obtenerCuotaMensualBD();
-
-                    cargarFiltrosReporteDinamicos();
-                    renderListasMantenimientoConceptos();
-                    renderMasterCRUDTables();
-                    renderReporteAuditoriaAbajo();
-                } else {
-                    document.getElementById('tab-btn-auditoria').classList.add('hidden');
-                    document.getElementById('tab-btn-config').classList.add('hidden');
-                    document.getElementById('crud-usuarios-nivel3').classList.add('hidden');
-                }
-                
-                calcularYRenderizarTarjetasAdmin();
-                cargarListaUsuariosAdmin();
-                cambiarTabAdmin(activeAdminTab);
+                renderAdminView();
             }
         }
 
-        function cargarFormulariosConceptosDinamicos() {
-            const selIngresos = document.getElementById('ingreso-subtipo');
-            selIngresos.innerHTML = "";
-            const resI = db.exec("SELECT subtipo, nombre FROM categorias_conceptos WHERE tipo_movimiento = 'ingreso' ORDER BY nombre ASC");
-            if(resI.length > 0) {
-                resI[0].values.forEach(r => { selIngresos.innerHTML += `<option value="${r[0]}">${r[1]}</option>`; });
-            }
-
-            const selGastos = document.getElementById('gasto-subtipo');
-            selGastos.innerHTML = "";
-            const resG = db.exec("SELECT subtipo, nombre FROM categorias_conceptos WHERE tipo_movimiento = 'gasto' ORDER BY nombre ASC");
-            if(resG.length > 0) {
-                resG[0].values.forEach(r => { selGastos.innerHTML += `<option value="${r[0]}">${r[1]}</option>`; });
-            }
-        }
-
-        function cargarFiltrosReporteDinamicos() {
-            const selFiltro = document.getElementById('reporte-filtro-tipo');
-            const valorPrevio = selFiltro.value || "todos";
-            
-            let html = `
-                <option value="todos">Todos los movimientos contables</option>
-                <option value="ingreso">Solo Ingresos (Pagos Totales)</option>
-                <option value="gasto">Solo Egresos (Salidas Totales)</option>
-            `;
-
-            const resCats = db.exec("SELECT subtipo, nombre, tipo_movimiento FROM categorias_conceptos ORDER BY tipo_movimiento ASC, nombre ASC");
-            if (resCats.length > 0) {
-                resCats[0].values.forEach(r => {
-                    const prefijo = r[2] === 'ingreso' ? 'Ingreso' : 'Egreso';
-                    html += `<option value="cat:${r[0]}">${prefijo}: ${r[1]}</option>`;
-                });
-            }
-
-            html += `<option value="morosos_deuda">Ver Solo Morosos y su Deuda</option>`;
-            selFiltro.innerHTML = html;
-
-            if (Array.from(selFiltro.options).some(o => o.value === valorPrevio)) {
-                selFiltro.value = valorPrevio;
-            }
-        }
-
-        function renderListasMantenimientoConceptos() {
-            const divI = document.getElementById('lista-cats-ingresos');
-            divI.innerHTML = "";
-            const resI = db.exec("SELECT subtipo, nombre FROM categorias_conceptos WHERE tipo_movimiento = 'ingreso'");
-            if(resI.length > 0) {
-                resI[0].values.forEach(r => {
-                    divI.innerHTML += `
-                        <div class="flex justify-between items-center p-2 bg-stone-50 gap-2">
-                            <span class="font-mono font-bold text-slate-400 text-xs w-1/5 truncate" title="${r[0]}">${r[0]}</span>
-                            <input type="text" id="input-edit-cat-${r[0]}" value="${r[1]}" class="w-3/5 p-1 border border-slate-300 rounded bg-white text-xs font-semibold">
-                            <div class="flex gap-1 justify-end w-1/5">
-                                <button onclick="editarCategoriaBD('${r[0]}')" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-1.5 rounded inline-flex items-center justify-center" title="Guardar cambios"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></button>
-                                ${r[0]==='cuota' || r[0]==='eventual' ? '' : `<button onclick="eliminarCategoriaBD('${r[0]}', 'ingreso')" class="bg-rose-800 hover:bg-rose-700 text-white p-1.5 rounded inline-flex items-center justify-center" title="Eliminar concepto"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>`}
-                            </div>
-                        </div>`;
-                });
-            }
-
-            const divG = document.getElementById('lista-cats-gastos');
-            divG.innerHTML = "";
-            const resG = db.exec("SELECT subtipo, nombre FROM categorias_conceptos WHERE tipo_movimiento = 'gasto'");
-            if(resG.length > 0) {
-                resG[0].values.forEach(r => {
-                    divG.innerHTML += `
-                        <div class="flex justify-between items-center p-2 bg-stone-50 gap-2">
-                            <span class="font-mono font-bold text-slate-400 text-xs w-1/5 truncate" title="${r[0]}">${r[0]}</span>
-                            <input type="text" id="input-edit-cat-${r[0]}" value="${r[1]}" class="w-3/5 p-1 border border-slate-300 rounded bg-white text-xs font-semibold">
-                            <div class="flex gap-1 justify-end w-1/5">
-                                <button onclick="editarCategoriaBD('${r[0]}')" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-1.5 rounded inline-flex items-center justify-center" title="Guardar cambios"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></button>
-                                ${r[0]==='gasto_variable' ? '' : `<button onclick="eliminarCategoriaBD('${r[0]}', 'gasto')" class="bg-rose-800 hover:bg-rose-700 text-white p-1.5 rounded inline-flex items-center justify-center" title="Eliminar concepto"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>`}
-                            </div>
-                        </div>`;
-                });
-            }
-        }
-
-        async function crearCategoriaBD(tipo) {
-            const idInput = document.getElementById(`new-cat-${tipo}-id`).value.trim().toLowerCase().replace(/[^a-z0-9_]/g, '');
-            const nameInput = document.getElementById(`new-cat-${tipo}-name`).value.trim();
-
-            if(!idInput || !nameInput) return mostrarToast("Introduce un ID Único y un Nombre válido.", "warning");
-
-            try {
-                db.run("INSERT INTO categorias_conceptos (subtipo, nombre, tipo_movimiento) VALUES (?, ?, ?)", [idInput, nameInput, tipo]);
-                await guardarEnStorage();
-                document.getElementById(`new-cat-${tipo}-id`).value = "";
-                document.getElementById(`new-cat-${tipo}-name`).value = "";
-                mostrarToast("Concepto creado exitosamente.");
-                routeDashboardByNivel();
-            } catch(e) { mostrarToast("Error: El ID ingresado ya se encuentra en uso.", "error"); }
-        }
-
-        async function editarCategoriaBD(subtipo) {
-            const nuevoNombre = document.getElementById(`input-edit-cat-${subtipo}`).value.trim();
-            if(!nuevoNombre) return mostrarToast("El nombre del concepto no puede quedar vacío.", "warning");
-
-            try {
-                db.run("UPDATE categorias_conceptos SET nombre = ? WHERE subtipo = ?", [nuevoNombre, subtipo]);
-                await guardarEnStorage();
-                mostrarToast("Concepto actualizado correctamente.");
-                routeDashboardByNivel();
-            } catch(e) { mostrarToast("Error al modificar el concepto.", "error"); }
-        }
-
-        async function eliminarCategoriaBD(subtipo, tipoMovimiento) {
-            abrirModalConfirmacion(
-                "Eliminar Clasificación",
-                `¿Deseas eliminar la clasificación [${subtipo}]? Las operaciones asociadas pasarán a la categoría base correspondiente.`,
-                async () => {
-                    const respaldoSubtipo = tipoMovimiento === 'ingreso' ? 'eventual' : 'gasto_variable';
-                    db.run("DELETE FROM categorias_conceptos WHERE subtipo = ?", [subtipo]);
-                    db.run("UPDATE transacciones SET subtipo = ? WHERE subtipo = ?", [respaldoSubtipo, subtipo]);
-                    await guardarEnStorage();
-                    mostrarToast("Clasificación eliminada y operaciones reasignadas.");
-                    routeDashboardByNivel();
-                }
-            );
-        }
-
-        function renderVistasNivelSocio() {
-            const badge = document.getElementById('socio-badge-status');
-            const box = document.getElementById('socio-status-box');
-            
+        function renderSocioView() {
             document.getElementById('socio-nombre-saludo').innerText = currentUser.nombre;
-            document.getElementById('socio-cedula-display').innerText = `Cédula de Identidad: ${currentUser.cedula.toUpperCase()}`;
-
-            const resStatus = db.exec(`
-                SELECT 
-                    CASE 
-                        WHEN MAX(CASE WHEN t.subtipo = 'cuota' THEN t.fecha END) IS NULL THEN 'MOROSO'
-                        WHEN strftime('%d', 'now') >= '28' AND strftime('%m-%Y', 'now') != strftime('%m-%Y', MAX(CASE WHEN t.subtipo = 'cuota' THEN t.fecha END)) THEN 'MOROSO'
-                        WHEN julianday('now') - julianday(MAX(CASE WHEN t.subtipo = 'cuota' THEN t.fecha END)) > 30 THEN 'MOROSO'
-                        ELSE 'SOLVENTE'
-                    END as estatus,
-                    CASE 
-                        WHEN MAX(CASE WHEN t.subtipo = 'cuota' THEN t.fecha END) IS NULL THEN 1 + (CAST(julianday('now') - julianday(u.fecha_registro) AS INTEGER) / 30)
-                        ELSE CAST(julianday('now') - julianday(MAX(CASE WHEN t.subtipo = 'cuota' THEN t.fecha END)) AS INTEGER) / 30
-                    END as meses
-                FROM usuarios u
-                LEFT JOIN transacciones t ON u.id = t.usuario_id
-                WHERE u.id = ?
-            `, [currentUser.id]);
+            document.getElementById('socio-cedula-display').innerText = `C.I: ${currentUser.cedula}`;
             
-            const estatus = (resStatus.length > 0) ? resStatus[0].values[0][0] : 'MOROSO';
-            let mesesAtrasados = (resStatus.length > 0) ? parseInt(resStatus[0].values[0][1]) : 1;
-            if (mesesAtrasados < 1) mesesAtrasados = 1;
-
-            badge.innerText = estatus;
-            const containerDeuda = document.getElementById('socio-deuda-container');
-
-            if (estatus === 'SOLVENTE') {
-                box.className = "p-6 rounded-xl border text-center shadow-md bg-emerald-50/80 border-emerald-300 text-emerald-900";
-                badge.className = "text-2xl font-extrabold tracking-widest inline-block px-7 py-2 rounded-full border bg-emerald-100 border-emerald-400 text-emerald-800";
-                containerDeuda.classList.add('hidden');
-            } else {
-                box.className = "p-6 rounded-xl border text-center shadow-md bg-rose-50/80 border-rose-300 text-rose-900";
-                badge.className = "text-2xl font-extrabold tracking-widest inline-block px-7 py-2 rounded-full border bg-rose-100 border-rose-400 text-rose-800";
-                
-                const cuotaM = obtenerCuotaMensualBD();
-                document.getElementById('socio-meses-deuda').innerText = mesesAtrasados;
-                document.getElementById('socio-monto-deuda').innerText = `$${(mesesAtrasados * cuotaM).toFixed(2)}`;
-                containerDeuda.classList.remove('hidden');
-            }
+            const badge = document.getElementById('socio-badge-status');
+            badge.innerText = "ACTIVO / CONSULTA CLOUD";
+            badge.className = "text-xl font-extrabold tracking-widest inline-block px-7 py-2 rounded-full border bg-emerald-100 border-emerald-400 text-emerald-800";
 
             const tbody = document.getElementById('tabla-historial-socio');
             tbody.innerHTML = "";
-            const resHistorial = db.exec("SELECT t.fecha, COALESCE(t.descripcion, '') || ' (' || COALESCE(c.nombre, t.subtipo) || ')', t.monto FROM transacciones t LEFT JOIN categorias_conceptos c ON t.subtipo = c.subtipo WHERE t.usuario_id = ? AND t.tipo = 'ingreso' ORDER BY t.fecha DESC", [currentUser.id]);
-            if (resHistorial.length > 0) {
-                resHistorial[0].values.forEach(row => {
-                    tbody.innerHTML += `<tr class="hover:bg-stone-50"><td class="px-4 py-2.5 font-mono text-xs">${row[0]}</td><td class="px-4 py-2.5">${row[1]}</td><td class="px-4 py-2.5 text-right font-bold text-emerald-700">$${row[2].toFixed(2)}</td></tr>`;
+            const misTrans = appData.transacciones.filter(t => String(t.usuario_id) === String(currentUser.id) || String(t.usuario_id) === String(currentUser.cedula));
+            
+            if (misTrans.length > 0) {
+                misTrans.forEach(t => {
+                    tbody.innerHTML += `<tr class="hover:bg-stone-50"><td class="px-4 py-2.5 font-mono">${t.fecha}</td><td class="px-4 py-2.5">${t.descripcion || t.subtipo}</td><td class="px-4 py-2.5 text-right font-bold text-emerald-700">$${parseFloat(t.monto).toFixed(2)}</td></tr>`;
                 });
             } else {
-                tbody.innerHTML = `<tr><td colspan="3" class="text-center py-6 text-slate-400">No registras transacciones de pago en Tesorería R.·. L.·. Renovación N° 72.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-slate-400">Sin movimientos registrados en Google Sheets.</td></tr>`;
             }
         }
 
-        function calcularYRenderizarTarjetasAdmin() {
-            const resMetricas = db.exec("SELECT tipo, SUM(monto) FROM transacciones GROUP BY tipo");
-            let ingresos = 0; let gastos = 0;
-
-            if (resMetricas.length > 0) {
-                resMetricas[0].values.forEach(row => {
-                    if (row[0] === 'ingreso') ingresos = row[1];
-                    if (row[0] === 'gasto') gastos = row[1];
-                });
-            }
-            const saldo = ingresos - gastos;
-            document.getElementById('admin-card-ingresos').innerText = `$${ingresos.toFixed(2)}`;
-            document.getElementById('admin-card-gastos').innerText = `$${gastos.toFixed(2)}`;
-            document.getElementById('admin-card-saldo').innerText = `$${saldo.toFixed(2)}`;
-        }
-
-        function cargarListaUsuariosAdmin() {
-            const filtro = document.getElementById('filtro-estatus').value;
-            const tbody = document.getElementById('tabla-usuarios-admin');
-            tbody.innerHTML = "";
-            
-            const res = db.exec(`
-                SELECT u.cedula, u.nombre, u.membresia, MAX(CASE WHEN t.subtipo = 'cuota' THEN t.fecha END),
-                    CASE 
-                        WHEN MAX(CASE WHEN t.subtipo = 'cuota' THEN t.fecha END) IS NULL THEN 'moroso'
-                        WHEN strftime('%d', 'now') >= '28' AND strftime('%m-%Y', 'now') != strftime('%m-%Y', MAX(CASE WHEN t.subtipo = 'cuota' THEN t.fecha END)) THEN 'moroso'
-                        WHEN julianday('now') - julianday(MAX(CASE WHEN t.subtipo = 'cuota' THEN t.fecha END)) > 30 THEN 'moroso' 
-                        ELSE 'solvente' 
-                    END as estatus
-                FROM usuarios u LEFT JOIN transacciones t ON u.id = t.usuario_id
-                GROUP BY u.id
-            `);
-
-            if (res.length > 0) {
-                res[0].values.forEach(row => {
-                    if (filtro !== 'todos' && filtro !== row[4]) return;
-                    const bg = row[4] === 'solvente'
-                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                        : 'bg-rose-100 text-rose-800 border border-rose-300';
-                    tbody.innerHTML += `
-                        <tr class="text-sm hover:bg-stone-50 transition">
-                            <td class="px-4 py-2.5 font-mono font-bold text-slate-900">${row[0].toUpperCase()}</td>
-                            <td class="px-4 py-2.5 capitalize font-medium">${row[1]}</td>
-                            <td class="px-4 py-2.5 text-slate-500 text-xs font-semibold">${row[2]}</td>
-                            <td class="px-4 py-2.5 font-mono text-xs text-slate-600">${row[3] || 'Ninguno (Nuevo Hermano)'}</td>
-                            <td class="px-4 py-2.5 text-center"><span class="px-2.5 py-0.5 rounded-full font-bold text-[11px] tracking-wider ${bg}">${row[4].toUpperCase()}</span></td>
-                        </tr>`;
-                });
-            }
-        }
-
-        function cargarSelectorUsuarios() {
+        function renderAdminView() {
             const select = document.getElementById('ingreso-usuario');
             select.innerHTML = "";
-            const res = db.exec("SELECT id, cedula, nombre, membresia FROM usuarios ORDER BY cedula ASC");
-            if (res.length > 0) {
-                res[0].values.forEach(row => {
-                    select.innerHTML += `<option value="${row[0]}">C.I: ${row[1].toUpperCase()} - ${row[2]} (${row[3]})</option>`;
-                });
-            }
+            appData.usuarios.forEach(u => {
+                select.innerHTML += `<option value="${u.id || u.cedula}">C.I: ${u.cedula} - ${u.nombre}</option>`;
+            });
+
+            let ingresos = 0, gastos = 0;
+            appData.transacciones.forEach(t => {
+                if (t.tipo === 'ingreso') ingresos += parseFloat(t.monto) || 0;
+                if (t.tipo === 'gasto') gastos += parseFloat(t.monto) || 0;
+            });
+
+            document.getElementById('admin-card-ingresos').innerText = `$${ingresos.toFixed(2)}`;
+            document.getElementById('admin-card-gastos').innerText = `$${gastos.toFixed(2)}`;
+            document.getElementById('admin-card-saldo').innerText = `$${(ingresos - gastos).toFixed(2)}`;
         }
 
-        async function registrarTransaccion(tipo) {
-            const monto = parseFloat(document.getElementById(`${tipo}-monto`).value);
-            const desc = document.getElementById(`${tipo}-desc`).value.trim();
-            const fecha = document.getElementById(`${tipo}-fecha`).value;
+        // Envío directo al Apps Script mediante POST (manejado de forma síncrona con recarga)
+        async function registrarTransaccionCloud() {
+            const usuario_id = document.getElementById('ingreso-usuario').value;
+            const fecha = document.getElementById('ingreso-fecha').value;
+            const subtipo = document.getElementById('ingreso-subtipo').value;
+            const monto = parseFloat(document.getElementById('ingreso-monto').value);
+            const descripcion = document.getElementById('ingreso-desc').value.trim();
 
-            if (isNaN(monto) || monto <= 0 || !fecha) return mostrarToast("Ingresa datos válidos.", "warning");
-
-            let idAsignado = currentUser.id;
-            let subtipo = document.getElementById(`${tipo}-subtipo`).value;
-
-            if (tipo === 'ingreso') {
-                idAsignado = parseInt(document.getElementById('ingreso-usuario').value);
-                if (isNaN(idAsignado)) return mostrarToast("Hermano inválido.", "error");
+            if (isNaN(monto) || monto <= 0 || !fecha) {
+                return alert("Introduce un monto y fecha válidos.");
             }
 
-            db.run("INSERT INTO transacciones (usuario_id, tipo, subtipo, monto, descripcion, fecha) VALUES (?, ?, ?, ?, ?, ?)", [idAsignado, tipo, subtipo, monto, desc, fecha]);
-            await guardarEnStorage();
+            const payload = {
+                usuario_id: usuario_id,
+                tipo: 'ingreso',
+                subtipo: subtipo,
+                monto: monto,
+                descripcion: descripcion,
+                fecha: fecha
+            };
 
             try {
+                // Indicador visual rápido
+                alert("Enviando registro directamente a Google Sheets...");
+                
                 await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        usuario_id: idAsignado,
-                        tipo: tipo,
-                        subtipo: subtipo,
-                        monto: monto,
-                        descripcion: desc,
-                        fecha: fecha
-                    })
+                    body: JSON.stringify(payload)
                 });
+
+                alert("¡Registrado en la nube! Actualizando datos...");
+                setTimeout(() => {
+                    cargarDatosCloud(); // Recarga fresca desde Google Sheets
+                }, 1500);
+
             } catch (err) {
-                console.error("Error al enviar POST a Google Sheets:", err);
+                alert("Error al conectar con Google Sheets: " + err.message);
             }
-            
-            document.getElementById(`${tipo}-monto`).value = "";
-            document.getElementById(`${tipo}-desc`).value = "";
-            mostrarToast("Operación guardada y sincronizada con éxito.");
-
-            if (tipo === 'ingreso') {
-                imprimirReciboIndividualPDF(idAsignado, subtipo, monto, desc, fecha);
-            }
-            
-            routeDashboardByNivel();
-            setTimeout(sincronizarConGoogleSheetsSegundoPlano, 2000);
-        }
-
-        function imprimirReciboIndividualPDF(usuarioId, subtipo, monto, desc, fecha) {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({ format: 'a6' });
-
-            const resSocio = db.exec("SELECT cedula, nombre FROM usuarios WHERE id = ?", [usuarioId]);
-            const cedulaSocio = resSocio[0].values[0][0].toUpperCase();
-            const nombreSocio = resSocio[0].values[0][1].toUpperCase();
-            
-            const resNombreCat = db.exec("SELECT nombre FROM categorias_conceptos WHERE subtipo = ?", [subtipo]);
-            const conceptoText = resNombreCat.length > 0 ? resNombreCat[0].values[0][0].toUpperCase() : "INGRESO GENERAL";
-
-            // Encabezado Institucional Azul Marino + Dorado
-            doc.setFillColor(15, 23, 42); // slate-900
-            doc.rect(0, 0, 105, 20, 'F');
-            doc.setDrawColor(217, 119, 6); // amber-600
-            doc.setLineWidth(0.7);
-            doc.line(0, 20, 105, 20);
-
-            doc.setTextColor(251, 191, 36); // amber-400
-            doc.setFontSize(8.5);
-            doc.text("TESORERÍA R.·. L.·. RENOVACIÓN N° 72", 8, 9);
-            doc.setTextColor(226, 232, 240);
-            doc.setFontSize(7.5);
-            doc.text("COMPROBANTE OFICIAL DE INGRESO", 8, 15);
-
-            doc.setTextColor(30, 41, 59);
-            doc.setFontSize(8);
-            doc.text(`Recibo N°: REC-${Math.floor(1000 + Math.random() * 9000)}`, 8, 28);
-            doc.text(`Fecha de Emisión: ${fecha}`, 8, 34);
-            doc.setDrawColor(203, 213, 225);
-            doc.setLineWidth(0.3);
-            doc.line(8, 38, 97, 38);
-
-            doc.setFontSize(7.5);
-            doc.setTextColor(100, 116, 139);
-            doc.text("DATOS DEL HERMANO:", 8, 44);
-            doc.setFontSize(8.5);
-            doc.setTextColor(15, 23, 42);
-            doc.text(`Hermano: ${nombreSocio}`, 8, 50);
-            doc.text(`Cédula: C.I. ${cedulaSocio}`, 8, 56);
-            doc.line(8, 61, 97, 61);
-
-            doc.setFontSize(7.5);
-            doc.setTextColor(100, 116, 139);
-            doc.text("DETALLE DE LA OPERACIÓN:", 8, 67);
-            doc.setFontSize(8.5);
-            doc.setTextColor(15, 23, 42);
-            doc.text(`Concepto: ${conceptoText}`, 8, 73);
-            doc.text(`Observación: ${desc || 'Sin observaciones'}`, 8, 79);
-            
-            doc.setFillColor(248, 250, 252);
-            doc.setDrawColor(217, 119, 6);
-            doc.rect(8, 85, 89, 13, 'FD');
-            doc.setFontSize(10);
-            doc.setTextColor(15, 23, 42);
-            doc.text(`TOTAL PROCESADO: $${monto.toFixed(2)} USD`, 12, 93.5);
-
-            doc.save(`Tesoreria_RL_Renovacion_72_Recibo_CI_${cedulaSocio}_${fecha}.pdf`);
-        }
-
-        function exportarReporteFiltradoPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const selFiltro = document.getElementById('reporte-filtro-tipo');
-            const filtroTipo = selFiltro.value;
-            const filtroLabel = selFiltro.options[selFiltro.selectedIndex].text.toUpperCase();
-            const filtroCedula = document.getElementById('reporte-filtro-cedula').value.trim();
-            const totalFiltrado = document.getElementById('reporte-total-big-badge').innerText;
-
-            doc.setFontSize(14);
-            doc.setTextColor(15, 23, 42);
-            doc.text("TESORERÍA R.·. L.·. RENOVACIÓN N° 72 — REPORTE DE AUDITORÍA", 14, 18);
-            doc.setFontSize(9);
-            doc.setTextColor(71, 85, 105);
-            doc.text(`Filtro: ${filtroLabel} | Cédula: ${filtroCedula || 'TODAS'}`, 14, 24);
-            doc.text(`Sumatoria Total del Reporte: ${totalFiltrado}`, 14, 29);
-
-            let tableHeader = [];
-            const filasVisibles = Array.from(document.getElementById('reporte-tabla-auditoria-rows').rows);
-            let rowsData = [];
-
-            filasVisibles.forEach(tr => {
-                let r = [];
-                Array.from(tr.cells).forEach(c => r.push(c.innerText));
-                rowsData.push(r);
-            });
-
-            if (filtroTipo === "morosos_deuda") {
-                tableHeader = [["Cédula", "Nombre", "Estatus", "Último Pago", "Deuda ($)"]];
-            } else {
-                tableHeader = [["Fecha", "Cédula", "Tipo (Concepto)", "Descripción", "Monto ($)"]];
-            }
-
-            if(rowsData.length === 0 || (rowsData.length === 1 && rowsData[0][0].includes("Ninguna"))) {
-                return mostrarToast("No hay datos cargados en pantalla para exportar.", "warning");
-            }
-
-            rowsData.push(["", "", "", "SUMATORIA TOTAL:", totalFiltrado]);
-
-            doc.autoTable({
-                head: tableHeader,
-                body: rowsData,
-                startY: 35,
-                theme: 'striped',
-                headStyles: { fillColor: [15, 23, 42], textColor: [251, 191, 36] }
-            });
-
-            doc.save(`Tesoreria_RL_Renovacion_72_Reporte_${filtroTipo.replace(':', '_')}.pdf`);
-        }
-
-        function alternarOrdenColumna(columna) {
-            if (columnaOrdenActual === columna) { ordenAscendente = !ordenAscendente; } 
-            else { columnaOrdenActual = columna; ordenAscendente = true; }
-            renderMasterCRUDTables();
-        }
-
-        async function actualizarClaveBD(membresia) {
-            const inputId = membresia === '2do Nivel' ? 'key-input-nivel2' : 'key-input-nivel3';
-            const nuevaClave = document.getElementById(inputId).value.trim();
-            if (!nuevaClave) return mostrarToast("La contraseña no puede estar en blanco.", "warning");
-            db.run("UPDATE config_claves SET clave = ? WHERE membresia = ?", [nuevaClave, membresia]);
-            await guardarEnStorage();
-            mostrarToast("Contraseña actualizada correctamente.");
-        }
-
-        async function actualizarCuotaClubBD() {
-            const nuevaCuota = parseFloat(document.getElementById('cfg-input-cuota').value);
-            if (isNaN(nuevaCuota) || nuevaCuota < 0) return mostrarToast("Monto inválido.", "error");
-            db.run("UPDATE config_club SET valor = ? WHERE parametro = 'cuota_mensual'", [nuevaCuota]);
-            await guardarEnStorage();
-            mostrarToast("Cápita mensual actualizada correctamente.");
-            routeDashboardByNivel();
-        }
-
-        function renderMasterCRUDTables() {
-            const tUsuarios = document.getElementById('crud-tabla-usuarios');
-            tUsuarios.innerHTML = "";
-            const direccionOrden = ordenAscendente ? "ASC" : "DESC";
-            const resU = db.exec(`SELECT id, cedula, nombre, membresia FROM usuarios ORDER BY ${columnaOrdenActual} ${direccionOrden}`);
-            if (resU.length > 0) {
-                resU[0].values.forEach(row => {
-                    tUsuarios.innerHTML += `
-                        <tr class="hover:bg-stone-50">
-                            <td class="p-2"><input type="text" id="crud-u-cedula-${row[0]}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" value="${row[1]}" class="w-full bg-transparent font-bold border-b border-transparent focus:border-amber-600 p-0.5 font-mono text-xs"></td>
-                            <td class="p-2"><input type="text" id="crud-u-nombre-${row[0]}" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ ]/g, '')" value="${row[2]}" class="w-full bg-transparent border-b border-transparent focus:border-amber-600 p-0.5 text-xs capitalize"></td>
-                            <td class="p-2">
-                                <select id="crud-u-membresia-${row[0]}" class="bg-transparent font-bold text-slate-800 text-xs">
-                                    <option value="1er Nivel" ${row[3]=='1er Nivel'?'selected':''}>1er Nivel</option>
-                                    <option value="2do Nivel" ${row[3]=='2do Nivel'?'selected':''}>2do Nivel</option>
-                                    <option value="3er Nivel" ${row[3]=='3er Nivel'?'selected':''}>3er Nivel</option>
-                                </select>
-                            </td>
-                            <td class="p-2 text-center flex justify-center gap-1.5">
-                                <button onclick="crudEditarUsuario(${row[0]})" class="bg-slate-800 hover:bg-slate-700 text-amber-400 px-2 py-1 rounded text-[10px] font-bold inline-flex items-center gap-1" title="Actualizar hermano"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg><span>Guardar</span></button>
-                                <button onclick="crudEliminarUsuario(${row[0]})" class="bg-rose-800 hover:bg-rose-700 text-white p-1.5 rounded inline-flex items-center justify-center" title="Eliminar hermano"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-                            </td>
-                        </tr>`;
-                });
-            }
-
-            const tTrans = document.getElementById('crud-tabla-transacciones');
-            tTrans.innerHTML = "";
-            const resT = db.exec("SELECT t.id, t.fecha, u.cedula, t.tipo, c.nombre, t.descripcion, t.monto FROM transacciones t JOIN usuarios u ON t.usuario_id = u.id LEFT JOIN categorias_conceptos c ON t.subtipo = c.subtipo ORDER BY t.id DESC LIMIT 50");
-            if (resT.length > 0) {
-                resT[0].values.forEach(row => {
-                    const colorT = row[3] === 'ingreso' ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold';
-                    const tipoTxt = `${row[3]} (${row[4] || 'General'})`;
-                    tTrans.innerHTML += `
-                        <tr class="hover:bg-stone-50">
-                            <td class="p-1.5"><input type="date" id="crud-t-fecha-${row[0]}" value="${row[1]}" class="w-full bg-transparent font-mono"></td>
-                            <td class="p-1.5 font-mono uppercase font-semibold text-slate-600">${row[2].toUpperCase()}</td>
-                            <td class="p-1.5 uppercase text-[10px] ${colorT}">${tipoTxt}</td>
-                            <td class="p-1.5"><input type="text" id="crud-t-desc-${row[0]}" value="${row[5] || ''}" class="w-full bg-transparent border-b border-transparent focus:border-amber-600"></td>
-                            <td class="p-1.5"><input type="number" step="0.01" id="crud-t-monto-${row[0]}" value="${row[6]}" class="w-full bg-transparent text-right font-bold border-b border-transparent focus:border-amber-600"></td>
-                            <td class="p-1.5 text-center flex justify-center gap-1.5">
-                                <button onclick="crudEditarTransaccion(${row[0]})" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-1.5 rounded inline-flex items-center justify-center" title="Guardar asiento"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></button>
-                                <button onclick="crudEliminarTransaccion(${row[0]})" class="bg-rose-800 hover:bg-rose-700 text-white p-1.5 rounded inline-flex items-center justify-center" title="Eliminar asiento"><svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-                            </td>
-                        </tr>`;
-                });
-            }
-        }
-
-        function renderReporteAuditoriaAbajo() {
-            const filtroTipo = document.getElementById('reporte-filtro-tipo').value;
-            const filtroCedula = document.getElementById('reporte-filtro-cedula').value.trim();
-            const thead = document.getElementById('reporte-tabla-header');
-            const tbody = document.getElementById('reporte-tabla-auditoria-rows');
-            const badgeTotal = document.getElementById('reporte-total-big-badge');
-            
-            tbody.innerHTML = "";
-            let sumaAcumulada = 0;
-
-            if (filtroTipo === "morosos_deuda") {
-                thead.innerHTML = `<tr><th class="px-3 py-2.5 text-left">Cédula del Hermano</th><th class="px-3 py-2.5 text-left">Nombre del Hermano</th><th class="px-3 py-2.5 text-left">Estatus de Cuenta</th><th class="px-3 py-2.5 text-left">Último Pago Cápita</th><th class="px-3 py-2.5 text-right">Monto Adeudado</th></tr>`;
-                let query = `SELECT u.cedula, u.nombre, MAX(CASE WHEN t.subtipo = 'cuota' THEN t.fecha END) as ultimo_pago, CASE WHEN MAX(CASE WHEN t.subtipo = 'cuota' THEN t.fecha END) IS NULL THEN 1 + (CAST(julianday('now') - julianday(u.fecha_registro) AS INTEGER) / 30) ELSE CAST(julianday('now') - julianday(MAX(CASE WHEN t.subtipo = 'cuota' THEN t.fecha END)) AS INTEGER) / 30 END as meses_deuda FROM usuarios u LEFT JOIN transacciones t ON u.id = t.usuario_id WHERE u.membresia = '1er Nivel' GROUP BY u.id HAVING ultimo_pago IS NULL OR strftime('%d', 'now') >= '28' AND strftime('%m-%Y', 'now') != strftime('%m-%Y', ultimo_pago) OR julianday('now') - julianday(ultimo_pago) > 30`;
-                let params = [];
-                if(filtroCedula) { query = query.replace("WHERE u.membresia = '1er Nivel'", "WHERE u.membresia = '1er Nivel' AND u.cedula LIKE ?"); params.push(`%${filtroCedula}%`); }
-                const res = db.exec(query, params);
-                const cuotaM = obtenerCuotaMensualBD();
-                
-                if(res.length > 0) {
-                    res[0].values.forEach(row => {
-                        let mv = parseInt(row[3]); if(mv < 1) mv = 1;
-                        const subtotalDeuda = mv * cuotaM;
-                        sumaAcumulada += subtotalDeuda;
-                        tbody.innerHTML += `<tr class="hover:bg-rose-50 font-medium"><td class="px-3 py-2 font-mono font-bold text-slate-900">${row[0].toUpperCase()}</td><td class="px-3 py-2 capitalize">${row[1]}</td><td class="px-3 py-2"><span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-300 text-[10px] font-bold">MOROSO</span></td><td class="px-3 py-2 font-mono text-xs text-slate-400">${row[2] || 'Nunca'}</td><td class="px-3 py-2 text-right text-rose-700 font-black font-mono">$${subtotalDeuda.toFixed(2)}</td></tr>`;
-                    });
-                } else { tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-slate-400">Ningún hermano califica en morosidad.</td></tr>`; }
-            } else {
-                thead.innerHTML = `<tr><th class="px-3 py-2.5 text-left">Fecha Aplicada</th><th class="px-3 py-2.5 text-left">Cédula Origen</th><th class="px-3 py-2.5 text-left">Tipo (Concepto)</th><th class="px-3 py-2.5 text-left">Descripción / Detalle</th><th class="px-3 py-2.5 text-right">Monto Procesado</th></tr>`;
-                let query = `SELECT t.fecha, u.cedula, t.tipo, t.descripcion, c.nombre, t.monto FROM transacciones t JOIN usuarios u ON t.usuario_id = u.id LEFT JOIN categorias_conceptos c ON t.subtipo = c.subtipo WHERE 1=1`;
-                let params = [];
-                
-                if (filtroTipo === 'ingreso' || filtroTipo === 'gasto') { 
-                    query += " AND t.tipo = ? "; params.push(filtroTipo); 
-                } else if (filtroTipo.startsWith('cat:')) {
-                    const catSubtipo = filtroTipo.substring(4);
-                    query += " AND t.subtipo = ? "; params.push(catSubtipo);
-                }
-                
-                if (filtroCedula) { query += " AND u.cedula LIKE ? "; params.push(`%${filtroCedula}%`); }
-                query += " ORDER BY t.fecha DESC, t.id DESC";
-                const res = db.exec(query, params);
-                if(res.length > 0) {
-                    res[0].values.forEach(row => {
-                        sumaAcumulada += parseFloat(row[5]);
-                        const color = row[2] === 'ingreso' ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold';
-                        const subTxt = `${row[2].toUpperCase()}: ${row[4] ? row[4].toUpperCase() : 'GENERAL'}`;
-
-                        tbody.innerHTML += `<tr class="hover:bg-stone-50"><td class="px-3 py-2 font-mono">${row[0]}</td><td class="px-3 py-2 font-mono font-bold uppercase text-slate-600">${row[1]}</td><td class="px-3 py-2 uppercase text-[10px] ${color}">${subTxt}</td><td class="px-3 py-2 text-slate-700">${row[3] || '-'}</td><td class="px-3 py-2 text-right font-bold text-slate-900">$${row[5].toFixed(2)}</td></tr>`;
-                    });
-                } else { tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-slate-400">Ninguna transacción coincide con los filtros aplicados.</td></tr>`; }
-            }
-            
-            badgeTotal.innerText = `$${sumaAcumulada.toFixed(2)} USD`;
-        }
-
-        async function crudCrearUsuario() {
-            const cedula = document.getElementById('admin-new-cedula').value.trim();
-            const nombre = document.getElementById('admin-new-name').value.trim();
-            const membresia = document.getElementById('admin-new-membresia').value;
-            if (!cedula || !nombre) return mostrarToast("Rellena los campos.", "warning");
-            try {
-                db.run("INSERT INTO usuarios (cedula, nombre, membresia, fecha_registro) VALUES (?, ?, ?, DATE('now'))", [cedula, nombre, membresia]);
-                await guardarEnStorage();
-                mostrarToast("Insertado correctamente en Tesorería R.·. L.·. Renovación N° 72.");
-                document.getElementById('admin-new-cedula').value = "";
-                document.getElementById('admin-new-name').value = "";
-                routeDashboardByNivel();
-            } catch(e) { mostrarToast("Cédula duplicada.", "error"); }
-        }
-
-        async function crudEditarUsuario(id) {
-            const inputCedula = document.getElementById(`crud-u-cedula-${id}`);
-            const inputNombre = document.getElementById(`crud-u-nombre-${id}`);
-            const inputMembresia = document.getElementById(`crud-u-membresia-${id}`);
-
-            if (!inputCedula || !inputNombre || !inputMembresia) {
-                return mostrarToast("Error crítico al enlazar los campos editables de la fila.", "error");
-            }
-
-            const cedula = inputCedula.value.trim();
-            const nombre = inputNombre.value.trim();
-            const membresia = inputMembresia.value;
-
-            if(!cedula || !nombre) return mostrarToast("Los campos Cédula y Nombre no pueden guardarse vacíos.", "warning");
-
-            try {
-                db.run("UPDATE usuarios SET cedula=?, nombre=?, membresia=? WHERE id=?", [cedula, nombre, membresia, id]);
-                await guardarEnStorage();
-                mostrarToast("Hermano/Usuario modificado exitosamente en el Padrón.");
-
-                if(currentUser && currentUser.id === id) {
-                    currentUser.cedula = cedula;
-                    currentUser.nombre = nombre;
-                    currentUser.membresia = membresia;
-                    localStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
-                }
-
-                routeDashboardByNivel();
-            } catch(e) { 
-                mostrarToast("Error de base de datos al actualizar: " + e.message, "error"); 
-            }
-        }
-
-        async function crudEliminarUsuario(id) {
-            if(id === currentUser.id) return mostrarToast("No puedes eliminar tu propia cuenta.", "warning");
-            abrirModalConfirmacion(
-                "Eliminar Usuario",
-                "¿Deseas eliminar este usuario y todas sus transacciones?",
-                async () => {
-                    db.run("DELETE FROM usuarios WHERE id=?", [id]);
-                    await guardarEnStorage();
-                    mostrarToast("Usuario eliminado correctamente.");
-                    routeDashboardByNivel();
-                }
-            );
-        }
-
-        async function crudEditarTransaccion(id) {
-            const fecha = document.getElementById(`crud-t-fecha-${id}`).value;
-            const desc = document.getElementById(`crud-t-desc-${id}`).value.trim();
-            const monto = parseFloat(document.getElementById(`crud-t-monto-${id}`).value);
-            if(!fecha || isNaN(monto) || monto <= 0) return mostrarToast("Campos inválidos.", "warning");
-            db.run("UPDATE transacciones SET fecha=?, descripcion=?, monto=? WHERE id=?", [fecha, desc, monto, id]);
-            await guardarEnStorage();
-            mostrarToast("Transacción modificada correctamente.");
-            routeDashboardByNivel();
-        }
-
-        async function crudEliminarTransaccion(id) {
-            abrirModalConfirmacion(
-                "Eliminar Asiento Contable",
-                "¿Deseas remover este registro contable?",
-                async () => {
-                    db.run("DELETE FROM transacciones WHERE id=?", [id]);
-                    await guardarEnStorage();
-                    mostrarToast("Registro eliminado correctamente.");
-                    routeDashboardByNivel();
-                }
-            );
-        }
-
-        
-        // Sistema de Notificaciones Toast y Modales Institucionales
-        function mostrarToast(mensaje, tipo = 'success') {
-            const container = document.getElementById('toast-container');
-            if (!container) return;
-
-            const toast = document.createElement('div');
-            toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl shadow-xl border text-xs font-semibold tracking-wide transition-all transform translate-y-2 opacity-0 duration-300 ${
-                tipo === 'success' ? 'bg-slate-900 text-emerald-400 border-emerald-500/40' :
-                tipo === 'error' ? 'bg-slate-900 text-rose-400 border-rose-500/40' :
-                'bg-slate-900 text-amber-300 border-amber-500/40'
-            }`;
-
-            let svgIcon = tipo === 'success' 
-                ? '<svg class="w-4 h-4 shrink-0 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>'
-                : tipo === 'error'
-                ? '<svg class="w-4 h-4 shrink-0 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>'
-                : '<svg class="w-4 h-4 shrink-0 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
-
-            toast.innerHTML = `${svgIcon}<span>${mensaje}</span>`;
-            container.appendChild(toast);
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            }, 10);
-
-            setTimeout(() => {
-                toast.classList.add('translate-y-2', 'opacity-0');
-                setTimeout(() => toast.remove(), 300);
-            }, 3500);
-        }
-
-        function abrirModalConfirmacion(titulo, descripcion, callbackAceptar) {
-            const modal = document.getElementById('modal-institucional');
-            const titleEl = document.getElementById('modal-title');
-            const descEl = document.getElementById('modal-desc');
-            const btnAceptar = document.getElementById('modal-btn-aceptar');
-            const btnCancelar = document.getElementById('modal-btn-cancelar');
-
-            if (!modal) {
-                if (confirm(descripcion)) callbackAceptar();
-                return;
-            }
-
-            titleEl.innerText = titulo;
-            descEl.innerText = descripcion;
-            modal.classList.remove('hidden');
-
-            const limpiarYCerrar = () => {
-                modal.classList.add('hidden');
-                btnAceptar.onclick = null;
-                btnCancelar.onclick = null;
-            };
-
-            btnAceptar.onclick = () => {
-                limpiarYCerrar();
-                callbackAceptar();
-            };
-
-            btnCancelar.onclick = () => {
-                limpiarYCerrar();
-            };
-        }
-
-        function descargarBaseDatos() {
-            const binaryDb = db.export();
-            const blob = new Blob([binaryDb], { type: "application/x-sqlite3" });
-            const a = document.createElement("a");
-            a.href = URL.createObjectURL(blob);
-            a.download = `Tesoreria_RL_Renovacion_72_Respaldo_${fechaPorDefecto}.db`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
-
-        function importarBaseDatos(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            abrirModalConfirmacion(
-                "Restaurar Base de Datos",
-                `¿Deseas reemplazar la base de datos actual con el respaldo "${file.name}"? Esta acción sobrescribirá los registros actuales.`,
-                () => {
-                    const reader = new FileReader();
-                    reader.onload = async function(e) {
-                        try {
-                            const u8arr = new Uint8Array(e.target.result);
-                            const testDb = new SQL_ENGINE.Database(u8arr);
-                            const check = testDb.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='usuarios'");
-                            if (check.length === 0) {
-                                throw new Error("El archivo seleccionado no corresponde a una base de datos válida del sistema.");
-                            }
-
-                            db = testDb;
-                            await guardarEnStorage();
-                            mostrarToast("Base de datos restaurada con éxito.");
-                            event.target.value = "";
-                            routeDashboardByNivel();
-                        } catch (err) {
-                            mostrarToast("Error al importar el archivo .db: " + err.message, "error");
-                            event.target.value = "";
-                        }
-                    };
-                    reader.readAsArrayBuffer(file);
-                }
-            );
         }
     </script>
-
-    <!-- Contenedor global de Toasts -->
-    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
-
-    <!-- Modal Institucional Reutilizable -->
-    <div id="modal-institucional" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white rounded-xl shadow-2xl border border-slate-200 max-w-md w-full p-6 space-y-4 animate-in fade-in zoom-in-95 duration-200">
-            <div class="flex items-center gap-3">
-                <div id="modal-icon-container" class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                </div>
-                <div>
-                    <h3 id="modal-title" class="font-serif text-lg font-bold text-slate-900">Confirmación de Acción</h3>
-                    <p id="modal-desc" class="text-xs text-slate-500">¿Estás seguro de realizar esta acción en el sistema?</p>
-                </div>
-            </div>
-            <div class="flex justify-end gap-2.5 pt-2 border-t border-slate-100">
-                <button id="modal-btn-cancelar" type="button" class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-slate-600 bg-slate-100 hover:bg-slate-200 transition">Cancelar</button>
-                <button id="modal-btn-aceptar" type="button" class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-amber-400 bg-slate-900 hover:bg-slate-800 shadow transition">Aceptar</button>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
