@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tesorería R.·. L.·. Renovación N° 72</title>
-    <!-- Tipografías Institucionales -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,7 +20,6 @@
             }
         }
     </script>
-    <!-- jsPDF y AutoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
     <style>
@@ -37,7 +34,6 @@
 </head>
 <body class="bg-masonic-pattern text-slate-800 font-sans min-h-screen flex flex-col selection:bg-amber-600 selection:text-white">
 
-    <!-- Barra de Navegación -->
     <header class="bg-slate-900 text-stone-100 shadow-lg border-b-2 border-amber-500/80 px-4 py-3.5 flex flex-wrap justify-between items-center gap-3">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-slate-800 border border-amber-500/60 flex items-center justify-center shadow-inner shrink-0">
@@ -52,12 +48,12 @@
                     Tesorería R.·. L.·. Renovación N° 72
                 </h1>
                 <p class="text-[11px] uppercase tracking-[0.2em] text-slate-400 font-medium">
-                    Google Sheets Cloud Direct Backend + CRUD
+                    Sincronización Directa JSONP (Sin Bloqueos POST)
                 </p>
             </div>
         </div>
         <div id="session-info" class="hidden text-xs sm:text-sm flex items-center gap-3">
-            <span id="sync-status" class="text-[11px] font-mono text-emerald-400 hidden sm:inline">● Conectado</span>
+            <span id="api-badge" class="text-[11px] font-mono px-2 py-1 rounded bg-slate-800 text-slate-300">Verificando API...</span>
             <span id="user-display" class="font-mono font-semibold bg-slate-800 text-amber-300 border border-amber-500/40 px-3 py-1.5 rounded"></span>
             <button onclick="logout()" class="bg-rose-900 hover:bg-rose-800 text-stone-100 border border-rose-700/70 px-3 py-1.5 rounded transition font-semibold">
                 Cerrar Sesión
@@ -93,11 +89,11 @@
 
         <!-- SECCIÓN 2: Panel del Hermano -->
         <section id="panel-nivel-socio" class="hidden space-y-6">
-            <div id="socio-status-box" class="p-6 rounded-xl border text-center shadow-md bg-emerald-50 border-emerald-300 text-emerald-900">
+            <div class="p-6 rounded-xl border text-center shadow-md bg-emerald-50 border-emerald-300 text-emerald-900">
                 <span class="text-[11px] font-bold uppercase tracking-[0.2em] mb-1 block">Estado de Cuenta Cloud</span>
                 <h3 id="socio-nombre-saludo" class="font-serif text-2xl font-bold capitalize mb-1">---</h3>
                 <p id="socio-cedula-display" class="text-xs font-mono mb-4">C.I: ---</p>
-                <div id="socio-badge-status" class="text-xl font-extrabold tracking-widest inline-block px-6 py-1.5 rounded-full border bg-emerald-100 border-emerald-400 text-emerald-800">ACTIVO</div>
+                <div class="text-xl font-extrabold tracking-widest inline-block px-6 py-1.5 rounded-full border bg-emerald-100 border-emerald-400 text-emerald-800">ACTIVO</div>
             </div>
 
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
@@ -158,7 +154,7 @@
                             <select id="ingreso-usuario" class="w-full p-2 border rounded-lg bg-stone-50 font-mono"></select>
                             <input type="number" id="ingreso-monto" step="0.01" placeholder="Monto ($)" class="w-full p-2 border rounded-lg text-base tabular-nums">
                             <input type="text" id="ingreso-desc" placeholder="Descripción" class="w-full p-2 border rounded-lg text-base">
-                            <button id="btn-guardar-ingreso" onclick="registrarTransaccionCloud('ingreso')" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg font-semibold transition">
+                            <button onclick="registrarTransaccionCloud('ingreso')" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white py-2.5 rounded-lg font-semibold">
                                 Guardar Ingreso e Imprimir Recibo
                             </button>
                         </div>
@@ -177,7 +173,7 @@
                             </select>
                             <input type="number" id="gasto-monto" step="0.01" placeholder="Monto Egreso ($)" class="w-full p-2 border rounded-lg text-base tabular-nums">
                             <input type="text" id="gasto-desc" placeholder="Descripción o detalle" class="w-full p-2 border rounded-lg text-base">
-                            <button id="btn-guardar-gasto" onclick="registrarTransaccionCloud('gasto')" class="w-full bg-rose-700 hover:bg-rose-800 text-white py-2.5 rounded-lg font-semibold transition">
+                            <button onclick="registrarTransaccionCloud('gasto')" class="w-full bg-rose-700 hover:bg-rose-800 text-white py-2.5 rounded-lg font-semibold">
                                 Guardar Egreso en Google Sheet
                             </button>
                         </div>
@@ -187,31 +183,24 @@
 
             <!-- PESTAÑA 2: PADRÓN DE HERMANOS (CRUD COMPLETO) -->
             <div id="tab-panel-padron" class="admin-tab-panel hidden space-y-6">
-                <!-- Formulario de Alta -->
                 <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 border-t-4 border-t-amber-600 max-w-xl mx-auto">
                     <h3 class="font-serif text-base font-bold text-slate-900 mb-3">Registrar Nuevo Hermano en Google Sheets</h3>
                     <div class="space-y-3 text-sm">
-                        <input type="text" id="crud-cedula" oninput="this.value = this.value.replace(/[^0-9a-zA-Z]/g, '')" placeholder="Cédula (Ej: 12345678)" class="w-full p-2 border rounded-lg font-mono font-bold">
-                        <input type="text" id="crud-nombre" placeholder="Nombre Completo del Hermano" class="w-full p-2 border rounded-lg">
+                        <input type="text" id="crud-cedula" placeholder="Cédula (Solo números)" class="w-full p-2 border rounded-lg font-mono font-bold">
+                        <input type="text" id="crud-nombre" placeholder="Nombre Completo" class="w-full p-2 border rounded-lg">
                         <select id="crud-membresia" class="w-full p-2 border rounded-lg bg-white font-semibold">
                             <option value="1er Nivel">1er Nivel (Hermano Regular)</option>
                             <option value="2do Nivel">2do Nivel (Operador de Caja)</option>
                             <option value="3er Nivel">3er Nivel (Tesorero Supremo)</option>
                         </select>
-                        <button id="btn-crear-usuario" onclick="crudCrearUsuario()" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 py-2.5 rounded-lg font-bold transition">
+                        <button onclick="crudCrearUsuario()" class="w-full bg-slate-900 hover:bg-slate-800 text-amber-400 py-2.5 rounded-lg font-bold">
                             Insertar Hermano en Nube
                         </button>
                     </div>
                 </div>
 
-                <!-- Tabla de Edición y Borrado -->
                 <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-serif text-lg font-bold text-slate-900">Padrón y Edición Directa (CRUD)</h3>
-                        <button onclick="cargarDatosCloud()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3 py-1.5 rounded-lg border">
-                            ↻ Refrescar Padrón
-                        </button>
-                    </div>
+                    <h3 class="font-serif text-lg font-bold text-slate-900 mb-4">Padrón y Edición Directa (CRUD)</h3>
                     <div class="overflow-x-auto rounded-lg border border-slate-200">
                         <table class="min-w-full divide-y divide-slate-200 text-xs">
                             <thead class="bg-slate-900 text-amber-300 uppercase">
@@ -248,92 +237,68 @@
     </main>
 
     <script>
-        // URL DE TU IMPLEMENTACIÓN DE GOOGLE APPS SCRIPT
+        // PEGA AQUÍ LA NUEVA URL QUE TE GENERE "NUEVA IMPLEMENTACIÓN" EN APPS SCRIPT:
         const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyK1mC8unJaWJHdXLQjXzDhmBt8_dXzZcX9MP_9ubTHTZmM-tODJyz5oqZsAfbxQXv4SA/exec';
 
-        let appData = { usuarios: [], transacciones: [], cuota_mensual: 50 };
+        let appData = { usuarios: [], transacciones: [] };
         let currentUser = null;
         let activeAdminTab = 'caja';
+        let accionPendiente = null;
 
-        function formatearFechaLimpia(fechaRaw) {
-            if (!fechaRaw) return '-';
-            return String(fechaRaw).split('T')[0];
-        }
-
-        // Lectura por JSONP
-        function cargarDatosCloud() {
+        // Único canal de comunicación: JSONP por GET (100% libre de bloqueos CORS y no-cors)
+        function ejecutarLlamadaJSONP(parametrosObj = {}) {
             const scriptViejo = document.getElementById('jsonp-cloud');
             if (scriptViejo) scriptViejo.remove();
 
+            const params = new URLSearchParams(parametrosObj);
+            params.set('callback', 'procesarDatosCloud');
+            params.set('t', new Date().getTime());
+
+            if (parametrosObj.action) {
+                accionPendiente = parametrosObj.action;
+            }
+
             const script = document.createElement('script');
             script.id = 'jsonp-cloud';
-            script.src = `${APPS_SCRIPT_URL}?callback=procesarDatosCloud&t=${new Date().getTime()}`;
+            script.src = `${APPS_SCRIPT_URL}?${params.toString()}`;
             document.body.appendChild(script);
         }
 
-        function procesarDatosCloud(res) {
-            if (res && (res.status === 'success' || res.usuarios)) {
-                appData.usuarios = res.usuarios || [];
-                // Filtramos filas basura de $0.00 sin descripción que hayan quedado de pruebas anteriores
-                appData.transacciones = (res.transacciones || []).filter(t => parseFloat(t.monto) > 0 || (t.descripcion && t.descripcion !== '-'));
-                appData.cuota_mensual = res.cuota_mensual || 50;
-
-                if (res.write_info) {
-                    if (res.write_info.status === 'error') {
-                        alert("Aviso del servidor: " + res.write_info.message);
-                    }
-                }
-                if (currentUser) routeDashboard();
-            }
+        function cargarDatosCloud() {
+            ejecutarLlamadaJSONP({});
         }
 
-        // Motor dual para enviar órdenes al Apps Script (POST text/plain + respaldo JSONP)
-        async function enviarAccionCloud(payload) {
-            try {
-                // 1. Intentar POST con text/plain (Evita bloqueo CORS preflight en Apps Script y lee la respuesta real)
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify(payload)
-                });
+        function procesarDatosCloud(res) {
+            if (!res || res.status !== 'success') return;
 
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.status === 'error') {
-                        alert("Error en Google Sheets: " + data.message);
-                        return false;
-                    }
-                    // Si el Apps Script viejo no devuelve "target" esperado para usuarios, disparamos por GET/JSONP
-                    if (payload.action.includes('usuario') && data.target === 'transacciones') {
-                        alert("⚠️ ATENCIÓN: Tu URL de Apps Script sigue ejecutando una versión vieja en Google Drive. Ve a Apps Script -> Implementar -> Gestionar implementaciones -> Editar -> Nueva Versión.");
-                        return false;
-                    }
-                    cargarDatosCloud();
-                    return true;
+            appData.usuarios = res.usuarios || [];
+            appData.transacciones = (res.transacciones || []).filter(t => parseFloat(t.monto) > 0);
+
+            // Verificador visual de versión de Apps Script
+            const badge = document.getElementById('api-badge');
+            if (res.version_api === 'v2_get_only') {
+                badge.innerText = "● API v2 Activa";
+                badge.className = "text-[11px] font-mono px-2 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-700";
+            } else {
+                badge.innerText = "⚠️ API Vieja en Google";
+                badge.className = "text-[11px] font-mono px-2 py-1 rounded bg-rose-950 text-rose-300 border border-rose-700";
+                if (accionPendiente) {
+                    alert("ATENCIÓN: Tu URL de Apps Script sigue ejecutando el código viejo en Google Drive. Debes ir a Apps Script -> Implementar -> NUEVA IMPLEMENTACIÓN y pegar la nueva URL en el código.");
                 }
-            } catch (err) {
-                console.warn("Usando canal JSONP directo para operación:", err);
             }
 
-            // 2. Respaldo garantizado vía parámetros GET + JSONP
-            return new Promise((resolve) => {
-                const params = new URLSearchParams(payload);
-                params.append('callback', 'procesarDatosCloud');
-                params.append('t', new Date().getTime());
+            if (res.op_result === "OK_USUARIO_CREADO") {
+                alert("¡Hermano guardado directamente en la pestaña 'usuarios'!");
+            } else if (res.op_result === "OK_USUARIO_EDITADO") {
+                alert("¡Datos del hermano actualizados en Google Sheets!");
+            } else if (res.op_result === "OK_USUARIO_ELIMINADO") {
+                alert("¡Hermano eliminado del padrón!");
+            } else if (res.op_result === "OK_TRANSACCION_CREADA") {
+                alert("¡Transacción registrada en Google Sheets!");
+            }
 
-                const scriptViejo = document.getElementById('jsonp-action');
-                if (scriptViejo) scriptViejo.remove();
-
-                const script = document.createElement('script');
-                script.id = 'jsonp-action';
-                script.src = `${APPS_SCRIPT_URL}?${params.toString()}`;
-                script.onload = () => resolve(true);
-                script.onerror = () => {
-                    alert("No se pudo conectar con Google Apps Script. Verifica tu conexión o el despliegue.");
-                    resolve(false);
-                };
-                document.body.appendChild(script);
-            });
+            accionPendiente = null;
+            if (currentUser) routeDashboard();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -423,7 +388,7 @@
             
             if (misTrans.length > 0) {
                 misTrans.forEach(t => {
-                    tbody.innerHTML += `<tr class="hover:bg-stone-50"><td class="px-4 py-2.5 font-mono">${formatearFechaLimpia(t.fecha)}</td><td class="px-4 py-2.5">${t.descripcion || t.subtipo}</td><td class="px-4 py-2.5 text-right font-bold text-emerald-700">$${parseFloat(t.monto).toFixed(2)}</td></tr>`;
+                    tbody.innerHTML += `<tr class="hover:bg-stone-50"><td class="px-4 py-2.5 font-mono">${String(t.fecha).split('T')[0]}</td><td class="px-4 py-2.5">${t.descripcion || t.subtipo}</td><td class="px-4 py-2.5 text-right font-bold text-emerald-700">$${parseFloat(t.monto).toFixed(2)}</td></tr>`;
                 });
             } else {
                 tbody.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-slate-400">Sin movimientos registrados.</td></tr>`;
@@ -432,14 +397,10 @@
 
         function renderAdminView() {
             const select = document.getElementById('ingreso-usuario');
-            const valorPrevio = select.value;
             select.innerHTML = "";
             appData.usuarios.forEach(u => {
                 select.innerHTML += `<option value="${u.cedula}">C.I: ${u.cedula} - ${u.nombre}</option>`;
             });
-            if (valorPrevio && Array.from(select.options).some(o => o.value === valorPrevio)) {
-                select.value = valorPrevio;
-            }
 
             let ingresos = 0, gastos = 0;
             const tbodyAuditoria = document.getElementById('tabla-auditoria-rows');
@@ -453,7 +414,7 @@
                 const colorT = t.tipo === 'ingreso' ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold';
                 tbodyAuditoria.innerHTML += `
                     <tr class="hover:bg-stone-50">
-                        <td class="px-3 py-2 font-mono">${formatearFechaLimpia(t.fecha)}</td>
+                        <td class="px-3 py-2 font-mono">${String(t.fecha).split('T')[0]}</td>
                         <td class="px-3 py-2 uppercase ${colorT}">${t.tipo}</td>
                         <td class="px-3 py-2 uppercase text-[10px]">${t.subtipo}</td>
                         <td class="px-3 py-2 text-slate-700">${t.descripcion || '-'}</td>
@@ -464,93 +425,72 @@
             document.getElementById('admin-card-ingresos').innerText = `$${ingresos.toFixed(2)}`;
             document.getElementById('admin-card-gastos').innerText = `$${gastos.toFixed(2)}`;
             document.getElementById('admin-card-saldo').innerText = `$${(ingresos - gastos).toFixed(2)}`;
-
             renderCrudUsuarios();
         }
 
         function renderCrudUsuarios() {
             const tbody = document.getElementById('crud-tabla-usuarios');
-            if (!tbody) return;
             tbody.innerHTML = "";
             appData.usuarios.forEach(u => {
-                const cedKey = String(u.cedula).replace(/[^a-zA-Z0-9_-]/g, '');
                 tbody.innerHTML += `
                     <tr class="hover:bg-stone-50">
-                        <td class="p-2"><input type="text" id="edit-ced-${cedKey}" value="${u.cedula}" class="w-full font-mono font-bold bg-transparent border-b border-slate-200 focus:border-amber-600 focus:outline-none p-1"></td>
-                        <td class="p-2"><input type="text" id="edit-nom-${cedKey}" value="${u.nombre}" class="w-full bg-transparent border-b border-slate-200 focus:border-amber-600 focus:outline-none p-1"></td>
+                        <td class="p-2"><input type="text" id="edit-ced-${u.cedula}" value="${u.cedula}" class="w-full font-mono font-bold bg-transparent border-b"></td>
+                        <td class="p-2"><input type="text" id="edit-nom-${u.cedula}" value="${u.nombre}" class="w-full capitalize bg-transparent border-b"></td>
                         <td class="p-2">
-                            <select id="edit-mem-${cedKey}" class="bg-transparent font-semibold border-b border-slate-200 p-1">
+                            <select id="edit-mem-${u.cedula}" class="bg-transparent font-semibold">
                                 <option value="1er Nivel" ${u.membresia==='1er Nivel'?'selected':''}>1er Nivel</option>
                                 <option value="2do Nivel" ${u.membresia==='2do Nivel'?'selected':''}>2do Nivel</option>
                                 <option value="3er Nivel" ${u.membresia==='3er Nivel'?'selected':''}>3er Nivel</option>
                             </select>
                         </td>
                         <td class="p-2 text-center flex justify-center gap-1.5">
-                            <button onclick="crudEditarUsuario('${u.cedula}', '${cedKey}')" class="bg-slate-800 hover:bg-slate-700 text-amber-400 px-3 py-1 rounded text-xs font-bold transition">Guardar</button>
-                            <button onclick="crudEliminarUsuario('${u.cedula}')" class="bg-rose-800 hover:bg-rose-700 text-white px-3 py-1 rounded text-xs font-bold transition">Eliminar</button>
+                            <button onclick="crudEditarUsuario('${u.cedula}')" class="bg-slate-800 text-amber-400 px-2.5 py-1 rounded text-xs font-bold">Guardar</button>
+                            <button onclick="crudEliminarUsuario('${u.cedula}')" class="bg-rose-800 text-white px-2.5 py-1 rounded text-xs font-bold">Eliminar</button>
                         </td>
                     </tr>`;
             });
         }
 
-        async function crudCrearUsuario() {
+        function crudCrearUsuario() {
             const cedula = document.getElementById('crud-cedula').value.trim();
             const nombre = document.getElementById('crud-nombre').value.trim();
             const membresia = document.getElementById('crud-membresia').value;
-            if(!cedula || !nombre) return alert("Rellena la cédula y el nombre del hermano.");
+            if(!cedula || !nombre) return alert("Rellena la cédula y el nombre.");
 
-            const btn = document.getElementById('btn-crear-usuario');
-            const textoOriginal = btn.innerText;
-            btn.innerText = "Guardando en pestaña 'usuarios'...";
-            btn.disabled = true;
-
-            const ok = await enviarAccionCloud({
+            ejecutarLlamadaJSONP({
                 action: 'crear_usuario',
                 cedula: cedula,
                 nombre: nombre,
                 membresia: membresia
             });
 
-            btn.innerText = textoOriginal;
-            btn.disabled = false;
-
-            if (ok) {
-                document.getElementById('crud-cedula').value = "";
-                document.getElementById('crud-nombre').value = "";
-                alert("¡Hermano registrado directamente en la pestaña 'usuarios'!");
-            }
+            document.getElementById('crud-cedula').value = "";
+            document.getElementById('crud-nombre').value = "";
         }
 
-        async function crudEditarUsuario(cedulaOriginal, cedKey) {
-            const cedula = document.getElementById(`edit-ced-${cedKey}`).value.trim();
-            const nombre = document.getElementById(`edit-nom-${cedKey}`).value.trim();
-            const membresia = document.getElementById(`edit-mem-${cedKey}`).value;
+        function crudEditarUsuario(cedulaOriginal) {
+            const cedula = document.getElementById(`edit-ced-${cedulaOriginal}`).value.trim();
+            const nombre = document.getElementById(`edit-nom-${cedulaOriginal}`).value.trim();
+            const membresia = document.getElementById(`edit-mem-${cedulaOriginal}`).value;
 
-            if (!cedula || !nombre) return alert("Cédula y nombre no pueden quedar vacíos.");
-
-            const ok = await enviarAccionCloud({
+            ejecutarLlamadaJSONP({
                 action: 'editar_usuario',
                 cedula_original: cedulaOriginal,
                 cedula: cedula,
                 nombre: nombre,
                 membresia: membresia
             });
-
-            if (ok) alert("¡Datos del hermano actualizados en Google Sheets!");
         }
 
-        async function crudEliminarUsuario(cedula) {
-            if(!confirm(`¿Deseas eliminar al hermano con cédula ${cedula} de la pestaña 'usuarios'?`)) return;
-            
-            const ok = await enviarAccionCloud({
+        function crudEliminarUsuario(cedula) {
+            if(!confirm(`¿Deseas eliminar al hermano con cédula ${cedula} de Google Sheets?`)) return;
+            ejecutarLlamadaJSONP({
                 action: 'eliminar_usuario',
                 cedula: cedula
             });
-
-            if (ok) alert("¡Hermano eliminado del padrón!");
         }
 
-        async function registrarTransaccionCloud(tipo) {
+        function registrarTransaccionCloud(tipo) {
             const fecha = document.getElementById(`${tipo}-fecha`).value;
             const subtipo = document.getElementById(`${tipo}-subtipo`).value;
             const monto = parseFloat(document.getElementById(`${tipo}-monto`).value);
@@ -558,15 +498,14 @@
             let usuario_id = tipo === 'ingreso' ? document.getElementById('ingreso-usuario').value : 'admin';
 
             if (isNaN(monto) || monto <= 0 || !fecha) {
-                return alert("Introduce un monto mayor a $0.00 y una fecha válida.");
+                return alert("Introduce un monto mayor a $0.00 y fecha válidos.");
             }
 
-            const btn = document.getElementById(`btn-guardar-${tipo}`);
-            const txtOrig = btn.innerText;
-            btn.innerText = "Sincronizando con Google Sheets...";
-            btn.disabled = true;
+            if (tipo === 'ingreso') {
+                imprimirReciboPDF(usuario_id, subtipo, monto, descripcion, fecha);
+            }
 
-            const ok = await enviarAccionCloud({
+            ejecutarLlamadaJSONP({
                 action: 'crear_transaccion',
                 usuario_id: usuario_id,
                 tipo: tipo,
@@ -576,18 +515,8 @@
                 fecha: fecha
             });
 
-            btn.innerText = txtOrig;
-            btn.disabled = false;
-
-            if (ok) {
-                document.getElementById(`${tipo}-monto`).value = "";
-                document.getElementById(`${tipo}-desc`).value = "";
-
-                if (tipo === 'ingreso') {
-                    imprimirReciboPDF(usuario_id, subtipo, monto, descripcion, fecha);
-                }
-                alert(`¡${tipo.toUpperCase()} guardado con éxito en Google Sheets!`);
-            }
+            document.getElementById(`${tipo}-monto`).value = "";
+            document.getElementById(`${tipo}-desc`).value = "";
         }
 
         function imprimirReciboPDF(usuarioId, subtipo, monto, desc, fecha) {
@@ -608,7 +537,7 @@
 
             doc.setTextColor(30, 41, 59);
             doc.setFontSize(8);
-            doc.text(`Fecha: ${formatearFechaLimpia(fecha)}`, 8, 28);
+            doc.text(`Fecha: ${fecha}`, 8, 28);
             doc.text(`Hermano: ${nombre}`, 8, 35);
             doc.text(`Cédula: C.I. ${cedula}`, 8, 42);
             doc.text(`Concepto: ${subtipo.toUpperCase()}`, 8, 49);
@@ -620,7 +549,7 @@
             doc.setFontSize(10);
             doc.text(`TOTAL PROCESADO: $${monto.toFixed(2)} USD`, 12, 73.5);
 
-            doc.save(`Recibo_Tesoreria_CI_${cedula}_${formatearFechaLimpia(fecha)}.pdf`);
+            doc.save(`Recibo_Tesoreria_CI_${cedula}_${fecha}.pdf`);
         }
 
         function exportarAuditoriaPDF() {
@@ -631,7 +560,7 @@
             
             let rows = [];
             appData.transacciones.forEach(t => {
-                rows.push([formatearFechaLimpia(t.fecha), t.tipo.toUpperCase(), t.subtipo.toUpperCase(), t.descripcion || '-', `$${parseFloat(t.monto).toFixed(2)}`]);
+                rows.push([String(t.fecha).split('T')[0], t.tipo.toUpperCase(), t.subtipo.toUpperCase(), t.descripcion || '-', `$${parseFloat(t.monto).toFixed(2)}`]);
             });
 
             doc.autoTable({
