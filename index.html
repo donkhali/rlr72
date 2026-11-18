@@ -432,7 +432,7 @@
                 alert("¡Hermano agregado con éxito en la nube!");
                 document.getElementById('crud-cedula').value = "";
                 document.getElementById('crud-nombre').value = "";
-                setTimeout(cargarDatosCloud, 2000);
+                setTimeout(cargarDatosCloud, 2500);
             } catch(e) { alert("Error: " + e.message); }
         }
 
@@ -451,7 +451,7 @@
                     body: JSON.stringify(payload)
                 });
                 alert("¡Actualizado con éxito!");
-                setTimeout(cargarDatosCloud, 2000);
+                setTimeout(cargarDatosCloud, 2500);
             } catch(e) { alert("Error: " + e.message); }
         }
 
@@ -468,7 +468,7 @@
                     body: JSON.stringify(payload)
                 });
                 alert("¡Eliminado con éxito!");
-                setTimeout(cargarDatosCloud, 2000);
+                setTimeout(cargarDatosCloud, 2500);
             } catch(e) { alert("Error: " + e.message); }
         }
 
@@ -509,7 +509,7 @@
                     imprimirReciboPDF(usuario_id, subtipo, monto, descripcion, fecha);
                 }
                 
-                setTimeout(cargarDatosCloud, 2000);
+                setTimeout(cargarDatosCloud, 2500);
             } catch (err) {
                 alert("Error al registrar en Google Sheets: " + err.message);
             }
